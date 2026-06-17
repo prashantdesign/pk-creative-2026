@@ -1,0 +1,94 @@
+{
+  "placeholderImages": [
+    {
+      "id": "about-profile",
+      "description": "User profile picture",
+      "imageUrl": "https://images.unsplash.com/photo-1543610892-0b1f7e6d8ac1?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw4fHxwcm9maWxlJTIwcG9ydHJhaXR8ZW58MHx8fHwxNzY5NDk0NzcwfDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "profile portrait"
+    },
+    {
+      "id": "proj-aura-main",
+      "description": "Aura Branding Main Image",
+      "imageUrl": "https://images.unsplash.com/photo-1711779323810-c12e1df42816?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8YWJzdHJhY3QlMjBicmFuZGluZ3xlbnwwfHx8fDE3Njk1MjU1NzR8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "abstract branding"
+    },
+    {
+      "id": "proj-aura-img1",
+      "description": "Aura branding materials",
+      "imageUrl": "https://images.unsplash.com/photo-1762365189058-7be5b07e038b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8YnJhbmQlMjBtYXRlcmlhbHN8ZW58MHx8fHwxNzY5NTMxMDM0fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "brand materials"
+    },
+    {
+      "id": "proj-aura-img2",
+      "description": "Aura branding meeting",
+      "imageUrl": "https://images.unsplash.com/photo-1557426272-fc759fdf7a8d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHxwcm9qZWN0JTIwbWVldGluZ3xlbnwwfHx8fDE3Njk2NTg5ODd8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "project meeting"
+    },
+    {
+      "id": "proj-socialfeed-main",
+      "description": "SocialFeed App Main Image",
+      "imageUrl": "https://images.unsplash.com/photo-1724862936518-ae7fcfc052c1?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHxzb2NpYWwlMjBtZWRpYXxlbnwwfHx8fDE3Njk0OTY2OTB8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "social media"
+    },
+    {
+      "id": "proj-socialfeed-img1",
+      "description": "SocialFeed app wireframes",
+      "imageUrl": "https://images.unsplash.com/photo-1581291518633-83b4ebd1d83e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHx1aSUyMHdpcmVmcmFtZXxlbnwwfHx8fDE3Njk2NjAxODZ8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "ui wireframe"
+    },
+    {
+      "id": "proj-modernist-main",
+      "description": "Modernist Magazine Main Image",
+      "imageUrl": "https://images.unsplash.com/photo-1616080808758-b8a2fc2ec5d4?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw3fHxwcmludCUyMGRlc2lnbnxlbnwwfHx8fDE3Njk1MzEwMzR8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "print design"
+    },
+    {
+      "id": "proj-fintech-main",
+      "description": "Fintech Dashboard Main Image",
+      "imageUrl": "https://images.unsplash.com/photo-1586717799252-bd134ad00e26?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw3fHx1aSUyMGRlc2lnbnxlbnwwfHx8fDE3Njk0OTI4MjN8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "ui design"
+    },
+    {
+      "id": "proj-motion-main",
+      "description": "Motion graphics project main image",
+      "imageUrl": "https://images.unsplash.com/photo-1732032506091-6fd57cc3113e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHxtb3Rpb24lMjBncmFwaGljc3xlbnwwfHx8fDE3Njk1MjcwMjF8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "motion graphics"
+    },
+    {
+      "id": "gallery-abstract-1",
+      "description": "Abstract colorful shapes",
+      "imageUrl": "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHxhYnN0cmFjdCUyMGFydHxlbnwwfHx8fDE3Njk2NjA1NTB8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "abstract art"
+    },
+    {
+      "id": "gallery-abstract-2",
+      "description": "Geometric patterns",
+      "imageUrl": "https://images.unsplash.com/photo-1518976029331-2303b38121b8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHxnZW9tZXRyaWMlMjBwYXR0ZXJufGVufDB8fHx8MTc2OTY2MDU5MHww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "geometric pattern"
+    },
+    {
+      "id": "gallery-arch-1",
+      "description": "Modern building facade",
+      "imageUrl": "https://images.unsplash.com/photo-1487958449943-2429e8be8625?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHxhcmNoaXRlY3R1cmV8ZW58MHx8fHwxNzY5NjYwNjE5fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "architecture building"
+    },
+    {
+      "id": "gallery-arch-2",
+      "description": "Interior design shot",
+      "imageUrl": "https://images.unsplash.com/photo-1616046229478-9901c5536a45?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHxpbnRlcmlvciUyMGRlc2lnbnxlbnwwfHx8fDE3Njk2NjA2NDR8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "interior design"
+    },
+    {
+      "id": "gallery-nature-1",
+      "description": "Misty forest landscape",
+      "imageUrl": "https://images.unsplash.com/photo-1448375240586-882707db888b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHxuYXR1cmUlMjBsYW5kc2NhcGV8ZW58MHx8fHwxNzY5NjYwNjczfDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "nature landscape"
+    },
+    {
+      "id": "gallery-nature-2",
+      "description": "Close up of a flower",
+      "imageUrl": "https://images.unsplash.com/photo-1490750967868-88aa4486c946?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHxmbG93ZXJ8ZW58MHx8fHwxNzY5NjYwNjkzfDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "flower closeup"
+    }
+  ]
+}

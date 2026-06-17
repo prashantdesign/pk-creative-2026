@@ -1,0 +1,129 @@
+/**
+ * @file firestore.rules
+ * @description Security rules for a single-page portfolio website with an admin dashboard.
+ *
+ * Core Philosophy:
+ * This ruleset implements a dual-access security model:
+ * 1. Public-Read: Core portfolio content (site settings, categories, projects, gallery) is publicly readable by any visitor, including unauthenticated ones.
+ * 2. Admin-Only Write: All content creation, modification, and deletion are restricted to authenticated administrators. For prototyping, any non-anonymous authenticated user is considered an admin.
+ * 3. Private Data "Dropbox": A dedicated collection for contact messages allows any user to submit (create) a message, but only admins can read or manage them.
+ *
+ * Data Structure:
+ * The data is organized into distinct, top-level collections to enforce a clear separation of security concerns (Structural Segregation):
+ * - /siteContent: Singleton collection for global website configuration.
+ * - /projectCategories: Defines categories for portfolio projects.
+ * - /galleryCategories: Defines categories for gallery images.
+ * - /projects: Contains the individual portfolio projects.
+ * - /galleryImages: Stores images for the public gallery.
+ * - /contactMessages: A private collection to store user-submitted contact form messages.
+ *
+ * Key Security Decisions:
+ * - Admin Role Assumption: There is no explicit admin role system defined. For rapid prototyping, we treat any user authenticated via a non-anonymous provider (e.g., email/password) as an administrator with full write privileges. This should be replaced with a more robust system (like custom claims) for production.
+ * - Public Read Access: To support the public-facing portfolio, all content except contact messages is world-readable.
+ * - Secure Contact Form: The `/contactMessages` collection is designed as a secure "dropbox". Anyone can write into it, but nobody can read its contents except for administrators, preventing data leaks. List operations are disabled for the public.
+ * - No User Listing: The rules do not depend on a `/users` collection, thus avoiding any possibility of listing user accounts.
+ *
+ * Denormalization for Authorization:
+ * This ruleset does not require complex `get()` calls to check permissions. Access is determined by a simple role check (`isAdmin()`) on the user's authentication token, making the rules fast, performant, and easy to audit.
+ */
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // -------------------------------------------------------------------------
+    // Helper Functions
+    // -------------------------------------------------------------------------
+
+    /**
+     * Checks if a user is authenticated.
+     */
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    /**
+     * Checks if the user is an administrator.
+     * For prototyping, any non-anonymous authenticated user is considered an admin.
+     * TODO: Replace with a more secure mechanism like custom claims for production
+     * (e.g., `request.auth.token.admin == true`).
+     */
+    function isAdmin() {
+      return isSignedIn() && request.auth.token.firebase.sign_in_provider != 'anonymous';
+    }
+
+    /**
+     * Checks if the document being accessed already exists.
+     * This is a crucial check for all update and delete operations.
+     */
+    function isExistingDoc() {
+      return resource != null;
+    }
+
+    /**
+     * Ensures that a user creating a contact message cannot mark it as 'read'.
+     * The `isRead` flag must either be absent or explicitly set to false.
+     */
+    function isValidContactMessageCreate() {
+      return !('isRead' in request.resource.data) || request.resource.data.isRead == false;
+    }
+
+    // -------------------------------------------------------------------------
+    // Collection Rules
+    // -------------------------------------------------------------------------
+
+    /**
+     * @description Manages global site content. Publicly readable, but only admins can modify it.
+     * @path /siteContent/{siteContentId}
+     */
+    match /siteContent/{siteContentId} {
+      allow read: if request.auth == null || request.auth != null;
+      allow write: if isAdmin();
+    }
+
+    /**
+     * @description Manages portfolio project categories. Publicly readable, but only admins can manage them.
+     * @path /projectCategories/{categoryId}
+     */
+    match /projectCategories/{categoryId} {
+      allow read: if request.auth == null || request.auth != null;
+      allow write: if isAdmin();
+    }
+
+    /**
+     * @description Manages gallery image categories. Publicly readable, but only admins can manage them.
+     * @path /galleryCategories/{categoryId}
+     */
+    match /galleryCategories/{categoryId} {
+      allow read: if request.auth == null || request.auth != null;
+      allow write: if isAdmin();
+    }
+    
+    /**
+     * @description Manages portfolio projects. Publicly readable, but only admins can manage them.
+     * @path /projects/{projectId}
+     */
+    match /projects/{projectId} {
+      allow read: if request.auth == null || request.auth != null;
+      allow write: if isAdmin();
+    }
+    
+    /**
+     * @description Manages gallery images. Publicly readable, but only admins can manage them.
+     * @path /galleryImages/{imageId}
+     */
+    match /galleryImages/{imageId} {
+      allow read: if request.auth == null || request.auth != null;
+      allow write: if isAdmin();
+    }
+
+    /**
+     * @description A "dropbox" for contact form submissions. Anyone can create, but only admins can read/manage.
+     * @path /contactMessages/{messageId}
+     */
+    match /contactMessages/{messageId} {
+      allow read: if isAdmin();
+      allow create: if isValidContactMessageCreate();
+      allow update, delete: if isAdmin() && isExistingDoc();
+    }
+  }
+}
