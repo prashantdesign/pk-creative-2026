@@ -139,7 +139,23 @@ export default function DemoDataControls() {
         const snapshot = await getDocs(collection(firestore, coll.from));
         snapshot.forEach(docSnap => {
           const newDocRef = doc(firestore, coll.to, docSnap.id);
-          batch.set(newDocRef, docSnap.data());
+          let data = docSnap.data();
+
+          if (coll.from === 'siteContent' && docSnap.id === 'global') {
+            data = {
+              ...data,
+              services: data.services && data.services.length > 0 ? data.services : DEMO_SITE_CONTENT.services,
+              targetAudience: data.targetAudience && data.targetAudience.length > 0 ? data.targetAudience : DEMO_SITE_CONTENT.targetAudience,
+              isServicesSectionVisible: data.isServicesSectionVisible !== undefined ? data.isServicesSectionVisible : true,
+              isTargetAudienceSectionVisible: data.isTargetAudienceSectionVisible !== undefined ? data.isTargetAudienceSectionVisible : true,
+            };
+            
+            if (data.portfolioSectionTitle === "My Work") {
+               data.portfolioSectionTitle = "Our Work";
+            }
+          }
+
+          batch.set(newDocRef, data);
         });
       }
 

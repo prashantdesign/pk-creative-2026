@@ -71,6 +71,8 @@ export interface SiteContent {
   isPortfolioSectionVisible?: boolean;
   isSkillsSectionVisible?: boolean;
   isToolsSectionVisible?: boolean;
+  isServicesSectionVisible?: boolean;
+  isTargetAudienceSectionVisible?: boolean;
   skillsSectionTitle?: string;
   skillsSectionDescription?: string;
   skills?: string[];

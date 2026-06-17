@@ -21,8 +21,8 @@ const formSchema = z.object({
   areAnimationsEnabled: z.boolean().default(true),
   isAboutSectionVisible: z.boolean().default(true),
   isStatsSectionVisible: z.boolean().default(true),
-  isSkillsSectionVisible: z.boolean().default(true),
-  isToolsSectionVisible: z.boolean().default(true),
+  isServicesSectionVisible: z.boolean().default(true),
+  isTargetAudienceSectionVisible: z.boolean().default(true),
   isGallerySectionVisible: z.boolean().default(true),
   isPortfolioSectionVisible: z.boolean().default(true),
 });
@@ -42,8 +42,8 @@ export default function SettingsForm() {
       areAnimationsEnabled: true,
       isAboutSectionVisible: true,
       isStatsSectionVisible: true,
-      isSkillsSectionVisible: true,
-      isToolsSectionVisible: true,
+      isServicesSectionVisible: true,
+      isTargetAudienceSectionVisible: true,
       isGallerySectionVisible: true,
       isPortfolioSectionVisible: true,
     },
@@ -56,8 +56,8 @@ export default function SettingsForm() {
         areAnimationsEnabled: siteContent.areAnimationsEnabled === undefined ? true : siteContent.areAnimationsEnabled,
         isAboutSectionVisible: siteContent.isAboutSectionVisible === undefined ? true : siteContent.isAboutSectionVisible,
         isStatsSectionVisible: siteContent.isStatsSectionVisible === undefined ? true : siteContent.isStatsSectionVisible,
-        isSkillsSectionVisible: siteContent.isSkillsSectionVisible === undefined ? true : siteContent.isSkillsSectionVisible,
-        isToolsSectionVisible: siteContent.isToolsSectionVisible === undefined ? true : siteContent.isToolsSectionVisible,
+        isServicesSectionVisible: siteContent.isServicesSectionVisible === undefined ? true : siteContent.isServicesSectionVisible,
+        isTargetAudienceSectionVisible: siteContent.isTargetAudienceSectionVisible === undefined ? true : siteContent.isTargetAudienceSectionVisible,
         isGallerySectionVisible: siteContent.isGallerySectionVisible === undefined ? true : siteContent.isGallerySectionVisible,
         isPortfolioSectionVisible: siteContent.isPortfolioSectionVisible === undefined ? true : siteContent.isPortfolioSectionVisible,
       });
@@ -183,13 +183,13 @@ export default function SettingsForm() {
             />
             <FormField
               control={form.control}
-              name="isSkillsSectionVisible"
+              name="isServicesSectionVisible"
               render={({ field }) => (
                 <FormItem className="flex flex-row items-center justify-between rounded-lg border p-4">
                   <div className="space-y-0.5">
-                    <FormLabel>Show Skills Section</FormLabel>
+                    <FormLabel>Show Services Section</FormLabel>
                      <FormDescription>
-                       Control the visibility of the skills section.
+                       Control the visibility of the services section.
                     </FormDescription>
                   </div>
                   <FormControl>
@@ -203,13 +203,13 @@ export default function SettingsForm() {
             />
             <FormField
               control={form.control}
-              name="isToolsSectionVisible"
+              name="isTargetAudienceSectionVisible"
               render={({ field }) => (
                 <FormItem className="flex flex-row items-center justify-between rounded-lg border p-4">
                   <div className="space-y-0.5">
-                    <FormLabel>Show Tools Section</FormLabel>
+                    <FormLabel>Show Target Audience Section</FormLabel>
                      <FormDescription>
-                       Control the visibility of the tools section.
+                       Control the visibility of the "Who We Help" section.
                     </FormDescription>
                   </div>
                   <FormControl>
