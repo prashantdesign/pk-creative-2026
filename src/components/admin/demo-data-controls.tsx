@@ -124,18 +124,25 @@ export default function DemoDataControls() {
     toast({ title: 'Cloning database...', description: 'Copying from old site to new site. Please wait.' });
     
     try {
-      // First, clear the existing data
+      // First, clear the existing data in its own batch
       const collectionsToClear = ['pkcreative_projects', 'pkcreative_projectCategories', 'pkcreative_galleryImages', 'pkcreative_galleryCategories', 'pkcreative_siteContent', 'pkcreative_contactMessages'];
-      const batch = writeBatch(firestore);
+      const deleteBatch = writeBatch(firestore);
+      let deleteCount = 0;
 
       for (const coll of collectionsToClear) {
         const snapshot = await getDocs(collection(firestore, coll));
         snapshot.forEach(doc => {
-          batch.delete(doc.ref);
+          deleteBatch.delete(doc.ref);
+          deleteCount++;
         });
       }
+      
+      if (deleteCount > 0) {
+        await deleteBatch.commit();
+      }
 
-      // Then clone the old data into the empty collections
+      // Then clone the old data into the empty collections using a new batch
+      const cloneBatch = writeBatch(firestore);
       const collectionsToMigrate = [
         { from: 'siteContent', to: 'pkcreative_siteContent' },
         { from: 'projects', to: 'pkcreative_projects' },
@@ -174,11 +181,11 @@ export default function DemoDataControls() {
             }
           }
 
-          batch.set(newDocRef, data);
+          cloneBatch.set(newDocRef, data);
         });
       }
 
-      await batch.commit();
+      await cloneBatch.commit();
       toast({ title: 'Success!', description: 'Database successfully cloned from your personal site!' });
     } catch (error: any) {
       console.error(error);
