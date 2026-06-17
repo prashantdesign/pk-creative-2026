@@ -59,6 +59,14 @@ const formSchema = z.object({
   portfolioSectionTitle: z.string().optional(),
   portfolioSectionDescription: z.string().optional(),
 
+  services: z.array(z.object({
+    title: z.string().min(1, 'Title is required.'),
+    description: z.string().min(1, 'Description is required.'),
+    icon: z.string().min(1, 'Icon name is required.')
+  })).optional(),
+
+  targetAudience: z.array(z.string()).optional(),
+
   theme: z.enum(['light', 'dark']).default('dark'),
 
   linkedin: z.string().url({ message: "Please enter a valid URL." }).optional().or(z.literal('')),
@@ -110,6 +118,8 @@ export default function SiteContentForm() {
       gallerySectionDescription: "",
       portfolioSectionTitle: "My Work",
       portfolioSectionDescription: "",
+      services: [],
+      targetAudience: [],
       theme: 'dark',
       linkedin: "",
       twitter: "",
@@ -131,6 +141,14 @@ export default function SiteContentForm() {
   const { fields: toolsFields, append: appendTool, remove: removeTool } = useFieldArray({
     control: form.control,
     name: "tools",
+  });
+  const { fields: servicesFields, append: appendService, remove: removeService } = useFieldArray({
+    control: form.control,
+    name: "services",
+  });
+  const { fields: audienceFields, append: appendAudience, remove: removeAudience } = useFieldArray({
+    control: form.control,
+    name: "targetAudience" as never, // cast due to flat array of strings
   });
 
   useEffect(() => {
@@ -154,6 +172,8 @@ export default function SiteContentForm() {
         gallerySectionDescription: siteContent.gallerySectionDescription || "",
         portfolioSectionTitle: siteContent.portfolioSectionTitle || "My Work",
         portfolioSectionDescription: siteContent.portfolioSectionDescription || "",
+        services: siteContent.services || [],
+        targetAudience: siteContent.targetAudience || [],
         theme: siteContent.theme || 'dark',
         linkedin: siteContent.socials?.linkedin,
         twitter: siteContent.socials?.twitter,
@@ -247,7 +267,7 @@ export default function SiteContentForm() {
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-        <Accordion type="multiple" defaultValue={['hero', 'about', 'stats', 'skills', 'tools', 'gallery', 'portfolio', 'theme', 'socials', 'ai']} className="w-full">
+        <Accordion type="multiple" defaultValue={['hero', 'about', 'services', 'audience', 'stats', 'skills', 'tools', 'gallery', 'portfolio', 'theme', 'socials', 'ai']} className="w-full">
           <AccordionItem value="hero">
             <AccordionTrigger className="text-xl font-semibold">Hero Section</AccordionTrigger>
             <AccordionContent className="pt-4 space-y-4">
@@ -490,6 +510,87 @@ export default function SiteContentForm() {
               <FormField control={form.control} name="portfolioSectionDescription" render={({ field }) => (
                   <FormItem><FormLabel>Section Description</FormLabel><FormControl><Textarea {...field} value={field.value ?? ''} /></FormControl><FormMessage /></FormItem>
               )} />
+            </AccordionContent>
+          </AccordionItem>
+          <AccordionItem value="services">
+            <AccordionTrigger className="text-xl font-semibold">Services Section</AccordionTrigger>
+            <AccordionContent className="pt-4 space-y-4">
+              <FormLabel>Our Services</FormLabel>
+              <FormDescription>Add services to display on the homepage.</FormDescription>
+              {servicesFields.map((field, index) => (
+                <div key={field.id} className="flex items-start gap-4 p-4 border rounded-lg">
+                  <div className="flex-grow space-y-4">
+                    <FormField
+                      control={form.control}
+                      name={`services.${index}.title`}
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Service Title</FormLabel>
+                          <FormControl><Input placeholder="e.g., UI/UX Design" {...field} /></FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                    <FormField
+                      control={form.control}
+                      name={`services.${index}.description`}
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Description</FormLabel>
+                          <FormControl><Textarea placeholder="Short description..." {...field} /></FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                    <FormField
+                      control={form.control}
+                      name={`services.${index}.icon`}
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Icon Name</FormLabel>
+                          <FormControl><Input placeholder="e.g., monitor, layout, search" {...field} /></FormControl>
+                          <FormDescription>Use Lucide icon names in lowercase (e.g., "monitor", "smartphone").</FormDescription>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  </div>
+                  <Button type="button" variant="destructive" size="icon" onClick={() => removeService(index)}>
+                    <Trash2 className="h-4 w-4" />
+                  </Button>
+                </div>
+              ))}
+              <Button type="button" variant="outline" size="sm" onClick={() => appendService({ title: '', description: '', icon: 'check-circle-2' })}>
+                Add Service
+              </Button>
+            </AccordionContent>
+          </AccordionItem>
+          <AccordionItem value="audience">
+            <AccordionTrigger className="text-xl font-semibold">Target Audience</AccordionTrigger>
+            <AccordionContent className="pt-4 space-y-4">
+              <FormLabel>Who We Help</FormLabel>
+              <FormDescription>List the industries or client types you serve.</FormDescription>
+              {audienceFields.map((field, index) => (
+                <div key={field.id} className="flex items-end gap-2 p-2 border rounded-lg">
+                  <FormField
+                    control={form.control}
+                    name={`targetAudience.${index}` as never}
+                    render={({ field: inputField }) => (
+                      <FormItem className="flex-grow">
+                        <FormLabel>Client Type</FormLabel>
+                        <FormControl><Input placeholder="e.g., Hotels & Resorts" {...inputField} value={(inputField.value as unknown as string) || ''} /></FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <Button type="button" variant="destructive" size="icon" onClick={() => removeAudience(index)}>
+                    <Trash2 className="h-4 w-4" />
+                  </Button>
+                </div>
+              ))}
+              <Button type="button" variant="outline" size="sm" onClick={() => appendAudience('')}>
+                Add Target Audience
+              </Button>
             </AccordionContent>
           </AccordionItem>
            <AccordionItem value="ai">

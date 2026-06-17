@@ -36,6 +36,7 @@ const formSchema = z.object({
   problem: z.string().optional(),
   solution: z.string().optional(),
   outcome: z.string().optional(),
+  projectUrl: z.string().url({ message: "Please enter a valid URL." }).optional().or(z.literal('')),
 });
 
 type ProjectFormValues = z.infer<typeof formSchema>;
@@ -95,6 +96,7 @@ export default function ProjectForm({ project }: { project?: Project }) {
     problem: project?.problem || '',
     solution: project?.solution || '',
     outcome: project?.outcome || '',
+    projectUrl: project?.projectUrl || '',
   };
 
   const form = useForm<ProjectFormValues>({
@@ -194,6 +196,9 @@ export default function ProjectForm({ project }: { project?: Project }) {
             )} />
             <FormField control={form.control} name="description" render={({ field }) => (
                 <FormItem><FormLabel>Short Description</FormLabel><FormControl><Textarea {...field} /></FormControl><FormMessage /></FormItem>
+            )} />
+            <FormField control={form.control} name="projectUrl" render={({ field }) => (
+                <FormItem><FormLabel>Live Website URL (Optional)</FormLabel><FormControl><Input placeholder="https://example.com" {...field} value={field.value ?? ''} onBlur={(e) => handleUrlBlur(e, field)} /></FormControl><FormDescription>Add a link to the live website.</FormDescription><FormMessage /></FormItem>
             )} />
           </div>
           <div className="space-y-6">

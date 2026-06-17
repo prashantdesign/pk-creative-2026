@@ -3,20 +3,17 @@ import React from 'react';
 import SectionHeader from './section-header';
 import { CheckCircle2 } from 'lucide-react';
 
-const clients = [
-  'Hotels & Resorts',
-  'Safari Camps',
-  'Restaurants & Cafes',
-  'Bakeries',
-  'Jewellery Brands',
-  'Local Businesses',
-  'Startups',
-  'Coaches & Consultants',
-  'Educational Institutes',
-  'Service-Based Businesses'
-];
+import type { SiteContent } from '@/types';
 
-const TargetAudienceSection = () => {
+interface TargetAudienceSectionProps {
+  content?: SiteContent | null;
+}
+
+const TargetAudienceSection = ({ content }: TargetAudienceSectionProps) => {
+  const clients = content?.targetAudience || [];
+  
+  if (clients.length === 0) return null;
+
   return (
     <section id="audience" className="py-20 bg-primary text-primary-foreground">
       <div className="container mx-auto px-4 md:px-6">

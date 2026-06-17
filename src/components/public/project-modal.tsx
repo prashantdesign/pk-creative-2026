@@ -26,6 +26,13 @@ const ProjectModal = ({ project, isOpen, onClose }: ProjectModalProps) => {
         <DialogHeader className="flex-shrink-0">
           <DialogTitle className="text-3xl">{project.title}</DialogTitle>
           <DialogDescription>{project.description}</DialogDescription>
+          {project.projectUrl && (
+              <div className="mt-4">
+                  <a href={project.projectUrl} target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground shadow hover:bg-primary/90 h-9 px-4 py-2 rounded-md">
+                      Visit Live Website
+                  </a>
+              </div>
+          )}
         </DialogHeader>
         <div className="flex-grow overflow-y-auto pr-6 -mr-6 space-y-8">
             {allImages.length > 0 && (

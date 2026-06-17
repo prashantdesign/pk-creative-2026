@@ -31,6 +31,17 @@ export const DEMO_SITE_CONTENT: Omit<SiteContent, 'id'> = {
   isStatsSectionVisible: true,
   isGallerySectionVisible: true,
   isPortfolioSectionVisible: true,
+  services: [
+    { title: 'Website Design & Dev', description: 'Business, Portfolio, and E-commerce websites built with modern technologies.', icon: 'monitor' },
+    { title: 'UI/UX Design', description: 'Beautiful, intuitive user interfaces and landing pages that convert.', icon: 'layout' },
+    { title: 'Branding & Identity', description: 'Logo design, business profiles, and complete brand identity systems.', icon: 'pen-tool' },
+    { title: 'Social Media Management', description: 'Engaging post designs, festival creatives, and marketing campaigns.', icon: 'smartphone' },
+    { title: 'SEO Optimization', description: 'Rank higher on search engines and get found by your target clients.', icon: 'search' },
+    { title: 'Website Maintenance', description: 'Ongoing support, updates, and secure hosting for your peace of mind.', icon: 'settings' }
+  ],
+  targetAudience: [
+    'Hotels & Resorts', 'Safari Camps', 'Restaurants & Cafes', 'Bakeries', 'Jewellery Brands', 'Local Businesses', 'Startups', 'Coaches & Consultants', 'Educational Institutes', 'Service-Based Businesses'
+  ],
   aiSettings: {
     isAiFeatureEnabled: true,
     geminiModel: 'models/gemini-1.5-flash',

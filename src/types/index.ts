@@ -12,6 +12,7 @@ export interface Project {
   problem?: string;
   solution?: string;
   outcome?: string;
+  projectUrl?: string;
   createdAt?: Timestamp;
   updatedAt?: Timestamp;
 }
@@ -83,6 +84,12 @@ export interface SiteContent {
   gallerySectionDescription?: string;
   portfolioSectionTitle?: string;
   portfolioSectionDescription?: string;
+  services?: {
+    title: string;
+    description: string;
+    icon: string;
+  }[];
+  targetAudience?: string[];
 }
 
 export interface ContactMessage {

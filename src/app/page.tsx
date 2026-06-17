@@ -71,8 +71,8 @@ export default function Home() {
       <Header siteName={siteContent?.siteName} />
       <main className="flex-grow">
         <HeroSection content={siteContent} />
-        <ServicesSection />
-        <TargetAudienceSection />
+        <ServicesSection content={siteContent} />
+        <TargetAudienceSection content={siteContent} />
         {(siteContent?.isPortfolioSectionVisible ?? true) && <PortfolioSection content={siteContent} onProjectClick={handleProjectClick} />}
         <ContactSection />
       </main>
