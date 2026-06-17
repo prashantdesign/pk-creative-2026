@@ -1,0 +1,272 @@
+'use client';
+
+import React, { useEffect, useState, useMemo } from 'react';
+import { useForm, useFieldArray } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import * as z from 'zod';
+import { doc, setDoc } from 'firebase/firestore';
+import { useFirestore, useDoc } from '@/firebase';
+import { useToast } from '@/hooks/use-toast';
+import { uploadToCloudinary } from '@/lib/cloudinary';
+import { convertGoogleDriveLink } from '@/lib/utils';
+import Image from 'next/image';
+
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage, FormDescription } from '@/components/ui/form';
+import { Skeleton } from '../ui/skeleton';
+import { Trash2, MessageSquareQuote } from 'lucide-react';
+import type { SiteContent } from '@/types';
+import { errorEmitter } from '@/firebase/error-emitter';
+import { FirestorePermissionError } from '@/firebase/errors';
+
+const formSchema = z.object({
+  testimonialsSectionTitle: z.string().optional(),
+  testimonialsSectionDescription: z.string().optional(),
+  testimonials: z.array(z.object({
+    name: z.string().min(1, 'Name is required.'),
+    role: z.string().min(1, 'Role is required.'),
+    content: z.string().min(1, 'Content is required.'),
+    avatarUrl: z.string().optional(),
+  })).optional(),
+});
+
+export default function TestimonialsClient() {
+  const { toast } = useToast();
+  const [isLoading, setIsLoading] = useState(false);
+  const [isUploading, setIsUploading] = useState(false);
+  const [uploadingIndex, setUploadingIndex] = useState<number | null>(null);
+
+  const firestore = useFirestore();
+
+  const siteContentRef = useMemo(() => firestore ? doc(firestore, 'pkcreative_siteContent', 'global') : null, [firestore]);
+  const { data: siteContent, loading: isFetching } = useDoc<SiteContent>(siteContentRef as any);
+
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      testimonialsSectionTitle: "Client Stories",
+      testimonialsSectionDescription: "Hear what our partners have to say about working with us.",
+      testimonials: [],
+    },
+  });
+
+  const { fields: testimonialsFields, append: appendTestimonial, remove: removeTestimonial } = useFieldArray({
+    control: form.control,
+    name: "testimonials",
+  });
+
+  useEffect(() => {
+    if (siteContent) {
+      form.reset({
+        testimonialsSectionTitle: siteContent.testimonialsSectionTitle || "Client Stories",
+        testimonialsSectionDescription: siteContent.testimonialsSectionDescription || "Hear what our partners have to say about working with us.",
+        testimonials: siteContent.testimonials || [],
+      });
+    }
+  }, [siteContent, form]);
+
+  const handleUrlBlur = (e: React.FocusEvent<HTMLInputElement>, field: any) => {
+    const convertedUrl = convertGoogleDriveLink(e.target.value);
+    field.onChange(convertedUrl);
+  };
+
+  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>, index: number) => {
+      const file = e.target.files?.[0];
+      if (!file) return;
+
+      setUploadingIndex(index);
+      
+      try {
+          const downloadURL = await uploadToCloudinary(file);
+          form.setValue(`testimonials.${index}.avatarUrl`, downloadURL, { shouldValidate: true });
+          toast({title: "Avatar uploaded successfully"});
+      } catch (error: any) {
+          toast({variant: "destructive", title: "Avatar upload failed", description: error.message});
+          console.error("Cloudinary upload error: ", error);
+      } finally {
+          setUploadingIndex(null);
+      }
+  }
+
+  const onSubmit = (values: z.infer<typeof formSchema>) => {
+    if(!firestore || !siteContentRef) return;
+    setIsLoading(true);
+
+    setDoc(siteContentRef, values, { merge: true })
+        .then(() => {
+            toast({
+                title: "Testimonials Updated",
+                description: "Your testimonials have been saved successfully.",
+              });
+        })
+        .catch(async (serverError) => {
+            toast({
+                variant: "destructive",
+                title: "Uh oh! Something went wrong.",
+                description: "There was a problem saving your testimonials.",
+              });
+            const permissionError = new FirestorePermissionError({
+              path: siteContentRef.path,
+              operation: 'update',
+              requestResourceData: values,
+            });
+            errorEmitter.emit('permission-error', permissionError);
+        })
+        .finally(() => {
+            setIsLoading(false);
+        });
+  };
+
+  if (isFetching) {
+    return (
+      <div className="flex-1 overflow-y-auto">
+        <div className="p-8 max-w-4xl mx-auto"><Skeleton className="h-96 w-full" /></div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="flex-1 overflow-y-auto relative">
+      <div className="p-0">
+        <div className="max-w-4xl mx-auto">
+          <div className="bg-background border rounded-lg p-6 shadow-sm">
+            <div className="flex items-center gap-2 mb-6 pb-4 border-b">
+              <MessageSquareQuote className="h-5 w-5 text-muted-foreground" />
+              <h2 className="text-xl font-semibold">Testimonials Section</h2>
+            </div>
+            
+            <Form {...form}>
+              <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+                <div className="space-y-4 bg-muted/30 p-4 rounded-lg border border-dashed">
+                  <h3 className="font-medium text-sm text-muted-foreground uppercase tracking-wider mb-2">Section Settings</h3>
+                  <FormField control={form.control} name="testimonialsSectionTitle" render={({ field }) => (
+                      <FormItem><FormLabel>Section Title</FormLabel><FormControl><Input {...field} value={field.value ?? ''} /></FormControl><FormMessage /></FormItem>
+                  )} />
+                  <FormField control={form.control} name="testimonialsSectionDescription" render={({ field }) => (
+                      <FormItem><FormLabel>Section Description</FormLabel><FormControl><Textarea {...field} value={field.value ?? ''} /></FormControl><FormMessage /></FormItem>
+                  )} />
+                </div>
+
+                <div>
+                  <div className="flex items-center justify-between mb-4">
+                    <div>
+                      <FormLabel className="text-base">Client Quotes</FormLabel>
+                      <FormDescription>Add feedback from your clients to display on the homepage.</FormDescription>
+                    </div>
+                    <Button type="button" size="sm" onClick={() => appendTestimonial({ name: '', role: '', content: '', avatarUrl: '' })}>
+                      Add Testimonial
+                    </Button>
+                  </div>
+                  
+                  {testimonialsFields.length === 0 ? (
+                    <div className="text-center py-12 border border-dashed rounded-lg bg-muted/20">
+                      <MessageSquareQuote className="mx-auto h-12 w-12 text-muted-foreground/50 mb-4" />
+                      <h3 className="text-lg font-medium">No testimonials yet</h3>
+                      <p className="text-sm text-muted-foreground mb-4">Click the button above to add your first client quote.</p>
+                      <Button type="button" variant="outline" onClick={() => appendTestimonial({ name: '', role: '', content: '', avatarUrl: '' })}>
+                        Add Testimonial
+                      </Button>
+                    </div>
+                  ) : (
+                    <div className="space-y-6">
+                      {testimonialsFields.map((field, index) => (
+                        <div key={field.id} className="flex items-start gap-4 p-6 border rounded-lg bg-background shadow-sm relative group">
+                          <Button 
+                            type="button" 
+                            variant="destructive" 
+                            size="icon" 
+                            className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity"
+                            onClick={() => removeTestimonial(index)}
+                          >
+                            <Trash2 className="h-4 w-4" />
+                          </Button>
+                          
+                          <div className="w-full space-y-4 pr-12">
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                              <FormField
+                                control={form.control}
+                                name={`testimonials.${index}.name`}
+                                render={({ field }) => (
+                                  <FormItem>
+                                    <FormLabel>Client Name</FormLabel>
+                                    <FormControl><Input placeholder="e.g., Jane Doe" {...field} /></FormControl>
+                                    <FormMessage />
+                                  </FormItem>
+                                )}
+                              />
+                              <FormField
+                                control={form.control}
+                                name={`testimonials.${index}.role`}
+                                render={({ field }) => (
+                                  <FormItem>
+                                    <FormLabel>Role & Company</FormLabel>
+                                    <FormControl><Input placeholder="e.g., CEO, TechFlow" {...field} /></FormControl>
+                                    <FormMessage />
+                                  </FormItem>
+                                )}
+                              />
+                            </div>
+                            
+                            <FormField
+                              control={form.control}
+                              name={`testimonials.${index}.content`}
+                              render={({ field }) => (
+                                <FormItem>
+                                  <FormLabel>Testimonial Quote</FormLabel>
+                                  <FormControl><Textarea className="h-24" placeholder="Their quote..." {...field} /></FormControl>
+                                  <FormMessage />
+                                </FormItem>
+                              )}
+                            />
+                            
+                            <FormField
+                              control={form.control}
+                              name={`testimonials.${index}.avatarUrl`}
+                              render={({ field }) => (
+                                <FormItem className="bg-muted/20 p-4 rounded-lg border border-dashed">
+                                  <div className="flex flex-col md:flex-row gap-4 items-start md:items-center">
+                                    {field.value ? (
+                                      <div className="relative h-16 w-16 rounded-full overflow-hidden border-2 border-primary/20 shrink-0 bg-background">
+                                        <Image src={field.value} alt="Avatar" fill className="object-cover" />
+                                      </div>
+                                    ) : (
+                                      <div className="h-16 w-16 rounded-full bg-muted flex items-center justify-center shrink-0 border-2 border-dashed">
+                                        <span className="text-xs text-muted-foreground text-center leading-tight">No<br/>Image</span>
+                                      </div>
+                                    )}
+                                    <div className="flex-1 w-full space-y-2">
+                                      <FormLabel>Avatar URL (Optional)</FormLabel>
+                                      <FormControl><Input placeholder="https://..." {...field} value={field.value ?? ''} onBlur={(e) => handleUrlBlur(e, field)} /></FormControl>
+                                      <div className="flex items-center gap-2">
+                                        <span className="text-xs text-muted-foreground uppercase font-medium">Or upload:</span>
+                                        <Input type="file" className="h-8 text-xs max-w-[250px]" onChange={(e) => handleImageUpload(e, index)} disabled={uploadingIndex === index} />
+                                        {uploadingIndex === index && <span className="text-xs text-primary animate-pulse">Uploading...</span>}
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <FormMessage />
+                                </FormItem>
+                              )}
+                            />
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+
+                <div className="pt-4 border-t sticky bottom-0 bg-background pb-4">
+                  <Button type="submit" size="lg" disabled={isLoading || uploadingIndex !== null} className="w-full md:w-auto">
+                    {isLoading ? 'Saving Changes...' : 'Save Testimonials'}
+                  </Button>
+                </div>
+              </form>
+            </Form>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
