@@ -125,8 +125,7 @@ export default function SiteContentForm() {
       isAiFeatureEnabled: true,
     },
   });
-  
-  });
+
   const { fields: servicesFields, append: appendService, remove: removeService } = useFieldArray({
     control: form.control,
     name: "services",
