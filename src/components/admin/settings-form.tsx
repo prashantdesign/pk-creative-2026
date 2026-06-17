@@ -20,6 +20,7 @@ const formSchema = z.object({
   isMaintenanceModeEnabled: z.boolean().default(false),
   areAnimationsEnabled: z.boolean().default(true),
   isServicesSectionVisible: z.boolean().default(true),
+  isTestimonialsSectionVisible: z.boolean().default(true),
   isTargetAudienceSectionVisible: z.boolean().default(true),
   isPortfolioSectionVisible: z.boolean().default(true),
 });
@@ -38,6 +39,7 @@ export default function SettingsForm() {
       isMaintenanceModeEnabled: false,
       areAnimationsEnabled: true,
       isServicesSectionVisible: true,
+      isTestimonialsSectionVisible: true,
       isTargetAudienceSectionVisible: true,
       isPortfolioSectionVisible: true,
     },
@@ -49,6 +51,7 @@ export default function SettingsForm() {
         isMaintenanceModeEnabled: siteContent.isMaintenanceModeEnabled || false,
         areAnimationsEnabled: siteContent.areAnimationsEnabled === undefined ? true : siteContent.areAnimationsEnabled,
         isServicesSectionVisible: siteContent.isServicesSectionVisible === undefined ? true : siteContent.isServicesSectionVisible,
+        isTestimonialsSectionVisible: siteContent.isTestimonialsSectionVisible === undefined ? true : siteContent.isTestimonialsSectionVisible,
         isTargetAudienceSectionVisible: siteContent.isTargetAudienceSectionVisible === undefined ? true : siteContent.isTargetAudienceSectionVisible,
         isPortfolioSectionVisible: siteContent.isPortfolioSectionVisible === undefined ? true : siteContent.isPortfolioSectionVisible,
       });
@@ -142,6 +145,26 @@ export default function SettingsForm() {
                     <FormLabel>Show Services Section</FormLabel>
                      <FormDescription>
                        Control the visibility of the services section.
+                    </FormDescription>
+                  </div>
+                  <FormControl>
+                    <Switch
+                      checked={field.value}
+                      onCheckedChange={field.onChange}
+                    />
+                  </FormControl>
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="isTestimonialsSectionVisible"
+              render={({ field }) => (
+                <FormItem className="flex flex-row items-center justify-between rounded-lg border p-4">
+                  <div className="space-y-0.5">
+                    <FormLabel>Show Testimonials Section</FormLabel>
+                     <FormDescription>
+                       Control the visibility of the testimonials section.
                     </FormDescription>
                   </div>
                   <FormControl>

@@ -21,6 +21,7 @@ export const DEMO_SITE_CONTENT: Omit<SiteContent, 'id'> = {
   isMaintenanceModeEnabled: false,
   areAnimationsEnabled: true,
   isPortfolioSectionVisible: true,
+  isTestimonialsSectionVisible: true,
   services: [
     { title: 'Website Design & Dev', description: 'Business, Portfolio, and E-commerce websites built with modern technologies.', icon: 'monitor' },
     { title: 'UI/UX Design', description: 'Beautiful, intuitive user interfaces and landing pages that convert.', icon: 'layout' },
@@ -36,6 +37,28 @@ export const DEMO_SITE_CONTENT: Omit<SiteContent, 'id'> = {
   ],
   targetAudienceSectionTitle: 'Who We Help',
   targetAudienceSectionDescription: 'We partner with ambitious brands across various industries to deliver outstanding digital experiences.',
+  testimonialsSectionTitle: 'Client Stories',
+  testimonialsSectionDescription: 'Hear what our partners have to say about working with us.',
+  testimonials: [
+    {
+      name: 'Priya Sharma',
+      role: 'Founder, The Lotus Spa',
+      content: 'PK Creative completely transformed our online presence. Our bookings increased by 40% in just two months!',
+      avatarUrl: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?crop=entropy&cs=tinysrgb&fit=facearea&facepad=2&w=256&h=256&q=80'
+    },
+    {
+      name: 'Rohan Desai',
+      role: 'Marketing Head, UrbanEats',
+      content: 'Their branding work was phenomenal. They understood our vision perfectly and delivered a highly engaging social media strategy.',
+      avatarUrl: 'https://images.unsplash.com/photo-1599566150163-29194dcaad36?crop=entropy&cs=tinysrgb&fit=facearea&facepad=2&w=256&h=256&q=80'
+    },
+    {
+      name: 'Ananya Verma',
+      role: 'CEO, TechNova Solutions',
+      content: 'Professional, creative, and highly dedicated. The new website they developed for us is not only beautiful but incredibly fast.',
+      avatarUrl: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?crop=entropy&cs=tinysrgb&fit=facearea&facepad=2&w=256&h=256&q=80'
+    }
+  ],
   contactSectionTitle: 'Get in Touch',
   contactSectionDescription: 'Have a project in mind or just want to say hello? Drop us a line.',
   footerDescription: 'Creative Solutions For Modern Brands.\nWebsite Design • Branding • Social Media',

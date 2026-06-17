@@ -11,6 +11,7 @@ import HeroSection from '@/components/public/hero-section';
 import ServicesSection from '@/components/public/services-section';
 import TargetAudienceSection from '@/components/public/target-audience-section';
 import PortfolioSection from '@/components/public/portfolio-section';
+import TestimonialsSection from '@/components/public/testimonials-section';
 import ContactSection from '@/components/public/contact-section';
 import Footer from '@/components/public/footer';
 import ProjectModal from '@/components/public/project-modal';
@@ -61,6 +62,7 @@ export default function Home() {
         {(siteContent?.isServicesSectionVisible ?? true) && <ServicesSection content={siteContent} />}
         {(siteContent?.isTargetAudienceSectionVisible ?? true) && <TargetAudienceSection content={siteContent} />}
         {(siteContent?.isPortfolioSectionVisible ?? true) && <PortfolioSection content={siteContent} onProjectClick={handleProjectClick} />}
+        {(siteContent?.isTestimonialsSectionVisible ?? true) && <TestimonialsSection content={siteContent} />}
         <ContactSection content={siteContent} />
       </main>
       <Footer content={siteContent} />

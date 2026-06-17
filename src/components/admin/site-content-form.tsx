@@ -52,6 +52,15 @@ const formSchema = z.object({
 
   targetAudience: z.array(z.string()).optional(),
 
+  testimonialsSectionTitle: z.string().optional(),
+  testimonialsSectionDescription: z.string().optional(),
+  testimonials: z.array(z.object({
+    name: z.string().min(1, 'Name is required.'),
+    role: z.string().min(1, 'Role is required.'),
+    content: z.string().min(1, 'Content is required.'),
+    avatarUrl: z.string().optional(),
+  })).optional(),
+
   theme: z.enum(['light', 'dark']).default('dark'),
 
   contactSectionTitle: z.string().optional(),
@@ -100,6 +109,9 @@ export default function SiteContentForm() {
       targetAudienceSectionTitle: "Who We Help",
       targetAudienceSectionDescription: "We partner with ambitious brands across various industries to deliver outstanding digital experiences.",
       targetAudience: [],
+      testimonialsSectionTitle: "Client Stories",
+      testimonialsSectionDescription: "Hear what our partners have to say about working with us.",
+      testimonials: [],
       contactSectionTitle: "Get in Touch",
       contactSectionDescription: "Have a project in mind or just want to say hello? Drop us a line.",
       footerDescription: "Creative Solutions For Modern Brands.\nWebsite Design • Branding • Social Media",
@@ -123,6 +135,10 @@ export default function SiteContentForm() {
     control: form.control,
     name: "targetAudience" as never, // cast due to flat array of strings
   });
+  const { fields: testimonialsFields, append: appendTestimonial, remove: removeTestimonial } = useFieldArray({
+    control: form.control,
+    name: "testimonials",
+  });
 
   useEffect(() => {
     if (siteContent) {
@@ -143,6 +159,9 @@ export default function SiteContentForm() {
         targetAudienceSectionTitle: siteContent.targetAudienceSectionTitle || "Who We Help",
         targetAudienceSectionDescription: siteContent.targetAudienceSectionDescription || "We partner with ambitious brands across various industries to deliver outstanding digital experiences.",
         targetAudience: siteContent.targetAudience || [],
+        testimonialsSectionTitle: siteContent.testimonialsSectionTitle || "Client Stories",
+        testimonialsSectionDescription: siteContent.testimonialsSectionDescription || "Hear what our partners have to say about working with us.",
+        testimonials: siteContent.testimonials || [],
         contactSectionTitle: siteContent.contactSectionTitle || "Get in Touch",
         contactSectionDescription: siteContent.contactSectionDescription || "Have a project in mind or just want to say hello? Drop us a line.",
         footerDescription: siteContent.footerDescription || "Creative Solutions For Modern Brands.\nWebsite Design • Branding • Social Media",
@@ -168,6 +187,9 @@ export default function SiteContentForm() {
       if (!file) return;
 
       if(typeof fieldName === 'string' && fieldName.startsWith('tools.')) {
+        const index = parseInt(fieldName.split('.')[1], 10);
+        setUploadingIndex(index);
+      } else if(typeof fieldName === 'string' && fieldName.startsWith('testimonials.')) {
         const index = parseInt(fieldName.split('.')[1], 10);
         setUploadingIndex(index);
       } else {
@@ -239,7 +261,7 @@ export default function SiteContentForm() {
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-        <Accordion type="multiple" defaultValue={['hero', 'about', 'services', 'audience', 'stats', 'skills', 'tools', 'gallery', 'portfolio', 'theme', 'socials', 'ai']} className="w-full">
+        <Accordion type="multiple" defaultValue={['hero', 'about', 'services', 'audience', 'testimonials', 'stats', 'skills', 'tools', 'gallery', 'portfolio', 'theme', 'socials', 'ai']} className="w-full">
           <AccordionItem value="hero">
             <AccordionTrigger className="text-xl font-semibold">Hero Section</AccordionTrigger>
             <AccordionContent className="pt-4 space-y-4">
@@ -374,6 +396,85 @@ export default function SiteContentForm() {
               ))}
               <Button type="button" variant="outline" size="sm" onClick={() => appendAudience('')}>
                 Add Target Audience
+              </Button>
+            </AccordionContent>
+          </AccordionItem>
+          <AccordionItem value="testimonials">
+            <AccordionTrigger className="text-xl font-semibold">Testimonials Section</AccordionTrigger>
+            <AccordionContent className="pt-4 space-y-4">
+               <FormField control={form.control} name="testimonialsSectionTitle" render={({ field }) => (
+                  <FormItem><FormLabel>Section Title</FormLabel><FormControl><Input {...field} value={field.value ?? ''} /></FormControl><FormMessage /></FormItem>
+              )} />
+              <FormField control={form.control} name="testimonialsSectionDescription" render={({ field }) => (
+                  <FormItem><FormLabel>Section Description</FormLabel><FormControl><Textarea {...field} value={field.value ?? ''} /></FormControl><FormMessage /></FormItem>
+              )} />
+              <FormLabel>Client Testimonials</FormLabel>
+              <FormDescription>Add feedback from your clients.</FormDescription>
+              {testimonialsFields.map((field, index) => (
+                <div key={field.id} className="flex items-start gap-4 p-4 border rounded-lg">
+                  <div className="flex-grow space-y-4">
+                    <FormField
+                      control={form.control}
+                      name={`testimonials.${index}.name`}
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Client Name</FormLabel>
+                          <FormControl><Input placeholder="e.g., Jane Doe" {...field} /></FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                    <FormField
+                      control={form.control}
+                      name={`testimonials.${index}.role`}
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Role & Company</FormLabel>
+                          <FormControl><Input placeholder="e.g., CEO, TechFlow" {...field} /></FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                    <FormField
+                      control={form.control}
+                      name={`testimonials.${index}.content`}
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Testimonial Content</FormLabel>
+                          <FormControl><Textarea placeholder="Their quote..." {...field} /></FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                    <FormField
+                      control={form.control}
+                      name={`testimonials.${index}.avatarUrl`}
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Avatar URL (Optional)</FormLabel>
+                          <FormControl><Input placeholder="https://..." {...field} value={field.value ?? ''} onBlur={(e) => handleUrlBlur(e, field)} /></FormControl>
+                          <FormMessage />
+                          <div className="mt-2">
+                             <FormLabel className="text-xs">Or upload image:</FormLabel>
+                             <Input type="file" onChange={(e) => handleImageUpload(e, `testimonials.${index}.avatarUrl` as any)} disabled={isUploading || uploadingIndex === index} />
+                             {uploadingIndex === index && <p className="text-xs text-muted-foreground mt-1">Uploading...</p>}
+                          </div>
+                          {field.value && (
+                            <div className="mt-2">
+                              <Image src={field.value} alt="Avatar Preview" width={40} height={40} className="rounded-full object-cover" />
+                            </div>
+                          )}
+                        </FormItem>
+                      )}
+                    />
+                  </div>
+                  <Button type="button" variant="destructive" size="icon" onClick={() => removeTestimonial(index)}>
+                    <Trash2 className="h-4 w-4" />
+                  </Button>
+                </div>
+              ))}
+              <Button type="button" variant="outline" size="sm" onClick={() => appendTestimonial({ name: '', role: '', content: '', avatarUrl: '' })}>
+                Add Testimonial
               </Button>
             </AccordionContent>
           </AccordionItem>

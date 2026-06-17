@@ -63,7 +63,7 @@ export interface SiteContent {
   isGallerySectionVisible: boolean;
   isPortfolioSectionVisible: boolean;
   isServicesSectionVisible: boolean;
-  isToolsSectionVisible?: boolean;
+  isTestimonialsSectionVisible: boolean;
   isTargetAudienceSectionVisible?: boolean;
   skillsSectionTitle?: string;
   skillsSectionDescription?: string;
@@ -88,6 +88,14 @@ export interface SiteContent {
   targetAudienceSectionTitle?: string;
   targetAudienceSectionDescription?: string;
   targetAudience?: string[];
+  testimonialsSectionTitle?: string;
+  testimonialsSectionDescription?: string;
+  testimonials?: {
+    name: string;
+    role: string;
+    content: string;
+    avatarUrl?: string;
+  }[];
   contactSectionTitle?: string;
   contactSectionDescription?: string;
   footerDescription?: string;
