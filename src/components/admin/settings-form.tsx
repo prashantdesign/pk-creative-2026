@@ -149,7 +149,7 @@ export default function SettingsForm() {
                   <div className="space-y-0.5">
                     <FormLabel>Show About Section</FormLabel>
                      <FormDescription>
-                      Control the visibility of the 'About Me' section.
+                      Control the visibility of the 'About Us' section.
                     </FormDescription>
                   </div>
                   <FormControl>

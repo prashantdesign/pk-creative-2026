@@ -42,7 +42,7 @@ export default function PortfolioSection({ content, onProjectClick }: PortfolioS
       <div className="container mx-auto px-4">
         <div className="text-center max-w-3xl mx-auto mb-12">
           <h2 className="text-3xl md:text-4xl font-bold tracking-tight animate-fade-in-up">
-            {content?.portfolioSectionTitle || 'My Work'}
+            {content?.portfolioSectionTitle || 'Our Work'}
           </h2>
           {content?.portfolioSectionDescription && (
             <p className="mt-4 text-lg text-muted-foreground animate-fade-in-up animation-delay-300">
