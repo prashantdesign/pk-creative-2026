@@ -40,7 +40,22 @@ const iconComponents: { [key: string]: React.FC<React.SVGProps<SVGSVGElement>> }
   )
 };
 
+import * as LucideIcons from 'lucide-react';
+
 export const Icons = ({ name, ...props }: { name: string } & React.SVGProps<SVGSVGElement>) => {
   const IconComponent = iconComponents[name.toLowerCase()];
-  return IconComponent ? <IconComponent {...props} /> : null;
+  if (IconComponent) {
+    return <IconComponent {...props} />;
+  }
+
+  // Fallback to lucide-react
+  const toPascalCase = (str: string) => str.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join('');
+  const LucideIconName = toPascalCase(name);
+  const LucideIcon = (LucideIcons as any)[LucideIconName];
+  
+  if (LucideIcon) {
+    return <LucideIcon {...props} />;
+  }
+
+  return null;
 };
