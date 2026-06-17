@@ -39,9 +39,17 @@ export const DEMO_SITE_CONTENT: Omit<SiteContent, 'id'> = {
     { title: 'SEO Optimization', description: 'Rank higher on search engines and get found by your target clients.', icon: 'search' },
     { title: 'Website Maintenance', description: 'Ongoing support, updates, and secure hosting for your peace of mind.', icon: 'settings' }
   ],
+  servicesSectionTitle: 'Our Services',
+  servicesSectionDescription: 'Everything you need to grow your modern brand.',
   targetAudience: [
     'Hotels & Resorts', 'Safari Camps', 'Restaurants & Cafes', 'Bakeries', 'Jewellery Brands', 'Local Businesses', 'Startups', 'Coaches & Consultants', 'Educational Institutes', 'Service-Based Businesses'
   ],
+  targetAudienceSectionTitle: 'Who We Help',
+  targetAudienceSectionDescription: 'We partner with ambitious brands across various industries to deliver outstanding digital experiences.',
+  contactSectionTitle: 'Get in Touch',
+  contactSectionDescription: 'Have a project in mind or just want to say hello? Drop us a line.',
+  footerDescription: 'Creative Solutions For Modern Brands.\nWebsite Design • Branding • Social Media',
+  footerCopyrightText: '© 2026 PK Creative. All Rights Reserved.',
   aiSettings: {
     isAiFeatureEnabled: true,
     geminiModel: 'models/gemini-1.5-flash',
