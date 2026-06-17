@@ -285,6 +285,20 @@ export default function SiteContentForm() {
                 <FormMessage />
               </FormItem>
               <FormField control={form.control} name="heroTitle" render={({ field }) => (
+                <FormItem><FormLabel>Title</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>
+              )} />
+              <FormField control={form.control} name="heroSubtitle" render={({ field }) => (
+                <FormItem><FormLabel>Subtitle</FormLabel><FormControl><Textarea {...field} /></FormControl><FormMessage /></FormItem>
+              )} />
+              <FormField control={form.control} name="ctaText" render={({ field }) => (
+                <FormItem><FormLabel>CTA Button Text</FormLabel><FormControl><Input {...field} value={field.value ?? ''} /></FormControl><FormMessage /></FormItem>
+              )} />
+              <FormField control={form.control} name="ctaLink" render={({ field }) => (
+                <FormItem><FormLabel>CTA Button Link</FormLabel><FormControl><Input {...field} placeholder="#work" value={field.value ?? ''}/></FormControl><FormMessage /></FormItem>
+              )} />
+            </AccordionContent>
+          </AccordionItem>
+          <AccordionItem value="gallery">
             <AccordionTrigger className="text-xl font-semibold">Gallery Section</AccordionTrigger>
             <AccordionContent className="pt-4 space-y-4">
                <FormField control={form.control} name="gallerySectionTitle" render={({ field }) => (
