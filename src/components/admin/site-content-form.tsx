@@ -64,7 +64,7 @@ const formSchema = z.object({
   services: z.array(z.object({
     title: z.string().min(1, 'Title is required.'),
     description: z.string().min(1, 'Description is required.'),
-    icon: z.string().min(1, 'Icon name is required.')
+    icon: z.string().optional()
   })).optional(),
 
   targetAudienceSectionTitle: z.string().optional(),
@@ -470,9 +470,9 @@ export default function SiteContentForm() {
                       name={`services.${index}.icon`}
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Icon Name</FormLabel>
+                          <FormLabel>Icon Name (Optional)</FormLabel>
                           <FormControl><Input placeholder="e.g., monitor, layout, search" {...field} /></FormControl>
-                          <FormDescription>Use Lucide icon names in lowercase (e.g., "monitor", "smartphone").</FormDescription>
+                          <FormDescription>Leave blank to auto-detect the best icon, or use a specific Lucide icon name.</FormDescription>
                           <FormMessage />
                         </FormItem>
                       )}
@@ -483,7 +483,7 @@ export default function SiteContentForm() {
                   </Button>
                 </div>
               ))}
-              <Button type="button" variant="outline" size="sm" onClick={() => appendService({ title: '', description: '', icon: 'check-circle-2' })}>
+              <Button type="button" variant="outline" size="sm" onClick={() => appendService({ title: '', description: '', icon: '' })}>
                 Add Service
               </Button>
             </AccordionContent>

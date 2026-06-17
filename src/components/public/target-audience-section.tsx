@@ -1,7 +1,8 @@
 'use client';
 import React from 'react';
 import SectionHeader from './section-header';
-import { CheckCircle2 } from 'lucide-react';
+import { Icons } from '@/components/icons';
+import { getIconForText } from '@/lib/icon-mapper';
 
 import type { SiteContent } from '@/types';
 
@@ -28,7 +29,7 @@ const TargetAudienceSection = ({ content }: TargetAudienceSectionProps) => {
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 mt-12">
           {clients.map((client, index) => (
             <div key={index} className="flex items-center gap-3 bg-white/10 p-4 rounded-xl border border-white/20">
-              <CheckCircle2 className="h-5 w-5 text-white flex-shrink-0" />
+              <Icons name={getIconForText(client)} className="h-5 w-5 text-white flex-shrink-0" />
               <span className="font-medium text-white">{client}</span>
             </div>
           ))}
