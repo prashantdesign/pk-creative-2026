@@ -19,11 +19,8 @@ import type { SiteContent } from '@/types';
 const formSchema = z.object({
   isMaintenanceModeEnabled: z.boolean().default(false),
   areAnimationsEnabled: z.boolean().default(true),
-  isAboutSectionVisible: z.boolean().default(true),
-  isStatsSectionVisible: z.boolean().default(true),
   isServicesSectionVisible: z.boolean().default(true),
   isTargetAudienceSectionVisible: z.boolean().default(true),
-  isGallerySectionVisible: z.boolean().default(true),
   isPortfolioSectionVisible: z.boolean().default(true),
 });
 
@@ -40,11 +37,8 @@ export default function SettingsForm() {
     defaultValues: {
       isMaintenanceModeEnabled: false,
       areAnimationsEnabled: true,
-      isAboutSectionVisible: true,
-      isStatsSectionVisible: true,
       isServicesSectionVisible: true,
       isTargetAudienceSectionVisible: true,
-      isGallerySectionVisible: true,
       isPortfolioSectionVisible: true,
     },
   });
@@ -54,11 +48,8 @@ export default function SettingsForm() {
       form.reset({
         isMaintenanceModeEnabled: siteContent.isMaintenanceModeEnabled || false,
         areAnimationsEnabled: siteContent.areAnimationsEnabled === undefined ? true : siteContent.areAnimationsEnabled,
-        isAboutSectionVisible: siteContent.isAboutSectionVisible === undefined ? true : siteContent.isAboutSectionVisible,
-        isStatsSectionVisible: siteContent.isStatsSectionVisible === undefined ? true : siteContent.isStatsSectionVisible,
         isServicesSectionVisible: siteContent.isServicesSectionVisible === undefined ? true : siteContent.isServicesSectionVisible,
         isTargetAudienceSectionVisible: siteContent.isTargetAudienceSectionVisible === undefined ? true : siteContent.isTargetAudienceSectionVisible,
-        isGallerySectionVisible: siteContent.isGallerySectionVisible === undefined ? true : siteContent.isGallerySectionVisible,
         isPortfolioSectionVisible: siteContent.isPortfolioSectionVisible === undefined ? true : siteContent.isPortfolioSectionVisible,
       });
     }
@@ -141,46 +132,7 @@ export default function SettingsForm() {
                 </FormItem>
               )}
             />
-            <FormField
-              control={form.control}
-              name="isAboutSectionVisible"
-              render={({ field }) => (
-                <FormItem className="flex flex-row items-center justify-between rounded-lg border p-4">
-                  <div className="space-y-0.5">
-                    <FormLabel>Show About Section</FormLabel>
-                     <FormDescription>
-                      Control the visibility of the 'About Us' section.
-                    </FormDescription>
-                  </div>
-                  <FormControl>
-                    <Switch
-                      checked={field.value}
-                      onCheckedChange={field.onChange}
-                    />
-                  </FormControl>
-                </FormItem>
-              )}
-            />
-             <FormField
-              control={form.control}
-              name="isStatsSectionVisible"
-              render={({ field }) => (
-                <FormItem className="flex flex-row items-center justify-between rounded-lg border p-4">
-                  <div className="space-y-0.5">
-                    <FormLabel>Show Stats Section</FormLabel>
-                     <FormDescription>
-                       Control the visibility of the statistics section.
-                    </FormDescription>
-                  </div>
-                  <FormControl>
-                    <Switch
-                      checked={field.value}
-                      onCheckedChange={field.onChange}
-                    />
-                  </FormControl>
-                </FormItem>
-              )}
-            />
+
             <FormField
               control={form.control}
               name="isServicesSectionVisible"
@@ -221,26 +173,7 @@ export default function SettingsForm() {
                 </FormItem>
               )}
             />
-            <FormField
-              control={form.control}
-              name="isGallerySectionVisible"
-              render={({ field }) => (
-                <FormItem className="flex flex-row items-center justify-between rounded-lg border p-4">
-                  <div className="space-y-0.5">
-                    <FormLabel>Show Gallery Section</FormLabel>
-                     <FormDescription>
-                       Control the visibility of the image gallery section.
-                    </FormDescription>
-                  </div>
-                  <FormControl>
-                    <Switch
-                      checked={field.value}
-                      onCheckedChange={field.onChange}
-                    />
-                  </FormControl>
-                </FormItem>
-              )}
-            />
+
             <FormField
               control={form.control}
               name="isPortfolioSectionVisible"

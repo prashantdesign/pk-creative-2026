@@ -13,7 +13,7 @@ const Footer = ({ content }: { content: SiteContent | null }) => {
     <footer className="border-t bg-secondary/20">
       <div className="container mx-auto px-4 md:px-6 py-12 flex flex-col md:flex-row justify-between gap-8">
         <div className="flex flex-col gap-4 max-w-sm">
-          <Logo />
+          <Logo siteName={content?.siteName} logoUrl={content?.logoUrl} />
           <p className="text-muted-foreground whitespace-pre-line">
             {content?.footerDescription || "Creative Solutions For Modern Brands. \n Website Design • Branding • Social Media"}
           </p>
@@ -25,9 +25,10 @@ const Footer = ({ content }: { content: SiteContent | null }) => {
         
         <div className="flex flex-col gap-2">
            <h4 className="font-headline font-semibold text-lg">Quick Links</h4>
-           <a href="#services" className="text-muted-foreground hover:text-primary transition-colors">Services</a>
-           <a href="#work" className="text-muted-foreground hover:text-primary transition-colors">Work</a>
-           <a href="#contact" className="text-muted-foreground hover:text-primary transition-colors">Contact</a>
+           <a href="/#services" className="text-muted-foreground hover:text-primary transition-colors">Services</a>
+           <a href="/#work" className="text-muted-foreground hover:text-primary transition-colors">Work</a>
+           <a href="/gallery" className="text-muted-foreground hover:text-primary transition-colors">Gallery</a>
+           <a href="/#contact" className="text-muted-foreground hover:text-primary transition-colors">Contact</a>
         </div>
 
         <div className="flex flex-col gap-2">

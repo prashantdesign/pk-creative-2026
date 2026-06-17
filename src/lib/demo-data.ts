@@ -10,13 +10,6 @@ export const DEMO_SITE_CONTENT: Omit<SiteContent, 'id'> = {
   heroSubtitle: 'Creative Solutions For Modern Brands. We deliver premium Website Design, UI/UX, Branding, and Social Media Management.',
   ctaText: 'Our Services',
   ctaLink: '#services',
-  aboutText: "We are PK Creative, an agency specializing in beautiful, intuitive, and highly-crafted digital experiences for modern brands.",
-  aboutImageUrl: 'https://images.unsplash.com/photo-1543610892-0b1f7e6d8ac1?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw4fHxwcm9maWxlJTIwcG9ydHJhaXR8ZW58MHx8fHwxNzY5NDk0NzcwfDA&ixlib=rb-4.1.0&q=80&w=1080',
-  stats: [
-    { value: '5+', label: 'Years Experience' },
-    { value: '50+', label: 'Projects Completed' },
-    { value: '100%', label: 'Client Satisfaction' },
-  ],
   socials: {
     linkedin: 'https://www.linkedin.com/',
     twitter: 'https://twitter.com/',
@@ -27,9 +20,6 @@ export const DEMO_SITE_CONTENT: Omit<SiteContent, 'id'> = {
   theme: 'light',
   isMaintenanceModeEnabled: false,
   areAnimationsEnabled: true,
-  isAboutSectionVisible: true,
-  isStatsSectionVisible: true,
-  isGallerySectionVisible: true,
   isPortfolioSectionVisible: true,
   services: [
     { title: 'Website Design & Dev', description: 'Business, Portfolio, and E-commerce websites built with modern technologies.', icon: 'monitor' },

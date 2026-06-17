@@ -55,7 +55,7 @@ export default function Home() {
 
   return (
     <div className={`flex flex-col min-h-screen bg-background ${siteContent?.areAnimationsEnabled ? '' : 'no-animations'}`}>
-      <Header siteName={siteContent?.siteName} />
+      <Header content={siteContent} />
       <main className="flex-grow">
         <HeroSection content={siteContent} />
         {(siteContent?.isServicesSectionVisible ?? true) && <ServicesSection content={siteContent} />}

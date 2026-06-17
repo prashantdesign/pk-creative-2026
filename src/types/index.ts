@@ -41,17 +41,12 @@ export interface GalleryCategory {
 
 export interface SiteContent {
   id: string;
-  siteName?: string;
+  siteName: string;
+  logoUrl?: string;
   heroTitle: string;
   heroSubtitle: string;
   ctaText: string;
   ctaLink: string;
-  aboutText: string;
-  aboutImageUrl?: string;
-  stats?: {
-    value: string;
-    label: string;
-  }[];
   socials?: {
     linkedin?: string;
     twitter?: string;
@@ -62,16 +57,13 @@ export interface SiteContent {
     geminiModel?: string;
     isAiFeatureEnabled?: boolean;
   };
-  theme?: 'light' | 'dark';
-  isMaintenanceModeEnabled?: boolean;
-  areAnimationsEnabled?: boolean;
-  isAboutSectionVisible?: boolean;
-  isStatsSectionVisible?: boolean;
-  isGallerySectionVisible?: boolean;
-  isPortfolioSectionVisible?: boolean;
-  isSkillsSectionVisible?: boolean;
+  theme: 'light' | 'dark' | 'system';
+  isMaintenanceModeEnabled: boolean;
+  areAnimationsEnabled: boolean;
+  isGallerySectionVisible: boolean;
+  isPortfolioSectionVisible: boolean;
+  isServicesSectionVisible: boolean;
   isToolsSectionVisible?: boolean;
-  isServicesSectionVisible?: boolean;
   isTargetAudienceSectionVisible?: boolean;
   skillsSectionTitle?: string;
   skillsSectionDescription?: string;

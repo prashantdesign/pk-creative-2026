@@ -2,8 +2,9 @@
 import React, { useState, useEffect } from 'react';
 import { Menu, X } from 'lucide-react';
 import Logo from '@/components/logo';
+import type { SiteContent } from '@/types';
 
-const Header = ({ siteName }: { siteName?: string }) => {
+const Header = ({ content }: { content?: SiteContent }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
 
@@ -16,9 +17,10 @@ const Header = ({ siteName }: { siteName?: string }) => {
   }, []);
 
   const navItems = [
-    { label: 'Services', href: '#services' },
-    { label: 'Work', href: '#work' },
-    { label: 'Contact', href: '#contact' },
+    { label: 'Services', href: '/#services' },
+    { label: 'Work', href: '/#work' },
+    { label: 'Gallery', href: '/gallery' },
+    { label: 'Contact', href: '/#contact' },
   ];
 
   return (
@@ -28,8 +30,8 @@ const Header = ({ siteName }: { siteName?: string }) => {
       }`}
     >
       <div className="container mx-auto flex h-20 items-center justify-between px-4 md:px-6">
-        <a href="#" className="flex items-center">
-          <Logo />
+        <a href="/" className="flex items-center">
+          <Logo siteName={content?.siteName} logoUrl={content?.logoUrl} />
         </a>
         <nav className="hidden items-center gap-6 md:flex">
           {navItems.map((item) => (
