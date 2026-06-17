@@ -21,7 +21,7 @@ export default function Home() {
   const router = useRouter();
   const firestore = useFirestore();
 
-  const siteContentRef = useMemoFirebase(() => firestore ? doc(firestore, 'siteContent', 'global') : null, [firestore]);
+  const siteContentRef = useMemoFirebase(() => firestore ? doc(firestore, 'pkcreative_siteContent', 'global') : null, [firestore]);
   const { data: siteContent, loading } = useDoc<SiteContent>(siteContentRef);
 
   useEffect(() => {

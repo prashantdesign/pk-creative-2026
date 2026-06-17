@@ -17,7 +17,7 @@ export function ThemeProvider({ children }: ThemeProviderProps) {
   const [theme, setTheme] = useState<Theme>('dark'); // Default to dark
   const firestore = useFirestore();
   
-  const siteContentRef = useMemo(() => firestore ? doc(firestore, 'siteContent', 'global') : null, [firestore]);
+  const siteContentRef = useMemo(() => firestore ? doc(firestore, 'pkcreative_siteContent', 'global') : null, [firestore]);
   const { data: siteContent, loading } = useDoc<SiteContent & { theme?: Theme }>(siteContentRef);
 
   useEffect(() => {

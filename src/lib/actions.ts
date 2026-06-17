@@ -34,7 +34,7 @@ export async function submitContactForm(
 
   // Use the Firestore REST API to avoid server-side SDK initialization issues.
   const projectId = process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID;
-  const collectionId = 'contactMessages';
+  const collectionId = 'pkcreative_contactMessages';
   
   if (!projectId) {
      const errorMessage = 'Firebase Project ID is not configured on the server.';

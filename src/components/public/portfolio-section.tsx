@@ -19,11 +19,11 @@ export default function PortfolioSection({ content, onProjectClick }: PortfolioS
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
 
   const projectsQuery = useMemoFirebase(() => 
-    firestore ? query(collection(firestore, 'projects'), orderBy('order', 'asc')) : null
+    firestore ? query(collection(firestore, 'pkcreative_projects'), orderBy('order', 'asc')) : null
   , [firestore]);
 
   const categoriesQuery = useMemoFirebase(() => 
-    firestore ? query(collection(firestore, 'projectCategories'), orderBy('order', 'asc')) : null
+    firestore ? query(collection(firestore, 'pkcreative_projectCategories'), orderBy('order', 'asc')) : null
   , [firestore]);
 
   const { data: projects, isLoading: projectsLoading } = useCollection<Project>(projectsQuery);

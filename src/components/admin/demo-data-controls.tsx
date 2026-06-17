@@ -17,7 +17,7 @@ import type { ProjectCategory, GalleryCategory } from '@/types';
 export default function DemoDataControls() {
   const [dialogOpen, setDialogOpen] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [actionToConfirm, setActionToConfirm] = useState<'fill' | 'reset' | null>(null);
+  const [actionToConfirm, setActionToConfirm] = useState<'fill' | 'reset' | 'migrate' | null>(null);
   
   const { toast } = useToast();
   const firestore = useFirestore();
@@ -31,12 +31,12 @@ export default function DemoDataControls() {
       const batch = writeBatch(firestore);
       
       // 1. Set Site Content
-      const siteContentRef = doc(firestore, 'siteContent', 'global');
+      const siteContentRef = doc(firestore, 'pkcreative_siteContent', 'global');
       batch.set(siteContentRef, DEMO_SITE_CONTENT);
 
       // 2. Create Project Categories and get their IDs
       const projCategoryPromises = DEMO_PROJECT_CATEGORIES.map(category => {
-        const docRef = doc(collection(firestore, 'projectCategories'));
+        const docRef = doc(collection(firestore, 'pkcreative_projectCategories'));
         batch.set(docRef, category);
         return { ...category, id: docRef.id };
       });
@@ -52,14 +52,14 @@ export default function DemoDataControls() {
         const { categoryName, ...projectData } = project;
         const projectCategoryId = projCategoryNameIdMap[categoryName];
         if (projectCategoryId) {
-          const docRef = doc(collection(firestore, 'projects'));
+          const docRef = doc(collection(firestore, 'pkcreative_projects'));
           batch.set(docRef, { ...projectData, projectCategoryId });
         }
       });
 
       // 4. Create Gallery Categories and get their IDs
       const galleryCategoryPromises = DEMO_GALLERY_CATEGORIES.map(category => {
-        const docRef = doc(collection(firestore, 'galleryCategories'));
+        const docRef = doc(collection(firestore, 'pkcreative_galleryCategories'));
         batch.set(docRef, category);
         return { ...category, id: docRef.id };
       });
@@ -75,7 +75,7 @@ export default function DemoDataControls() {
         const { categoryName, ...imageData } = image;
         const galleryCategoryId = galleryCategoryNameIdMap[categoryName];
         if (galleryCategoryId) {
-          const docRef = doc(collection(firestore, 'galleryImages'));
+          const docRef = doc(collection(firestore, 'pkcreative_galleryImages'));
           batch.set(docRef, { ...imageData, galleryCategoryId });
         }
       });
@@ -97,7 +97,7 @@ export default function DemoDataControls() {
     toast({ title: 'Resetting portfolio...', description: 'This may take a moment.' });
     
     try {
-      const collectionsToClear = ['projects', 'projectCategories', 'galleryImages', 'galleryCategories', 'siteContent', 'contactMessages'];
+      const collectionsToClear = ['pkcreative_projects', 'pkcreative_projectCategories', 'pkcreative_galleryImages', 'pkcreative_galleryCategories', 'pkcreative_siteContent', 'pkcreative_contactMessages'];
       const batch = writeBatch(firestore);
 
       for (const coll of collectionsToClear) {
@@ -117,16 +117,54 @@ export default function DemoDataControls() {
       setDialogOpen(false);
     }
   };
+
+  const handleMigrateData = async () => {
+    if (!firestore) return;
+    setIsSubmitting(true);
+    toast({ title: 'Cloning database...', description: 'Copying from old site to new site. Please wait.' });
+    
+    try {
+      const collectionsToMigrate = [
+        { from: 'siteContent', to: 'pkcreative_siteContent' },
+        { from: 'projects', to: 'pkcreative_projects' },
+        { from: 'projectCategories', to: 'pkcreative_projectCategories' },
+        { from: 'galleryImages', to: 'pkcreative_galleryImages' },
+        { from: 'galleryCategories', to: 'pkcreative_galleryCategories' },
+        { from: 'contactMessages', to: 'pkcreative_contactMessages' }
+      ];
+      
+      const batch = writeBatch(firestore);
+
+      for (const coll of collectionsToMigrate) {
+        const snapshot = await getDocs(collection(firestore, coll.from));
+        snapshot.forEach(docSnap => {
+          const newDocRef = doc(firestore, coll.to, docSnap.id);
+          batch.set(newDocRef, docSnap.data());
+        });
+      }
+
+      await batch.commit();
+      toast({ title: 'Success!', description: 'Database successfully cloned from your personal site!' });
+    } catch (error: any) {
+      console.error(error);
+      toast({ variant: 'destructive', title: 'Migration Failed', description: 'Could not clone the database.' });
+    } finally {
+      setIsSubmitting(false);
+      setDialogOpen(false);
+    }
+  };
   
   const onConfirm = () => {
     if (actionToConfirm === 'fill') {
       handleFillData();
     } else if (actionToConfirm === 'reset') {
       handleResetData();
+    } else if (actionToConfirm === 'migrate') {
+      handleMigrateData();
     }
   };
 
-  const openConfirmation = (action: 'fill' | 'reset') => {
+  const openConfirmation = (action: 'fill' | 'reset' | 'migrate') => {
     setActionToConfirm(action);
     setDialogOpen(true);
   };
@@ -157,6 +195,15 @@ export default function DemoDataControls() {
           </p>
           <Button variant="destructive" onClick={() => openConfirmation('reset')} disabled={isSubmitting}>
             Clear All Data
+          </Button>
+        </div>
+        <div className="p-4 border rounded-lg border-primary/50 bg-primary/5">
+          <h4 className="font-semibold text-primary">Clone Database from Personal Site</h4>
+          <p className="text-sm text-muted-foreground mb-2">
+            This will copy all your projects, settings, and galleries from your original website into this new isolated agency database. Run this once so you don't have to start from scratch!
+          </p>
+          <Button variant="default" onClick={() => openConfirmation('migrate')} disabled={isSubmitting}>
+            Clone Database
           </Button>
         </div>
       </div>

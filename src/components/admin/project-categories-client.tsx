@@ -35,14 +35,14 @@ export default function ProjectCategoriesClient() {
 
   const categoriesQuery = useMemo(() => {
     if (!firestore) return null;
-    return query(collection(firestore, 'projectCategories'), orderBy('order', 'asc'));
+    return query(collection(firestore, 'pkcreative_projectCategories'), orderBy('order', 'asc'));
   }, [firestore]);
 
   const { data: categories, loading } = useCollection<ProjectCategory>(categoriesQuery);
 
   const handleDelete = (id: string) => {
       if (!firestore || !window.confirm("Are you sure you want to delete this category? This might affect existing projects.")) return;
-      const categoryRef = doc(firestore, "projectCategories", id);
+      const categoryRef = doc(firestore, "pkcreative_projectCategories", id);
       deleteDoc(categoryRef)
         .then(() => {
             toast({ title: "Category deleted successfully." });

@@ -12,7 +12,7 @@ export default function EditGalleryImagePage({ params }: { params: { imageId: st
   
   const imageRef = useMemo(() => {
     if (!firestore) return null;
-    return doc(firestore, 'galleryImages', params.imageId);
+    return doc(firestore, 'pkcreative_galleryImages', params.imageId);
   }, [firestore, params.imageId]);
 
   const { data: image, loading } = useDoc<GalleryImage>(imageRef);

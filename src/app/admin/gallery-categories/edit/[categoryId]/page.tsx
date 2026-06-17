@@ -12,7 +12,7 @@ export default function EditGalleryCategoryPage({ params }: { params: { category
   
   const categoryRef = useMemo(() => {
     if (!firestore) return null;
-    return doc(firestore, 'galleryCategories', params.categoryId);
+    return doc(firestore, 'pkcreative_galleryCategories', params.categoryId);
   }, [firestore, params.categoryId]);
 
   const { data: category, loading } = useDoc<GalleryCategory>(categoryRef);

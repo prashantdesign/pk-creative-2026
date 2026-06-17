@@ -32,7 +32,7 @@ export default function SettingsForm() {
   const [isLoading, setIsLoading] = useState(false);
   const firestore = useFirestore();
 
-  const siteContentRef = useMemo(() => firestore ? doc(firestore, 'siteContent', 'global') : null, [firestore]);
+  const siteContentRef = useMemo(() => firestore ? doc(firestore, 'pkcreative_siteContent', 'global') : null, [firestore]);
   const { data: siteContent, loading: isFetching } = useDoc<SiteContent>(siteContentRef as any);
 
   const form = useForm<z.infer<typeof formSchema>>({

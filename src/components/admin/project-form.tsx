@@ -44,7 +44,7 @@ type ProjectFormValues = z.infer<typeof formSchema>;
 function saveProject(firestore: any, projectId: string | undefined, data: any) {
   const projectData = { ...data, updatedAt: serverTimestamp() };
   if (projectId) {
-    const projectRef = doc(firestore, 'projects', projectId);
+    const projectRef = doc(firestore, 'pkcreative_projects', projectId);
     setDoc(projectRef, projectData, { merge: true }).catch(async (serverError: any) => {
         const permissionError = new FirestorePermissionError({
           path: projectRef.path,
@@ -54,7 +54,7 @@ function saveProject(firestore: any, projectId: string | undefined, data: any) {
         errorEmitter.emit('permission-error', permissionError);
       });
   } else {
-    const collRef = collection(firestore, 'projects');
+    const collRef = collection(firestore, 'pkcreative_projects');
     const finalData = { ...projectData, createdAt: serverTimestamp() };
     addDoc(collRef, finalData).catch(async (serverError: any) => {
         const permissionError = new FirestorePermissionError({
@@ -75,12 +75,12 @@ export default function ProjectForm({ project }: { project?: Project }) {
   const [isUploading, setIsUploading] = useState(false);
   const [isGenerating, setIsGenerating] = useState(false);
   
-  const siteContentRef = useMemo(() => firestore ? doc(firestore, 'siteContent', 'global') : null, [firestore]);
+  const siteContentRef = useMemo(() => firestore ? doc(firestore, 'pkcreative_siteContent', 'global') : null, [firestore]);
   const { data: siteContent } = useDoc<SiteContent>(siteContentRef);
 
   const categoriesQuery = useMemo(() => {
     if (!firestore) return null;
-    return query(collection(firestore, 'projectCategories'), orderBy('name'));
+    return query(collection(firestore, 'pkcreative_projectCategories'), orderBy('name'));
   }, [firestore]);
   const { data: categories, isLoading: categoriesLoading } = useCollection<ProjectCategory>(categoriesQuery);
 

@@ -36,14 +36,14 @@ export default function GalleryClient() {
 
   const galleryQuery = useMemo(() => {
     if (!firestore) return null;
-    return query(collection(firestore, 'galleryImages'), orderBy('order', 'asc'));
+    return query(collection(firestore, 'pkcreative_galleryImages'), orderBy('order', 'asc'));
   }, [firestore]);
 
   const { data: images, loading } = useCollection<GalleryImage>(galleryQuery);
 
   const handleDelete = (id: string) => {
       if (!firestore || !window.confirm("Are you sure you want to delete this image?")) return;
-      const imageRef = doc(firestore, "galleryImages", id);
+      const imageRef = doc(firestore, "pkcreative_galleryImages", id);
       deleteDoc(imageRef)
         .then(() => {
             toast({ title: "Image deleted successfully." });

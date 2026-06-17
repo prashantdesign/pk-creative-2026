@@ -26,7 +26,7 @@ type CategoryFormValues = z.infer<typeof formSchema>;
 function saveCategory(firestore: any, categoryId: string | undefined, data: any) {
   const categoryData = { ...data, updatedAt: serverTimestamp() };
   if (categoryId) {
-    const categoryRef = doc(firestore, 'projectCategories', categoryId);
+    const categoryRef = doc(firestore, 'pkcreative_projectCategories', categoryId);
     setDoc(categoryRef, categoryData, { merge: true }).catch(async (serverError: any) => {
         const permissionError = new FirestorePermissionError({
           path: categoryRef.path,
@@ -36,7 +36,7 @@ function saveCategory(firestore: any, categoryId: string | undefined, data: any)
         errorEmitter.emit('permission-error', permissionError);
       });
   } else {
-    const collRef = collection(firestore, 'projectCategories');
+    const collRef = collection(firestore, 'pkcreative_projectCategories');
     const finalData = { ...categoryData, createdAt: serverTimestamp() };
     addDoc(collRef, finalData).catch(async (serverError: any) => {
         const permissionError = new FirestorePermissionError({

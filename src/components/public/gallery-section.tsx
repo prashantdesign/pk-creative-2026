@@ -18,11 +18,11 @@ export default function GallerySection({ content }: GallerySectionProps) {
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
 
   const imagesQuery = useMemoFirebase(() => 
-    firestore ? query(collection(firestore, 'galleryImages'), orderBy('order', 'asc')) : null
+    firestore ? query(collection(firestore, 'pkcreative_galleryImages'), orderBy('order', 'asc')) : null
   , [firestore]);
 
   const categoriesQuery = useMemoFirebase(() => 
-    firestore ? query(collection(firestore, 'galleryCategories'), orderBy('order', 'asc')) : null
+    firestore ? query(collection(firestore, 'pkcreative_galleryCategories'), orderBy('order', 'asc')) : null
   , [firestore]);
 
   const { data: images, isLoading: imagesLoading } = useCollection<GalleryImage>(imagesQuery);

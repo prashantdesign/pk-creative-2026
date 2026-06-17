@@ -35,12 +35,12 @@ export default function ProjectsClient() {
 
   const projectsQuery = useMemo(() => {
     if (!firestore) return null;
-    return query(collection(firestore, 'projects'), orderBy('order', 'asc'));
+    return query(collection(firestore, 'pkcreative_projects'), orderBy('order', 'asc'));
   }, [firestore]);
 
   const categoriesQuery = useMemo(() => {
     if (!firestore) return null;
-    return query(collection(firestore, 'projectCategories'));
+    return query(collection(firestore, 'pkcreative_projectCategories'));
   }, [firestore]);
   
   const { data: projects, loading: projectsLoading } = useCollection<Project>(projectsQuery);
@@ -56,7 +56,7 @@ export default function ProjectsClient() {
 
   const handleDelete = (id: string) => {
       if (!firestore || !window.confirm("Are you sure you want to delete this project?")) return;
-      const projectRef = doc(firestore, "projects", id);
+      const projectRef = doc(firestore, "pkcreative_projects", id);
       deleteDoc(projectRef)
         .then(() => {
             toast({ title: "Project deleted successfully." });

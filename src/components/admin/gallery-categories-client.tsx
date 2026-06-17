@@ -35,14 +35,14 @@ export default function GalleryCategoriesClient() {
 
   const categoriesQuery = useMemo(() => {
     if (!firestore) return null;
-    return query(collection(firestore, 'galleryCategories'), orderBy('order', 'asc'));
+    return query(collection(firestore, 'pkcreative_galleryCategories'), orderBy('order', 'asc'));
   }, [firestore]);
 
   const { data: categories, loading } = useCollection<GalleryCategory>(categoriesQuery);
 
   const handleDelete = (id: string) => {
       if (!firestore || !window.confirm("Are you sure you want to delete this category? This might affect existing gallery images.")) return;
-      const categoryRef = doc(firestore, "galleryCategories", id);
+      const categoryRef = doc(firestore, "pkcreative_galleryCategories", id);
       deleteDoc(categoryRef)
         .then(() => {
             toast({ title: "Category deleted successfully." });

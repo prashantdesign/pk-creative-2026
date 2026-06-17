@@ -12,7 +12,7 @@ export default function EditProjectPage({ params }: { params: { projectId: strin
   
   const projectRef = useMemo(() => {
     if (!firestore) return null;
-    return doc(firestore, 'projects', params.projectId);
+    return doc(firestore, 'pkcreative_projects', params.projectId);
   }, [firestore, params.projectId]);
 
   const { data: project, loading } = useDoc<Project>(projectRef);

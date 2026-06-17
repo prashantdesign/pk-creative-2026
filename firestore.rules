@@ -125,5 +125,40 @@ service cloud.firestore {
       allow create: if isValidContactMessageCreate();
       allow update, delete: if isAdmin() && isExistingDoc();
     }
+
+    // -------------------------------------------------------------------------
+    // PK Creative Isolated Collections
+    // -------------------------------------------------------------------------
+    
+    match /pkcreative_siteContent/{siteContentId} {
+      allow read: if request.auth == null || request.auth != null;
+      allow write: if isAdmin();
+    }
+
+    match /pkcreative_projectCategories/{categoryId} {
+      allow read: if request.auth == null || request.auth != null;
+      allow write: if isAdmin();
+    }
+
+    match /pkcreative_galleryCategories/{categoryId} {
+      allow read: if request.auth == null || request.auth != null;
+      allow write: if isAdmin();
+    }
+    
+    match /pkcreative_projects/{projectId} {
+      allow read: if request.auth == null || request.auth != null;
+      allow write: if isAdmin();
+    }
+    
+    match /pkcreative_galleryImages/{imageId} {
+      allow read: if request.auth == null || request.auth != null;
+      allow write: if isAdmin();
+    }
+
+    match /pkcreative_contactMessages/{messageId} {
+      allow read: if isAdmin();
+      allow create: if isValidContactMessageCreate();
+      allow update, delete: if isAdmin() && isExistingDoc();
+    }
   }
 }

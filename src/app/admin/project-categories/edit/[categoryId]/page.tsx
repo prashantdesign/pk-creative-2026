@@ -12,7 +12,7 @@ export default function EditProjectCategoryPage({ params }: { params: { category
   
   const categoryRef = useMemo(() => {
     if (!firestore) return null;
-    return doc(firestore, 'projectCategories', params.categoryId);
+    return doc(firestore, 'pkcreative_projectCategories', params.categoryId);
   }, [firestore, params.categoryId]);
 
   const { data: category, loading } = useDoc<ProjectCategory>(categoryRef);

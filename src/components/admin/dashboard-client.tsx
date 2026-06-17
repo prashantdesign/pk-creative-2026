@@ -16,11 +16,11 @@ export default function DashboardClient() {
   const firestore = useFirestore();
 
   const projectsQuery = useMemoFirebase(() => 
-    firestore ? query(collection(firestore, 'projects')) : null
+    firestore ? query(collection(firestore, 'pkcreative_projects')) : null
   , [firestore]);
 
   const messagesQuery = useMemoFirebase(() => 
-    firestore ? query(collection(firestore, 'contactMessages'), orderBy('timestamp', 'desc')) : null
+    firestore ? query(collection(firestore, 'pkcreative_contactMessages'), orderBy('timestamp', 'desc')) : null
   , [firestore]);
 
   const { data: projects, isLoading: projectsLoading } = useCollection<Project>(projectsQuery);
