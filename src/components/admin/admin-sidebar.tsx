@@ -39,7 +39,7 @@ const AdminSidebar = () => {
         title: "Logged Out",
         description: "You have been successfully logged out.",
       });
-      router.push('/login');
+      router.push('/pk-admin');
     } catch (error) {
       toast({
         variant: "destructive",

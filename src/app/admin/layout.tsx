@@ -11,7 +11,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
 
   useEffect(() => {
     if (!loading && !user) {
-      router.push('/login');
+      router.push('/pk-admin');
     }
   }, [user, loading, router]);
 

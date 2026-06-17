@@ -24,20 +24,7 @@ export default function Home() {
   const siteContentRef = useMemoFirebase(() => firestore ? doc(firestore, 'pkcreative_siteContent', 'global') : null, [firestore]);
   const { data: siteContent, loading } = useDoc<SiteContent>(siteContentRef);
 
-  useEffect(() => {
-    const handleHashChange = () => {
-      if (window.location.hash === '#pkadmin') {
-        router.push('/login');
-      }
-    };
-    
-    handleHashChange(); // Check on initial load
-    window.addEventListener('hashchange', handleHashChange);
-    
-    return () => {
-      window.removeEventListener('hashchange', handleHashChange);
-    };
-  }, [router]);
+
 
   const handleProjectClick = (project: Project) => {
     setSelectedProject(project);
