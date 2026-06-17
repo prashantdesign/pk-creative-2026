@@ -59,15 +59,26 @@ const formSchema = z.object({
   portfolioSectionTitle: z.string().optional(),
   portfolioSectionDescription: z.string().optional(),
 
+  servicesSectionTitle: z.string().optional(),
+  servicesSectionDescription: z.string().optional(),
   services: z.array(z.object({
     title: z.string().min(1, 'Title is required.'),
     description: z.string().min(1, 'Description is required.'),
     icon: z.string().min(1, 'Icon name is required.')
   })).optional(),
 
+  targetAudienceSectionTitle: z.string().optional(),
+  targetAudienceSectionDescription: z.string().optional(),
+
   targetAudience: z.array(z.string()).optional(),
 
   theme: z.enum(['light', 'dark']).default('dark'),
+
+  contactSectionTitle: z.string().optional(),
+  contactSectionDescription: z.string().optional(),
+
+  footerDescription: z.string().optional(),
+  footerCopyrightText: z.string().optional(),
 
   linkedin: z.string().url({ message: "Please enter a valid URL." }).optional().or(z.literal('')),
   twitter: z.string().url({ message: "Please enter a valid URL." }).optional().or(z.literal('')),
@@ -118,8 +129,16 @@ export default function SiteContentForm() {
       gallerySectionDescription: "",
       portfolioSectionTitle: "Our Work",
       portfolioSectionDescription: "",
+      servicesSectionTitle: "Our Services",
+      servicesSectionDescription: "Everything you need to grow your modern brand.",
       services: [],
+      targetAudienceSectionTitle: "Who We Help",
+      targetAudienceSectionDescription: "We partner with ambitious brands across various industries to deliver outstanding digital experiences.",
       targetAudience: [],
+      contactSectionTitle: "Get in Touch",
+      contactSectionDescription: "Have a project in mind or just want to say hello? Drop us a line.",
+      footerDescription: "Creative Solutions For Modern Brands.\nWebsite Design • Branding • Social Media",
+      footerCopyrightText: "© 2026 PK Creative. All Rights Reserved.",
       theme: 'dark',
       linkedin: "",
       twitter: "",
@@ -172,8 +191,16 @@ export default function SiteContentForm() {
         gallerySectionDescription: siteContent.gallerySectionDescription || "",
         portfolioSectionTitle: siteContent.portfolioSectionTitle || "Our Work",
         portfolioSectionDescription: siteContent.portfolioSectionDescription || "",
+        servicesSectionTitle: siteContent.servicesSectionTitle || "Our Services",
+        servicesSectionDescription: siteContent.servicesSectionDescription || "Everything you need to grow your modern brand.",
         services: siteContent.services || [],
+        targetAudienceSectionTitle: siteContent.targetAudienceSectionTitle || "Who We Help",
+        targetAudienceSectionDescription: siteContent.targetAudienceSectionDescription || "We partner with ambitious brands across various industries to deliver outstanding digital experiences.",
         targetAudience: siteContent.targetAudience || [],
+        contactSectionTitle: siteContent.contactSectionTitle || "Get in Touch",
+        contactSectionDescription: siteContent.contactSectionDescription || "Have a project in mind or just want to say hello? Drop us a line.",
+        footerDescription: siteContent.footerDescription || "Creative Solutions For Modern Brands.\nWebsite Design • Branding • Social Media",
+        footerCopyrightText: siteContent.footerCopyrightText || "© 2026 PK Creative. All Rights Reserved.",
         theme: siteContent.theme || 'dark',
         linkedin: siteContent.socials?.linkedin,
         twitter: siteContent.socials?.twitter,
@@ -405,7 +432,13 @@ export default function SiteContentForm() {
           <AccordionItem value="services">
             <AccordionTrigger className="text-xl font-semibold">Services Section</AccordionTrigger>
             <AccordionContent className="pt-4 space-y-4">
-              <FormLabel>Our Services</FormLabel>
+               <FormField control={form.control} name="servicesSectionTitle" render={({ field }) => (
+                  <FormItem><FormLabel>Section Title</FormLabel><FormControl><Input {...field} value={field.value ?? ''} /></FormControl><FormMessage /></FormItem>
+              )} />
+              <FormField control={form.control} name="servicesSectionDescription" render={({ field }) => (
+                  <FormItem><FormLabel>Section Description</FormLabel><FormControl><Textarea {...field} value={field.value ?? ''} /></FormControl><FormMessage /></FormItem>
+              )} />
+              <FormLabel>Our Services List</FormLabel>
               <FormDescription>Add services to display on the homepage.</FormDescription>
               {servicesFields.map((field, index) => (
                 <div key={field.id} className="flex items-start gap-4 p-4 border rounded-lg">
@@ -458,7 +491,13 @@ export default function SiteContentForm() {
           <AccordionItem value="audience">
             <AccordionTrigger className="text-xl font-semibold">Target Audience</AccordionTrigger>
             <AccordionContent className="pt-4 space-y-4">
-              <FormLabel>Who We Help</FormLabel>
+               <FormField control={form.control} name="targetAudienceSectionTitle" render={({ field }) => (
+                  <FormItem><FormLabel>Section Title</FormLabel><FormControl><Input {...field} value={field.value ?? ''} /></FormControl><FormMessage /></FormItem>
+              )} />
+              <FormField control={form.control} name="targetAudienceSectionDescription" render={({ field }) => (
+                  <FormItem><FormLabel>Section Description</FormLabel><FormControl><Textarea {...field} value={field.value ?? ''} /></FormControl><FormMessage /></FormItem>
+              )} />
+              <FormLabel>Who We Help List</FormLabel>
               <FormDescription>List the industries or client types you serve.</FormDescription>
               {audienceFields.map((field, index) => (
                 <div key={field.id} className="flex items-end gap-2 p-2 border rounded-lg">
@@ -549,8 +588,30 @@ export default function SiteContentForm() {
               />
             </AccordionContent>
           </AccordionItem>
+          <AccordionItem value="contact">
+            <AccordionTrigger className="text-xl font-semibold">Contact Section</AccordionTrigger>
+            <AccordionContent className="pt-4 space-y-4">
+               <FormField control={form.control} name="contactSectionTitle" render={({ field }) => (
+                  <FormItem><FormLabel>Section Title</FormLabel><FormControl><Input {...field} value={field.value ?? ''} /></FormControl><FormMessage /></FormItem>
+              )} />
+              <FormField control={form.control} name="contactSectionDescription" render={({ field }) => (
+                  <FormItem><FormLabel>Section Description</FormLabel><FormControl><Textarea {...field} value={field.value ?? ''} /></FormControl><FormMessage /></FormItem>
+              )} />
+            </AccordionContent>
+          </AccordionItem>
+          <AccordionItem value="footer">
+            <AccordionTrigger className="text-xl font-semibold">Footer Settings</AccordionTrigger>
+            <AccordionContent className="pt-4 space-y-4">
+               <FormField control={form.control} name="footerDescription" render={({ field }) => (
+                  <FormItem><FormLabel>Footer Agency Description</FormLabel><FormControl><Textarea {...field} value={field.value ?? ''} /></FormControl><FormMessage /></FormItem>
+              )} />
+              <FormField control={form.control} name="footerCopyrightText" render={({ field }) => (
+                  <FormItem><FormLabel>Copyright Text</FormLabel><FormControl><Input {...field} value={field.value ?? ''} /></FormControl><FormMessage /></FormItem>
+              )} />
+            </AccordionContent>
+          </AccordionItem>
           <AccordionItem value="socials">
-            <AccordionTrigger className="text-xl font-semibold">Contact & Socials</AccordionTrigger>
+            <AccordionTrigger className="text-xl font-semibold">Contact Links & Socials</AccordionTrigger>
             <AccordionContent className="pt-4 space-y-4">
               <FormField control={form.control} name="email" render={({ field }) => (
                   <FormItem>

@@ -61,7 +61,7 @@ export default function Home() {
         {(siteContent?.isServicesSectionVisible ?? true) && <ServicesSection content={siteContent} />}
         {(siteContent?.isTargetAudienceSectionVisible ?? true) && <TargetAudienceSection content={siteContent} />}
         {(siteContent?.isPortfolioSectionVisible ?? true) && <PortfolioSection content={siteContent} onProjectClick={handleProjectClick} />}
-        <ContactSection />
+        <ContactSection content={siteContent} />
       </main>
       <Footer content={siteContent} />
       {selectedProject && (

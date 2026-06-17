@@ -9,6 +9,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
+import type { SiteContent } from '@/types';
 
 const initialState: FormState = {
   message: '',
@@ -24,7 +25,7 @@ function SubmitButton() {
   );
 }
 
-export default function ContactSection() {
+export default function ContactSection({ content }: { content?: SiteContent | null }) {
   const [state, formAction] = useActionState(submitContactForm, initialState);
   const { toast } = useToast();
   const formRef = useRef<HTMLFormElement>(null);
@@ -51,9 +52,9 @@ export default function ContactSection() {
     <section id="contact" className="py-16 md:py-24 bg-secondary">
       <div className="container mx-auto px-4">
         <div className="max-w-3xl mx-auto text-center">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">Get in Touch</h2>
+          <h2 className="text-3xl md:text-4xl font-bold mb-4">{content?.contactSectionTitle || "Get in Touch"}</h2>
           <p className="text-muted-foreground mb-8">
-            Have a project in mind or just want to say hello? Drop us a line.
+            {content?.contactSectionDescription || "Have a project in mind or just want to say hello? Drop us a line."}
           </p>
         </div>
         <div className="max-w-xl mx-auto p-8 border rounded-lg bg-card text-card-foreground">

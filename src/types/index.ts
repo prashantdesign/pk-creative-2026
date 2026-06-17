@@ -86,12 +86,20 @@ export interface SiteContent {
   gallerySectionDescription?: string;
   portfolioSectionTitle?: string;
   portfolioSectionDescription?: string;
+  servicesSectionTitle?: string;
+  servicesSectionDescription?: string;
   services?: {
     title: string;
     description: string;
     icon: string;
   }[];
+  targetAudienceSectionTitle?: string;
+  targetAudienceSectionDescription?: string;
   targetAudience?: string[];
+  contactSectionTitle?: string;
+  contactSectionDescription?: string;
+  footerDescription?: string;
+  footerCopyrightText?: string;
 }
 
 export interface ContactMessage {

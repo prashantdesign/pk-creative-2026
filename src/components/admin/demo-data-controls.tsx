@@ -124,6 +124,18 @@ export default function DemoDataControls() {
     toast({ title: 'Cloning database...', description: 'Copying from old site to new site. Please wait.' });
     
     try {
+      // First, clear the existing data
+      const collectionsToClear = ['pkcreative_projects', 'pkcreative_projectCategories', 'pkcreative_galleryImages', 'pkcreative_galleryCategories', 'pkcreative_siteContent', 'pkcreative_contactMessages'];
+      const batch = writeBatch(firestore);
+
+      for (const coll of collectionsToClear) {
+        const snapshot = await getDocs(collection(firestore, coll));
+        snapshot.forEach(doc => {
+          batch.delete(doc.ref);
+        });
+      }
+
+      // Then clone the old data into the empty collections
       const collectionsToMigrate = [
         { from: 'siteContent', to: 'pkcreative_siteContent' },
         { from: 'projects', to: 'pkcreative_projects' },
@@ -132,8 +144,6 @@ export default function DemoDataControls() {
         { from: 'galleryCategories', to: 'pkcreative_galleryCategories' },
         { from: 'contactMessages', to: 'pkcreative_contactMessages' }
       ];
-      
-      const batch = writeBatch(firestore);
 
       for (const coll of collectionsToMigrate) {
         const snapshot = await getDocs(collection(firestore, coll.from));
@@ -142,12 +152,21 @@ export default function DemoDataControls() {
           let data = docSnap.data();
 
           if (coll.from === 'siteContent' && docSnap.id === 'global') {
+            // Merge in all the new agency default texts if they are missing in the old database
             data = {
               ...data,
               services: data.services && data.services.length > 0 ? data.services : DEMO_SITE_CONTENT.services,
               targetAudience: data.targetAudience && data.targetAudience.length > 0 ? data.targetAudience : DEMO_SITE_CONTENT.targetAudience,
               isServicesSectionVisible: data.isServicesSectionVisible !== undefined ? data.isServicesSectionVisible : true,
               isTargetAudienceSectionVisible: data.isTargetAudienceSectionVisible !== undefined ? data.isTargetAudienceSectionVisible : true,
+              servicesSectionTitle: data.servicesSectionTitle || DEMO_SITE_CONTENT.servicesSectionTitle,
+              servicesSectionDescription: data.servicesSectionDescription || DEMO_SITE_CONTENT.servicesSectionDescription,
+              targetAudienceSectionTitle: data.targetAudienceSectionTitle || DEMO_SITE_CONTENT.targetAudienceSectionTitle,
+              targetAudienceSectionDescription: data.targetAudienceSectionDescription || DEMO_SITE_CONTENT.targetAudienceSectionDescription,
+              contactSectionTitle: data.contactSectionTitle || DEMO_SITE_CONTENT.contactSectionTitle,
+              contactSectionDescription: data.contactSectionDescription || DEMO_SITE_CONTENT.contactSectionDescription,
+              footerDescription: data.footerDescription || DEMO_SITE_CONTENT.footerDescription,
+              footerCopyrightText: data.footerCopyrightText || DEMO_SITE_CONTENT.footerCopyrightText,
             };
             
             if (data.portfolioSectionTitle === "My Work") {
@@ -214,12 +233,12 @@ export default function DemoDataControls() {
           </Button>
         </div>
         <div className="p-4 border rounded-lg border-primary/50 bg-primary/5">
-          <h4 className="font-semibold text-primary">Clone Database from Personal Site</h4>
+          <h4 className="font-semibold text-primary">Clean & Clone Setup (Recommended)</h4>
           <p className="text-sm text-muted-foreground mb-2">
-            This will copy all your projects, settings, and galleries from your original website into this new isolated agency database. Run this once so you don't have to start from scratch!
+            This ultimate button clears the current database, copies all your projects and galleries from your original website, and magically fills in all the new agency texts, services, and 'Who We Help' data!
           </p>
           <Button variant="default" onClick={() => openConfirmation('migrate')} disabled={isSubmitting}>
-            Clone Database
+            Clean & Clone Setup
           </Button>
         </div>
       </div>
