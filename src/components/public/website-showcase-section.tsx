@@ -19,7 +19,8 @@ import {
 const getFaviconUrl = (url: string) => {
   try {
     const domain = new URL(url).hostname;
-    return `https://www.google.com/s2/favicons?domain=${domain}&sz=256`;
+    // Clearbit Logo API returns high-quality logos for domains
+    return `https://logo.clearbit.com/${domain}`;
   } catch {
     return '';
   }
@@ -88,9 +89,16 @@ export default function WebsiteShowcaseSection({ content }: { content: SiteConte
                       }
                     `}
                   >
-                    <div className={`w-24 h-24 mb-6 rounded-2xl bg-background border flex items-center justify-center shadow-sm overflow-hidden p-3 transition-transform duration-500 ${isActive ? 'scale-110' : ''}`}>
+                    {/* Adjusted container to allow wide logos to fit without being forced into a small square */}
+                    <div className={`w-full max-w-[200px] h-24 mb-6 rounded-2xl bg-background border flex items-center justify-center shadow-sm overflow-hidden p-4 transition-transform duration-500 ${isActive ? 'scale-110' : ''}`}>
                       {displayLogo ? (
-                        <Image src={displayLogo} alt={website.name} width={80} height={80} className="object-contain" />
+                        <Image 
+                           src={displayLogo} 
+                           alt={website.name} 
+                           width={200} 
+                           height={80} 
+                           className="object-contain w-full h-full" 
+                        />
                       ) : (
                         <span className="text-3xl font-bold text-muted-foreground">{website.name.charAt(0)}</span>
                       )}
