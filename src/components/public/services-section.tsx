@@ -50,7 +50,6 @@ export default function ServicesSection({ content }: { content: SiteContent | nu
                     <div className="h-14 w-14 rounded-2xl bg-primary/10 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-primary-foreground transition-colors duration-500">
                       <Icons name={service.icon || 'star'} className="h-7 w-7" />
                     </div>
-                    <ArrowUpRight className="h-6 w-6 text-muted-foreground/50 group-hover:text-primary transition-colors duration-500" />
                   </div>
                   
                   <div className="mt-auto">

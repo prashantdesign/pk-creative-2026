@@ -36,6 +36,7 @@ const Footer = ({ content: initialContent }: { content?: SiteContent | null }) =
            {content?.isTeamSectionVisible !== false && (
              <a href="/team" className="text-muted-foreground hover:text-primary transition-colors">Team</a>
            )}
+           <a href="/gallery" className="text-muted-foreground hover:text-primary transition-colors">Gallery</a>
            <a href="/#contact" className="text-muted-foreground hover:text-primary transition-colors">Contact</a>
         </div>
 
