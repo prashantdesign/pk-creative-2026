@@ -80,11 +80,15 @@ export default function WebsiteShowcaseSection({ content }: { content: SiteConte
               const isActive = current === index;
 
               return (
-                <CarouselItem key={website.id} className="pl-4 md:pl-8 basis-full sm:basis-1/2 lg:basis-1/3">
+                <CarouselItem 
+                  key={website.id} 
+                  className="pl-4 md:pl-8 basis-full sm:basis-[60%] lg:basis-[40%] xl:basis-[33%] max-w-md"
+                  onClick={() => api?.scrollTo(index)}
+                >
                   <div 
-                    className={`group relative flex flex-col items-center justify-center p-8 rounded-2xl border transition-all duration-500 ease-out h-full
+                    className={`group relative flex flex-col items-center justify-center p-8 rounded-2xl border transition-all duration-500 ease-out h-full cursor-pointer
                       ${isActive 
-                        ? 'bg-secondary/80 border-primary/40 scale-110 shadow-2xl z-10 opacity-100' 
+                        ? 'bg-secondary/80 border-primary/40 scale-100 md:scale-110 shadow-2xl z-10 opacity-100' 
                         : 'bg-secondary/20 border-border/50 scale-90 opacity-40 hover:opacity-70'
                       }
                     `}
@@ -92,11 +96,9 @@ export default function WebsiteShowcaseSection({ content }: { content: SiteConte
                     {/* Adjusted container to allow wide logos to fit without being forced into a small square */}
                     <div className={`w-full max-w-[200px] h-24 mb-6 rounded-2xl bg-background border flex items-center justify-center shadow-sm overflow-hidden p-4 transition-transform duration-500 ${isActive ? 'scale-110' : ''}`}>
                       {displayLogo ? (
-                        <Image 
+                        <img 
                            src={displayLogo} 
                            alt={website.name} 
-                           width={200} 
-                           height={80} 
                            className="object-contain w-full h-full" 
                         />
                       ) : (
