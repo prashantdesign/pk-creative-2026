@@ -168,5 +168,10 @@ service cloud.firestore {
     match /pkcreative_instagramPosts/{postId} {
       allow read, write: if isAdmin();
     }
+    
+    match /pkcreative_teamMembers/{memberId} {
+      allow read: if request.auth == null || request.auth != null;
+      allow write: if isAdmin();
+    }
   }
 }

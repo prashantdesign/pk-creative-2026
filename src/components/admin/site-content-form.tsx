@@ -86,9 +86,9 @@ export default function SiteContentForm() {
     defaultValues: {
       siteName: "",
       logoUrl: "",
-      heroTitle: "",
-      heroSubtitle: "",
-      ctaText: "",
+      heroTitle: "Creative Graphic & Brand Design Agency",
+      heroSubtitle: "We design impactful visuals and digital experiences using creativity, strategy, and AI-powered tools. With years of experience, we help brands grow through strong visual identity, e-commerce design, and engaging digital content.",
+      ctaText: "View Our Work",
       ctaLink: "",
       gallerySectionTitle: "Gallery",
       gallerySectionDescription: "",

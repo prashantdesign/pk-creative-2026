@@ -107,6 +107,19 @@ export interface SiteContent {
     ogImageUrl?: string;
     gaTrackingId?: string;
   };
+  isTeamSectionVisible?: boolean;
+  teamSectionTitle?: string;
+  teamSectionDescription?: string;
+}
+
+export interface TeamMember {
+  id: string;
+  name: string;
+  designation: string;
+  photoUrl: string;
+  order: number;
+  createdAt?: Timestamp;
+  updatedAt?: Timestamp;
 }
 
 export interface PrivateSettings {

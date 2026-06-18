@@ -23,6 +23,7 @@ const formSchema = z.object({
   isTestimonialsSectionVisible: z.boolean().default(true),
   isTargetAudienceSectionVisible: z.boolean().default(true),
   isPortfolioSectionVisible: z.boolean().default(true),
+  isTeamSectionVisible: z.boolean().default(true),
 });
 
 export default function SettingsForm() {
@@ -42,6 +43,7 @@ export default function SettingsForm() {
       isTestimonialsSectionVisible: true,
       isTargetAudienceSectionVisible: true,
       isPortfolioSectionVisible: true,
+      isTeamSectionVisible: true,
     },
   });
 
@@ -54,6 +56,7 @@ export default function SettingsForm() {
         isTestimonialsSectionVisible: siteContent.isTestimonialsSectionVisible === undefined ? true : siteContent.isTestimonialsSectionVisible,
         isTargetAudienceSectionVisible: siteContent.isTargetAudienceSectionVisible === undefined ? true : siteContent.isTargetAudienceSectionVisible,
         isPortfolioSectionVisible: siteContent.isPortfolioSectionVisible === undefined ? true : siteContent.isPortfolioSectionVisible,
+        isTeamSectionVisible: siteContent.isTeamSectionVisible === undefined ? true : siteContent.isTeamSectionVisible,
       });
     }
   }, [siteContent, form]);
@@ -206,6 +209,26 @@ export default function SettingsForm() {
                     <FormLabel>Show Portfolio Section</FormLabel>
                      <FormDescription>
                       Control the visibility of the project portfolio section.
+                    </FormDescription>
+                  </div>
+                  <FormControl>
+                    <Switch
+                      checked={field.value}
+                      onCheckedChange={field.onChange}
+                    />
+                  </FormControl>
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="isTeamSectionVisible"
+              render={({ field }) => (
+                <FormItem className="flex flex-row items-center justify-between rounded-lg border p-4">
+                  <div className="space-y-0.5">
+                    <FormLabel>Enable Team Page</FormLabel>
+                     <FormDescription>
+                      Control whether the Team page is accessible and visible in the navigation.
                     </FormDescription>
                   </div>
                   <FormControl>

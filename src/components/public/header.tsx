@@ -20,6 +20,7 @@ const Header = ({ content }: { content?: SiteContent }) => {
     { label: 'Services', href: '/#services' },
     { label: 'Work', href: '/#work' },
     { label: 'Gallery', href: '/gallery' },
+    ...(content?.isTeamSectionVisible !== false ? [{ label: 'Team', href: '/team' }] : []),
     { label: 'Contact', href: '/#contact' },
   ];
 
