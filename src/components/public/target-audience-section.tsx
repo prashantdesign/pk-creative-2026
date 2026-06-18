@@ -1,7 +1,7 @@
 'use client';
 import React from 'react';
 import type { SiteContent } from '@/types';
-import Icons from '@/components/icons';
+import { Icons } from '@/components/icons';
 
 const defaultAudience = [
   'Tech Startups',

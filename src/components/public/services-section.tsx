@@ -1,7 +1,7 @@
 'use client';
 import React from 'react';
 import type { SiteContent, Service } from '@/types';
-import Icons from '@/components/icons';
+import { Icons } from '@/components/icons';
 import { ArrowUpRight } from 'lucide-react';
 
 const defaultServices: Service[] = [
