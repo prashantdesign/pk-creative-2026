@@ -63,6 +63,7 @@ const formSchema = z.object({
   linkedin: z.string().url({ message: "Please enter a valid URL." }).optional().or(z.literal('')),
   twitter: z.string().url({ message: "Please enter a valid URL." }).optional().or(z.literal('')),
   instagram: z.string().url({ message: "Please enter a valid URL." }).optional().or(z.literal('')),
+  whatsapp: z.string().optional().or(z.literal('')),
   email: z.string().email({ message: "Please enter a valid email." }).optional().or(z.literal('')),
 
   geminiModel: z.string().optional(),
@@ -114,6 +115,7 @@ export default function SiteContentForm() {
       linkedin: "",
       twitter: "",
       instagram: "",
+      whatsapp: "",
       email: "info@pkcreative.in",
       geminiModel: "models/gemini-1.5-flash",
       isAiFeatureEnabled: true,
@@ -160,6 +162,7 @@ export default function SiteContentForm() {
         linkedin: siteContent.socials?.linkedin,
         twitter: siteContent.socials?.twitter,
         instagram: siteContent.socials?.instagram,
+        whatsapp: siteContent.socials?.whatsapp,
         email: siteContent.socials?.email,
         geminiModel: siteContent.aiSettings?.geminiModel || 'models/gemini-1.5-flash',
         isAiFeatureEnabled: siteContent.aiSettings?.isAiFeatureEnabled === undefined ? true : siteContent.aiSettings.isAiFeatureEnabled,
@@ -210,6 +213,7 @@ export default function SiteContentForm() {
         linkedin: values.linkedin,
         twitter: values.twitter,
         instagram: values.instagram,
+        whatsapp: values.whatsapp,
         email: values.email,
       },
       aiSettings: {
@@ -520,6 +524,9 @@ export default function SiteContentForm() {
               )} />
               <FormField control={form.control} name="linkedin" render={({ field }) => (
                   <FormItem><FormLabel>LinkedIn URL</FormLabel><FormControl><Input placeholder="https://linkedin.com/in/..." {...field} value={field.value ?? ''} /></FormControl><FormMessage /></FormItem>
+              )} />
+              <FormField control={form.control} name="whatsapp" render={({ field }) => (
+                  <FormItem><FormLabel>WhatsApp Number / Link</FormLabel><FormControl><Input placeholder="+1234567890 or wa.me/..." {...field} value={field.value ?? ''} /></FormControl><FormMessage /></FormItem>
               )} />
               <FormField control={form.control} name="twitter" render={({ field }) => (
                   <FormItem><FormLabel>Twitter URL</FormLabel><FormControl><Input placeholder="https://twitter.com/..." {...field} value={field.value ?? ''} /></FormControl><FormMessage /></FormItem>

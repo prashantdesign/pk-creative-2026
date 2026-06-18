@@ -52,6 +52,7 @@ export interface SiteContent {
     twitter?: string;
     instagram?: string;
     email?: string;
+    whatsapp?: string;
   };
   aiSettings?: {
     geminiModel?: string;

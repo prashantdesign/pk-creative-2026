@@ -24,8 +24,8 @@ const Footer = ({ content: initialContent }: { content?: SiteContent | null }) =
             {content?.footerDescription || "Creative Solutions For Modern Brands. \n Website Design • Branding • Social Media"}
           </p>
           <div className="flex flex-col gap-1 text-sm font-medium mt-2">
-            {socialLinks?.linkedin && <span className="flex items-center gap-2"><span className="text-primary">🌐</span> <a href={socialLinks.linkedin} target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors">LinkedIn</a></span>}
             {socialLinks?.email && <span className="flex items-center gap-2"><span className="text-primary">📧</span> <a href={`mailto:${socialLinks.email}`} className="hover:text-primary transition-colors">{socialLinks.email}</a></span>}
+            {socialLinks?.whatsapp && <span className="flex items-center gap-2"><span className="text-primary">💬</span> <a href={socialLinks.whatsapp.startsWith('http') ? socialLinks.whatsapp : `https://wa.me/${socialLinks.whatsapp.replace(/[^0-9]/g, '')}`} target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors">WhatsApp</a></span>}
           </div>
         </div>
         
