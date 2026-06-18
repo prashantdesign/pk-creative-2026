@@ -27,8 +27,7 @@ const Header = ({ content: initialContent }: { content?: SiteContent | null }) =
 
   const navItems = [
     { label: 'Services', href: '/#services' },
-    { label: 'Work', href: '/#work' },
-    { label: 'Gallery', href: '/gallery' },
+    { label: 'Work', href: '/work' },
     ...(content?.isTeamSectionVisible !== false ? [{ label: 'Team', href: '/team' }] : []),
     { label: 'Contact', href: '/#contact' },
   ];
