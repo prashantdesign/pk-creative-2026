@@ -35,12 +35,9 @@ export function ThemeProvider({ children }: ThemeProviderProps) {
   }, [theme]);
 
   if (loading) {
-    // This will prevent FOUC by showing a loader until the theme is fetched.
-     return (
-        <div className="flex h-screen w-full items-center justify-center bg-background">
-            <PKLoader />
-        </div>
-    );
+    // This will prevent FOUC by showing a blank screen until the theme is fetched,
+    // avoiding a double-loader conflict with the page's Preloader.
+    return null;
   }
 
   return (
