@@ -35,15 +35,10 @@ export default function ServicesSection({ content }: { content: SiteContent | nu
         {/* Bento Grid Layout */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 auto-rows-[320px]">
           {services.map((service, index) => {
-            // Make the first and fourth items span wider on large screens for the "bento" look
-            const isWide = index === 0 || index === 3;
-            
             return (
               <div
                 key={index}
-                className={`group relative overflow-hidden rounded-3xl bg-background border border-border p-8 transition-all hover:-translate-y-2 hover:shadow-2xl hover:shadow-primary/10 hover:border-primary/30 animate-fade-in-up ${
-                  isWide ? 'md:col-span-2 lg:col-span-2' : ''
-                }`}
+                className={`group relative overflow-hidden rounded-3xl bg-background border border-border p-8 transition-all hover:-translate-y-2 hover:shadow-2xl hover:shadow-primary/10 hover:border-primary/30 animate-fade-in-up`}
                 style={{ animationDelay: `${index * 150}ms` }}
               >
                 <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />

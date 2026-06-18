@@ -52,7 +52,7 @@ export default async function RootLayout({
   } catch (error) {}
 
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" suppressHydrationWarning className="scroll-smooth">
       <body className={`${inter.variable} ${poppins.variable} font-body antialiased`}>
         {gaTrackingId && (
           <>
