@@ -141,15 +141,15 @@ export default function WebsiteShowcaseSection({ content }: { content: SiteConte
           opts={{
             align: "center",
             loop: true,
-            containScroll: false,
           }}
           setApi={setApi}
           className="w-full max-w-7xl mx-auto"
         >
           <CarouselContent className="-ml-4 md:-ml-8 py-12">
-            {websites.map((website, index) => (
+            {/* Artificially duplicate items if there are too few, to force Embla into a seamless infinite loop */}
+            {(websites.length > 0 && websites.length < 5 ? [...websites, ...websites, ...websites, ...websites] : websites).map((website, index) => (
               <WebsiteCard 
-                key={website.id} 
+                key={`${website.id}-${index}`} 
                 website={website} 
                 index={index} 
                 current={current} 
