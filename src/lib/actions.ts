@@ -136,3 +136,77 @@ export async function submitContactForm(
     return { message: 'Something went wrong. Please try again later.', error: true };
   }
 }
+
+const replySchema = z.object({
+  toEmail: z.string().email(),
+  subject: z.string().min(1),
+  message: z.string().min(1),
+});
+
+export async function sendAdminReply(
+  prevState: FormState,
+  formData: FormData
+): Promise<FormState> {
+  const parsed = replySchema.safeParse({
+    toEmail: formData.get('toEmail'),
+    subject: formData.get('subject'),
+    message: formData.get('message'),
+  });
+
+  if (!parsed.success) {
+    return {
+      message: parsed.error.errors.map((e) => e.message).join(', '),
+      error: true,
+    };
+  }
+
+  const { toEmail, subject, message } = parsed.data;
+  const projectId = process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID;
+
+  if (!projectId) {
+     return { message: 'Server configuration error.', error: true };
+  }
+
+  try {
+      const settingsUrl = `https://firestore.googleapis.com/v1/projects/${projectId}/databases/(default)/documents/pkcreative_privateSettings/global`;
+      const settingsResponse = await fetch(settingsUrl);
+      
+      if (!settingsResponse.ok) {
+          return { message: 'Failed to fetch SMTP settings.', error: true };
+      }
+      
+      const settingsData = await settingsResponse.json();
+      const fields = settingsData.fields;
+      
+      if (!fields || !fields.smtpHost?.stringValue || !fields.smtpUsername?.stringValue || !fields.smtpPassword?.stringValue) {
+          return { message: 'SMTP settings are not configured in the Admin Panel.', error: true };
+      }
+
+      const transporter = nodemailer.createTransport({
+          host: fields.smtpHost.stringValue,
+          port: parseInt(fields.smtpPort?.stringValue || '587'),
+          secure: fields.smtpPort?.stringValue === '465',
+          auth: {
+              user: fields.smtpUsername.stringValue,
+              pass: fields.smtpPassword.stringValue,
+          }
+      });
+
+      const senderEmail = fields.senderEmail?.stringValue || fields.smtpUsername.stringValue;
+
+      const mailOptions = {
+          from: `"${fields.adminEmail?.stringValue || 'Admin'}" <${senderEmail}>`,
+          to: toEmail,
+          subject: subject,
+          html: `<p style="white-space: pre-wrap;">${message}</p>`
+      };
+
+      await transporter.sendMail(mailOptions);
+      return { message: 'Reply sent successfully!' };
+
+  } catch (error) {
+      console.error("Failed to send admin reply:", error);
+      return { message: 'Failed to send email. Check your SMTP settings.', error: true };
+  }
+}
+
