@@ -42,12 +42,12 @@ export default function PrivateSettingsForm() {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      smtpHost: "",
+      smtpHost: "smtp.gmail.com",
       smtpPort: "587",
-      smtpUser: "",
+      smtpUser: "pkcreative.in@gmail.com",
       smtpPass: "",
-      smtpSender: "",
-      adminEmail: "",
+      smtpSender: "info@pkcreative.in",
+      adminEmail: "info@pkcreative.in",
       metaAppId: "",
       metaAppSecret: "",
       instagramAccountId: "",
@@ -58,12 +58,12 @@ export default function PrivateSettingsForm() {
   useEffect(() => {
     if (settings) {
       form.reset({
-        smtpHost: settings.smtpHost || "",
+        smtpHost: settings.smtpHost || "smtp.gmail.com",
         smtpPort: settings.smtpPort || "587",
-        smtpUser: settings.smtpUser || "",
+        smtpUser: settings.smtpUser || "pkcreative.in@gmail.com",
         smtpPass: settings.smtpPass || "",
-        smtpSender: settings.smtpSender || "",
-        adminEmail: settings.adminEmail || "",
+        smtpSender: settings.smtpSender || "info@pkcreative.in",
+        adminEmail: settings.adminEmail || "info@pkcreative.in",
         metaAppId: settings.metaAppId || "",
         metaAppSecret: settings.metaAppSecret || "",
         instagramAccountId: settings.instagramAccountId || "",
