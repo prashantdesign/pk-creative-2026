@@ -1,8 +1,10 @@
 'use client';
 import React from 'react';
-import type { SiteContent, Service } from '@/types';
+import type { SiteContent } from '@/types';
 import { Icons } from '@/components/icons';
 import { ArrowUpRight } from 'lucide-react';
+
+type Service = { title: string; description: string; icon?: string };
 
 const defaultServices: Service[] = [
   { title: 'Website Design', description: 'Stunning, high-conversion websites tailored for your brand.', icon: 'monitor' },

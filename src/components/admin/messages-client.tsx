@@ -95,6 +95,11 @@ export default function MessagesClient() {
                             </div>
                         </CardHeader>
                         <CardContent>
+                             {message.services && message.services.length > 0 && (
+                                 <div className="flex flex-wrap gap-1 mb-3">
+                                     {message.services.map(s => <Badge key={s} variant="outline" className="text-[10px]">{s}</Badge>)}
+                                 </div>
+                             )}
                              <p className="text-sm line-clamp-3">{message.message}</p>
                         </CardContent>
                         <CardFooter className="flex justify-between items-center">
@@ -148,7 +153,14 @@ export default function MessagesClient() {
                         <div>{message.name}</div>
                         <div className="text-sm text-muted-foreground">{message.email}</div>
                     </TableCell>
-                    <TableCell className="max-w-sm truncate">{message.message}</TableCell>
+                    <TableCell className="max-w-sm truncate">
+                        {message.services && message.services.length > 0 && (
+                            <div className="flex flex-wrap gap-1 mb-2">
+                                {message.services.map(s => <Badge key={s} variant="outline" className="text-[10px]">{s}</Badge>)}
+                            </div>
+                        )}
+                        {message.message}
+                    </TableCell>
                     <TableCell>{message.timestamp ? format(message.timestamp.toDate(), 'PP pp') : 'N/A'}</TableCell>
                     <TableCell>
                     <DropdownMenu>

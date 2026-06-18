@@ -1,11 +1,13 @@
 'use server';
 
 import { z } from 'zod';
+import nodemailer from 'nodemailer';
 
 const contactSchema = z.object({
   name: z.string().min(1, { message: 'Name is required.' }),
   email: z.string().email({ message: 'A valid email is required.' }),
   message: z.string().min(1, { message: 'Message is required.' }),
+  services: z.string().optional(),
 });
 
 export type FormState = {
@@ -21,6 +23,7 @@ export async function submitContactForm(
     name: formData.get('name'),
     email: formData.get('email'),
     message: formData.get('message'),
+    services: formData.get('services'),
   });
 
   if (!parsed.success) {
@@ -30,21 +33,24 @@ export async function submitContactForm(
     };
   }
 
-  const { name, email, message } = parsed.data;
+  const { name, email, message, services: servicesString } = parsed.data;
+  
+  let servicesArray: string[] = [];
+  try {
+      if (servicesString) {
+          servicesArray = JSON.parse(servicesString);
+      }
+  } catch(e) {}
 
   // Use the Firestore REST API to avoid server-side SDK initialization issues.
   const projectId = process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID;
   const collectionId = 'pkcreative_contactMessages';
   
   if (!projectId) {
-     const errorMessage = 'Firebase Project ID is not configured on the server.';
-     console.error(errorMessage);
      return { message: 'Server configuration error. Please contact support.', error: true };
   }
 
-  // The REST API automatically uses the service account credentials in this environment.
   const url = `https://firestore.googleapis.com/v1/projects/${projectId}/databases/(default)/documents/${collectionId}`;
-  
   const now = new Date().toISOString();
 
   // Structure the document according to the REST API format.
@@ -55,6 +61,13 @@ export async function submitContactForm(
       message: { stringValue: message },
       isRead: { booleanValue: false },
       timestamp: { timestampValue: now },
+      ...(servicesArray.length > 0 && {
+          services: {
+              arrayValue: {
+                  values: servicesArray.map(s => ({ stringValue: s }))
+              }
+          }
+      })
     },
   };
 
@@ -69,15 +82,57 @@ export async function submitContactForm(
     
     if (!response.ok) {
         const errorBody = await response.json();
-        console.error('Firestore REST API Error:', errorBody);
-        const errorMessage = errorBody.error?.message || 'Failed to save message to the database.';
-        return { message: `A server error occurred: ${errorMessage}`, error: true };
+        return { message: `A server error occurred: ${errorBody.error?.message || 'Failed'}`, error: true };
     }
     
+    // Attempt to send email notification using SMTP settings from Firestore
+    try {
+        const settingsUrl = `https://firestore.googleapis.com/v1/projects/${projectId}/databases/(default)/documents/pkcreative_privateSettings/global`;
+        const settingsResponse = await fetch(settingsUrl);
+        if (settingsResponse.ok) {
+            const settingsData = await settingsResponse.json();
+            const fields = settingsData.fields;
+            if (fields && fields.smtpHost?.stringValue && fields.smtpUsername?.stringValue && fields.smtpPassword?.stringValue) {
+                const transporter = nodemailer.createTransport({
+                    host: fields.smtpHost.stringValue,
+                    port: parseInt(fields.smtpPort?.stringValue || '587'),
+                    secure: fields.smtpPort?.stringValue === '465',
+                    auth: {
+                        user: fields.smtpUsername.stringValue,
+                        pass: fields.smtpPassword.stringValue,
+                    }
+                });
+
+                const adminEmail = fields.adminEmail?.stringValue || fields.smtpUsername.stringValue;
+                const senderEmail = fields.senderEmail?.stringValue || fields.smtpUsername.stringValue;
+
+                const mailOptions = {
+                    from: `"${name} via Website" <${senderEmail}>`,
+                    to: adminEmail,
+                    replyTo: email,
+                    subject: `New Contact Form Submission from ${name}`,
+                    html: `
+                        <h2>New Contact Form Submission</h2>
+                        <p><strong>Name:</strong> ${name}</p>
+                        <p><strong>Email:</strong> ${email}</p>
+                        ${servicesArray.length > 0 ? `<p><strong>Inquiring about:</strong> ${servicesArray.join(', ')}</p>` : ''}
+                        <p><strong>Message:</strong></p>
+                        <p style="white-space: pre-wrap;">${message}</p>
+                    `
+                };
+
+                await transporter.sendMail(mailOptions);
+            }
+        }
+    } catch (emailError) {
+        console.error("Email notification failed to send:", emailError);
+        // We don't return an error to the user if the notification fails, since the message was saved.
+    }
+
     return { message: 'Thank you for your message! I will get back to you soon.' };
 
   } catch (error) {
-    console.error('Error submitting contact form via REST API:', error);
+    console.error('Error submitting contact form:', error);
     return { message: 'Something went wrong. Please try again later.', error: true };
   }
 }

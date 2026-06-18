@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useActionState } from 'react';
 import { useFormStatus } from 'react-dom';
 import { submitContactForm, type FormState } from '@/lib/actions';
@@ -10,6 +10,8 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import type { SiteContent } from '@/types';
+import { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
+import { ChevronDown } from 'lucide-react';
 
 const initialState: FormState = {
   message: '',
@@ -27,8 +29,19 @@ function SubmitButton() {
 
 export default function ContactSection({ content }: { content?: SiteContent | null }) {
   const [state, formAction] = useActionState(submitContactForm, initialState);
+  const [selectedServices, setSelectedServices] = useState<string[]>([]);
   const { toast } = useToast();
   const formRef = useRef<HTMLFormElement>(null);
+
+  const availableServices = content?.services?.map(s => s.title) || [
+    'Website Design', 'UI/UX Design', 'Branding', 'Social Media', 'SEO Optimization'
+  ];
+
+  const handleServiceToggle = (service: string) => {
+    setSelectedServices(prev => 
+      prev.includes(service) ? prev.filter(s => s !== service) : [...prev, service]
+    );
+  };
 
   useEffect(() => {
     if (state.message) {
@@ -44,6 +57,7 @@ export default function ContactSection({ content }: { content?: SiteContent | nu
           description: state.message,
         });
         formRef.current?.reset();
+        setSelectedServices([]);
       }
     }
   }, [state, toast]);
@@ -59,6 +73,7 @@ export default function ContactSection({ content }: { content?: SiteContent | nu
         </div>
         <div className="max-w-xl mx-auto p-8 border rounded-lg bg-card text-card-foreground">
           <form ref={formRef} action={formAction} className="space-y-6">
+            <input type="hidden" name="services" value={JSON.stringify(selectedServices)} />
             <div className="space-y-2">
               <Label htmlFor="name">Name</Label>
               <Input id="name" name="name" type="text" placeholder="Your Name" required />
@@ -66,6 +81,30 @@ export default function ContactSection({ content }: { content?: SiteContent | nu
             <div className="space-y-2">
               <Label htmlFor="email">Email</Label>
               <Input id="email" name="email" type="email" placeholder="your.email@example.com" required />
+            </div>
+            <div className="space-y-2 flex flex-col">
+              <Label>I'm inquiring about...</Label>
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="outline" className="w-full justify-between font-normal text-muted-foreground h-10 px-3 py-2 bg-background">
+                    {selectedServices.length > 0 
+                      ? <span className="text-foreground truncate">{selectedServices.join(', ')}</span> 
+                      : "Select services..."}
+                    <ChevronDown className="h-4 w-4 opacity-50" />
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent className="w-[var(--radix-dropdown-menu-trigger-width)] max-h-64 overflow-y-auto">
+                  {availableServices.map((service) => (
+                    <DropdownMenuCheckboxItem
+                      key={service}
+                      checked={selectedServices.includes(service)}
+                      onCheckedChange={() => handleServiceToggle(service)}
+                    >
+                      {service}
+                    </DropdownMenuCheckboxItem>
+                  ))}
+                </DropdownMenuContent>
+              </DropdownMenu>
             </div>
             <div className="space-y-2">
               <Label htmlFor="message">Message</Label>

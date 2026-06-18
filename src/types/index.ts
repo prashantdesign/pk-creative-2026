@@ -153,6 +153,7 @@ export interface ContactMessage {
     name: string;
     email: string;
     message: string;
+    services?: string[];
     timestamp: Timestamp;
     isRead: boolean;
 }
