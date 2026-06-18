@@ -38,31 +38,35 @@ export default function PortfolioSection({ content, onProjectClick }: PortfolioS
   const isLoading = projectsLoading || categoriesLoading;
 
   return (
-    <section id="work" className="py-16 md:py-24 bg-secondary">
-      <div className="container mx-auto px-4">
-        <div className="text-center max-w-3xl mx-auto mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold tracking-tight animate-fade-in-up">
-            {content?.portfolioSectionTitle || 'Our Work'}
-          </h2>
-          {content?.portfolioSectionDescription && (
-            <p className="mt-4 text-lg text-muted-foreground animate-fade-in-up animation-delay-300">
-              {content.portfolioSectionDescription}
-            </p>
-          )}
+    <section id="work" className="py-24 bg-background relative">
+      <div className="container mx-auto px-4 md:px-6">
+        <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-8">
+          <div className="max-w-2xl">
+            <h2 className="text-4xl md:text-5xl lg:text-6xl font-headline font-black tracking-tighter mb-4 animate-fade-in-up">
+              {content?.portfolioSectionTitle || 'Selected Work'}
+            </h2>
+            {content?.portfolioSectionDescription && (
+              <p className="text-xl text-muted-foreground animate-fade-in-up animation-delay-300">
+                {content.portfolioSectionDescription}
+              </p>
+            )}
+          </div>
         </div>
 
         {isLoading ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <Skeleton className="h-80 w-full" />
-            <Skeleton className="h-80 w-full" />
-            <Skeleton className="h-80 w-full" />
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <Skeleton className="h-[500px] w-full rounded-2xl" />
+            <Skeleton className="h-[500px] w-full rounded-2xl" />
+            <Skeleton className="h-[500px] w-full rounded-2xl" />
+            <Skeleton className="h-[500px] w-full rounded-2xl" />
           </div>
         ) : (
           <>
-            <div className="flex justify-center flex-wrap gap-2 mb-12 animate-fade-in-up animation-delay-600">
+            <div className="flex flex-wrap gap-3 mb-12 animate-fade-in-up animation-delay-600">
               <Button
                 variant={selectedCategory === 'all' ? 'default' : 'outline'}
                 onClick={() => setSelectedCategory('all')}
+                className="rounded-full px-6"
               >
                 All
               </Button>
@@ -71,31 +75,36 @@ export default function PortfolioSection({ content, onProjectClick }: PortfolioS
                   key={cat.id}
                   variant={selectedCategory === cat.id ? 'default' : 'outline'}
                   onClick={() => setSelectedCategory(cat.id)}
+                  className="rounded-full px-6"
                 >
                   {cat.name}
                 </Button>
               ))}
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               {filteredProjects.map((project, index) => (
-                <div key={project.id} className={`animate-fade-in-up`} style={{animationDelay: `${600 + index * 150}ms`}}>
+                <div 
+                  key={project.id} 
+                  className={`animate-fade-in-up ${index % 2 !== 0 ? 'md:mt-16' : ''}`} 
+                  style={{animationDelay: `${index * 150}ms`}}
+                >
                   <Card 
-                    className="overflow-hidden group cursor-pointer h-full flex flex-col" 
+                    className="overflow-hidden group cursor-pointer border-none bg-transparent shadow-none" 
                     onClick={() => onProjectClick(project)}
                   >
-                    <CardContent className="p-0 relative aspect-[4/3]">
+                    <CardContent className="p-0 relative aspect-[4/5] sm:aspect-[4/3] md:aspect-[4/5] lg:aspect-square overflow-hidden rounded-3xl">
                       <Image
                         src={project.imageUrl}
                         alt={project.title}
                         fill
-                        className="object-cover group-hover:scale-105 transition-transform duration-300"
+                        className="object-cover group-hover:scale-105 transition-transform duration-700 ease-in-out"
                         data-ai-hint="project image"
                       />
-                      <div className="absolute inset-0 bg-black/20 group-hover:bg-black/50 transition-colors duration-300" />
-                      <div className="absolute bottom-4 left-4 p-2">
-                        <h3 className="text-xl font-semibold text-white drop-shadow-md">{project.title}</h3>
-                        <p className="text-sm text-white/90 drop-shadow-md line-clamp-2">{project.description}</p>
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-60 group-hover:opacity-80 transition-opacity duration-500" />
+                      <div className="absolute bottom-0 left-0 w-full p-8 translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
+                        <h3 className="text-3xl font-bold text-white drop-shadow-lg mb-2">{project.title}</h3>
+                        <p className="text-lg text-white/80 drop-shadow-md line-clamp-2">{project.description}</p>
                       </div>
                     </CardContent>
                   </Card>
@@ -103,7 +112,7 @@ export default function PortfolioSection({ content, onProjectClick }: PortfolioS
               ))}
             </div>
              {filteredProjects.length === 0 && (
-                <div className="text-center col-span-full py-12 text-muted-foreground">
+                <div className="text-center col-span-full py-24 text-muted-foreground border border-dashed rounded-3xl">
                     No projects found in this category.
                 </div>
              )}

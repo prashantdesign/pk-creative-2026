@@ -108,7 +108,7 @@ export default function SiteContentForm() {
       linkedin: "",
       twitter: "",
       instagram: "",
-      email: "",
+      email: "info@pkcreative.in",
       geminiModel: "models/gemini-1.5-flash",
       isAiFeatureEnabled: true,
     },
