@@ -4,7 +4,16 @@ import { Menu, X } from 'lucide-react';
 import Logo from '@/components/logo';
 import type { SiteContent } from '@/types';
 
-const Header = ({ content }: { content?: SiteContent }) => {
+import { useFirestore, useDoc, useMemoFirebase } from '@/firebase';
+import { doc } from 'firebase/firestore';
+
+const Header = ({ content: initialContent }: { content?: SiteContent | null }) => {
+  const firestore = useFirestore();
+  const siteContentRef = useMemoFirebase(() => firestore ? doc(firestore, 'pkcreative_siteContent', 'global') : null, [firestore]);
+  const { data: fetchedContent } = useDoc<SiteContent>(siteContentRef);
+  
+  const content = initialContent || fetchedContent;
+
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
 

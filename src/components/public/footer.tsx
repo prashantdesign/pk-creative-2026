@@ -4,10 +4,16 @@ import type { SiteContent } from '@/types';
 import { Linkedin, Twitter, Instagram, Mail } from 'lucide-react';
 import Logo from '../logo';
 
-const Footer = ({ content }: { content: SiteContent | null }) => {
-  const socialLinks = content?.socials;
+import { useFirestore, useDoc, useMemoFirebase } from '@/firebase';
+import { doc } from 'firebase/firestore';
 
-  const hasSocials = socialLinks && (socialLinks.linkedin || socialLinks.twitter || socialLinks.instagram || socialLinks.email);
+const Footer = ({ content: initialContent }: { content?: SiteContent | null }) => {
+  const firestore = useFirestore();
+  const siteContentRef = useMemoFirebase(() => firestore ? doc(firestore, 'pkcreative_siteContent', 'global') : null, [firestore]);
+  const { data: fetchedContent } = useDoc<SiteContent>(siteContentRef);
+  
+  const content = initialContent || fetchedContent;
+  const socialLinks = content?.socials;
 
   return (
     <footer className="border-t bg-secondary/20">
