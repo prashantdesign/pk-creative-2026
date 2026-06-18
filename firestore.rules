@@ -160,5 +160,13 @@ service cloud.firestore {
       allow create: if isValidContactMessageCreate();
       allow update, delete: if isAdmin() && isExistingDoc();
     }
+
+    match /pkcreative_privateSettings/{settingId} {
+      allow read, write: if isAdmin();
+    }
+    
+    match /pkcreative_instagramPosts/{postId} {
+      allow read, write: if isAdmin();
+    }
   }
 }

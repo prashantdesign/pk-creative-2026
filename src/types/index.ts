@@ -100,6 +100,39 @@ export interface SiteContent {
   contactSectionDescription?: string;
   footerDescription?: string;
   footerCopyrightText?: string;
+  seoSettings?: {
+    metaTitle?: string;
+    metaDescription?: string;
+    keywords?: string;
+    ogImageUrl?: string;
+    gaTrackingId?: string;
+  };
+}
+
+export interface PrivateSettings {
+  id: string; // 'global'
+  smtpHost?: string;
+  smtpPort?: string;
+  smtpUser?: string;
+  smtpPass?: string;
+  smtpSender?: string;
+  adminEmail?: string;
+  metaAppId?: string;
+  metaAppSecret?: string;
+  instagramAccountId?: string;
+  metaAccessToken?: string;
+}
+
+export interface InstagramPost {
+  id: string;
+  imageUrl: string;
+  caption: string;
+  scheduledTime: string; // ISO string
+  status: 'DRAFT' | 'SCHEDULED' | 'PUBLISHED' | 'FAILED';
+  publishedAt?: string; // ISO string
+  error?: string;
+  createdAt?: Timestamp;
+  updatedAt?: Timestamp;
 }
 
 export interface ContactMessage {

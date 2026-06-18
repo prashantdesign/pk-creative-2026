@@ -22,6 +22,8 @@ import {
   Images,
   FolderKanban,
   MessageSquareQuote,
+  Instagram,
+  Search,
 } from 'lucide-react';
 import Logo from '@/components/logo';
 import { useToast } from '@/hooks/use-toast';
@@ -57,6 +59,8 @@ const AdminSidebar = () => {
     { href: '/admin/gallery', label: 'Gallery', icon: Images },
     { href: '/admin/projects', label: 'Projects', icon: Briefcase },
     { href: '/admin/testimonials', label: 'Testimonials', icon: MessageSquareQuote },
+    { href: '/admin/instagram', label: 'Instagram', icon: Instagram },
+    { href: '/admin/seo', label: 'SEO', icon: Search },
     { href: '/admin/messages', label: 'Messages', icon: Mails },
     { href: '/admin/settings', label: 'Settings', icon: Settings },
   ];

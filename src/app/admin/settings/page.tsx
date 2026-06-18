@@ -1,5 +1,6 @@
 import React from 'react';
 import SettingsForm from '@/components/admin/settings-form';
+import PrivateSettingsForm from '@/components/admin/private-settings-form';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card';
 import DemoDataControls from '@/components/admin/demo-data-controls';
 
@@ -17,6 +18,17 @@ export default function SettingsPage() {
           </CardHeader>
           <CardContent>
             <SettingsForm />
+          </CardContent>
+        </Card>
+        <Card>
+          <CardHeader>
+            <CardTitle>Private Keys & API Integrations</CardTitle>
+            <CardDescription>
+              Manage your secure SMTP email server credentials and Meta Developer API keys.
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <PrivateSettingsForm />
           </CardContent>
         </Card>
         <Card className="border-destructive">
