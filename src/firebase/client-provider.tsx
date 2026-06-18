@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useEffect, type ReactNode } from 'react';
+import PKLoader from '@/components/pk-loader';
 import { FirebaseProvider } from '@/firebase/provider';
 import { initializeFirebase } from '@/firebase';
 import type { FirebaseApp } from 'firebase/app';
@@ -29,8 +30,8 @@ export function FirebaseClientProvider({ children }: FirebaseClientProviderProps
   // We'll show a loader to prevent rendering children that might depend on Firebase.
   if (!services) {
     return (
-        <div className="flex h-screen w-full items-center justify-center bg-background">
-            <div className="w-16 h-16 border-4 border-dashed rounded-full animate-spin border-primary"></div>
+        <div className="flex items-center justify-center min-h-screen">
+            <PKLoader />
         </div>
     );
   }

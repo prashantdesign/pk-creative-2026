@@ -5,6 +5,8 @@ import { doc } from 'firebase/firestore';
 import { useFirestore, useDoc } from '@/firebase';
 import type { SiteContent } from '@/types';
 
+import PKLoader from '@/components/pk-loader';
+
 type Theme = 'light' | 'dark';
 
 interface ThemeProviderProps {
@@ -36,7 +38,7 @@ export function ThemeProvider({ children }: ThemeProviderProps) {
     // This will prevent FOUC by showing a loader until the theme is fetched.
      return (
         <div className="flex h-screen w-full items-center justify-center bg-background">
-            <div className="w-16 h-16 border-4 border-dashed rounded-full animate-spin border-primary"></div>
+            <PKLoader />
         </div>
     );
   }

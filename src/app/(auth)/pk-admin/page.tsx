@@ -7,6 +7,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { signInWithEmailAndPassword, setPersistence, browserLocalPersistence } from 'firebase/auth';
 import { useAuth, useUser } from '@/firebase';
 import { useRouter } from 'next/navigation';
+import PKLoader from '@/components/pk-loader';
 
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -83,11 +84,11 @@ export default function LoginPage() {
       setIsLoading(false);
     }
   };
-  
+
   if (loading || user) {
       return (
         <div className="flex items-center justify-center h-screen">
-          <div className="w-16 h-16 border-4 border-dashed rounded-full animate-spin border-primary"></div>
+          <PKLoader />
         </div>
       );
   }

@@ -5,6 +5,7 @@ import { useFirestore, useDoc, useMemoFirebase } from '@/firebase';
 import { doc } from 'firebase/firestore';
 import type { SiteContent } from '@/types';
 
+import PKLoader from '@/components/pk-loader';
 import Header from '@/components/public/header';
 import Footer from '@/components/public/footer';
 import GallerySection from '@/components/public/gallery-section';
@@ -18,7 +19,7 @@ export default function GalleryPage() {
   if (loading) {
     return (
       <div className="flex h-screen w-full items-center justify-center bg-background">
-        <div className="w-16 h-16 border-4 border-dashed rounded-full animate-spin border-primary"></div>
+        <PKLoader />
       </div>
     );
   }

@@ -8,6 +8,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Skeleton } from '../ui/skeleton';
 import { X, ChevronLeft, ChevronRight } from 'lucide-react';
+import PKLoader from '@/components/pk-loader';
 
 interface GallerySectionProps {
   content: SiteContent | null;
@@ -178,8 +179,8 @@ export default function GallerySection({ content }: GallerySectionProps) {
                 
                 {/* Infinite Scroll trigger point */}
                 {visibleCount < filteredImages.length && (
-                  <div ref={loaderRef} className="py-12 flex justify-center">
-                    <div className="w-8 h-8 border-4 border-dashed rounded-full animate-spin border-primary opacity-50"></div>
+                  <div ref={loaderRef} className="py-12 flex justify-center opacity-70">
+                    <PKLoader size="sm" />
                   </div>
                 )}
 
