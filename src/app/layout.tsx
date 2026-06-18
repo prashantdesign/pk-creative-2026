@@ -5,7 +5,8 @@ import { Toaster } from "@/components/ui/toaster";
 import { ThemeProvider } from '@/components/theme-provider';
 import { FirebaseClientProvider } from '@/firebase';
 import { FirebaseErrorListener } from '@/components/firebase-error-listener';
-import { app } from '@/firebase/config';
+import { firebaseConfig } from '@/firebase/config';
+import { initializeApp, getApps } from 'firebase/app';
 import { getFirestore, doc, getDoc } from 'firebase/firestore';
 import Script from 'next/script';
 
@@ -15,6 +16,7 @@ const poppins = Poppins({ weight: ['400', '600', '700'], subsets: ['latin'], var
 export async function generateMetadata(): Promise<Metadata> {
   let seoSettings: any = {};
   try {
+    const app = getApps().length === 0 ? initializeApp(firebaseConfig) : getApps()[0];
     const db = getFirestore(app);
     const snap = await getDoc(doc(db, 'pkcreative_siteContent', 'global'));
     if (snap.exists()) {
@@ -41,6 +43,7 @@ export default async function RootLayout({
 }>) {
   let gaTrackingId = '';
   try {
+    const app = getApps().length === 0 ? initializeApp(firebaseConfig) : getApps()[0];
     const db = getFirestore(app);
     const snap = await getDoc(doc(db, 'pkcreative_siteContent', 'global'));
     if (snap.exists()) {
