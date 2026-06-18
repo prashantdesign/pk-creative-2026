@@ -39,7 +39,7 @@ export default function GalleryClient() {
     return query(collection(firestore, 'pkcreative_galleryImages'), orderBy('order', 'asc'));
   }, [firestore]);
 
-  const { data: images, loading } = useCollection<GalleryImage>(galleryQuery);
+  const { data: images, isLoading: loading } = useCollection<GalleryImage>(galleryQuery);
 
   const handleDelete = (id: string) => {
       if (!firestore || !window.confirm("Are you sure you want to delete this image?")) return;

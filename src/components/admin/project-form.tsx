@@ -106,7 +106,7 @@ export default function ProjectForm({ project }: { project?: Project }) {
 
   const { fields, append, remove } = useFieldArray({
     control: form.control,
-    name: "projectImages",
+    name: "projectImages" as never,
   });
 
   const handleUrlBlur = (e: React.FocusEvent<HTMLInputElement>, field: any) => {

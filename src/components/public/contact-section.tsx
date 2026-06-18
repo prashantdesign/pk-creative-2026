@@ -99,6 +99,7 @@ export default function ContactSection({ content }: { content?: SiteContent | nu
                       key={service}
                       checked={selectedServices.includes(service)}
                       onCheckedChange={() => handleServiceToggle(service)}
+                      onSelect={(e) => e.preventDefault()}
                     >
                       {service}
                     </DropdownMenuCheckboxItem>

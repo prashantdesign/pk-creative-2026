@@ -52,7 +52,7 @@ const formSchema = z.object({
 
   targetAudience: z.array(z.string()).optional(),
 
-  theme: z.enum(['light', 'dark']).default('dark'),
+  theme: z.enum(['light', 'dark', 'system']).default('dark'),
 
   contactSectionTitle: z.string().optional(),
   contactSectionDescription: z.string().optional(),
@@ -67,6 +67,12 @@ const formSchema = z.object({
 
   geminiModel: z.string().optional(),
   isAiFeatureEnabled: z.boolean().default(true),
+  
+  aboutImageUrl: z.string().optional(),
+
+  isWebsiteShowcaseVisible: z.boolean().default(true),
+  websiteShowcaseTitle: z.string().optional(),
+  websiteShowcaseDescription: z.string().optional(),
 });
 
 
@@ -111,6 +117,10 @@ export default function SiteContentForm() {
       email: "info@pkcreative.in",
       geminiModel: "models/gemini-1.5-flash",
       isAiFeatureEnabled: true,
+      aboutImageUrl: "",
+      isWebsiteShowcaseVisible: true,
+      websiteShowcaseTitle: "Websites We've Built",
+      websiteShowcaseDescription: "Check out some of the live websites we've designed and developed.",
     },
   });
 
@@ -153,6 +163,10 @@ export default function SiteContentForm() {
         email: siteContent.socials?.email,
         geminiModel: siteContent.aiSettings?.geminiModel || 'models/gemini-1.5-flash',
         isAiFeatureEnabled: siteContent.aiSettings?.isAiFeatureEnabled === undefined ? true : siteContent.aiSettings.isAiFeatureEnabled,
+        aboutImageUrl: siteContent.aboutImageUrl || "",
+        isWebsiteShowcaseVisible: siteContent.isWebsiteShowcaseVisible === undefined ? true : siteContent.isWebsiteShowcaseVisible,
+        websiteShowcaseTitle: siteContent.websiteShowcaseTitle || "Websites We've Built",
+        websiteShowcaseDescription: siteContent.websiteShowcaseDescription || "Check out some of the live websites we've designed and developed.",
       });
     }
   }, [siteContent, form]);
@@ -162,7 +176,7 @@ export default function SiteContentForm() {
     field.onChange(convertedUrl);
   };
 
-  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>, fieldName: 'aboutImageUrl' | `tools.${number}.iconUrl` ) => {
+  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>, fieldName: any ) => {
       const file = e.target.files?.[0];
       if (!file) return;
 
@@ -356,6 +370,34 @@ export default function SiteContentForm() {
               </Button>
             </AccordionContent>
           </AccordionItem>
+          
+          <AccordionItem value="websiteShowcase">
+            <AccordionTrigger className="text-xl font-semibold">Website Showcase Section</AccordionTrigger>
+            <AccordionContent className="pt-4 space-y-4">
+              <FormField
+                control={form.control}
+                name="isWebsiteShowcaseVisible"
+                render={({ field }) => (
+                  <FormItem className="flex flex-row items-center justify-between rounded-lg border p-4">
+                    <div className="space-y-0.5">
+                      <FormLabel>Show Website Showcase Section</FormLabel>
+                      <FormDescription>Toggle the visibility of the website showcase grid on the home page.</FormDescription>
+                    </div>
+                    <FormControl>
+                      <Switch checked={field.value} onCheckedChange={field.onChange} />
+                    </FormControl>
+                  </FormItem>
+                )}
+              />
+              <FormField control={form.control} name="websiteShowcaseTitle" render={({ field }) => (
+                  <FormItem><FormLabel>Section Title</FormLabel><FormControl><Input placeholder="Websites We've Built" {...field} value={field.value ?? ''} /></FormControl><FormMessage /></FormItem>
+              )} />
+              <FormField control={form.control} name="websiteShowcaseDescription" render={({ field }) => (
+                  <FormItem><FormLabel>Section Description</FormLabel><FormControl><Textarea {...field} value={field.value ?? ''} /></FormControl><FormMessage /></FormItem>
+              )} />
+            </AccordionContent>
+          </AccordionItem>
+
           <AccordionItem value="audience">
             <AccordionTrigger className="text-xl font-semibold">Target Audience</AccordionTrigger>
             <AccordionContent className="pt-4 space-y-4">

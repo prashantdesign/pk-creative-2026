@@ -55,10 +55,10 @@ const generateProjectDetailsFlow = ai.defineFlow(
     const model = googleAI.model(modelName || 'gemini-1.5-flash-latest');
     
     // Call the AI model with the defined prompt and input
-    const { output } = await projectDetailsPrompt({
-      input: { title, description },
-      model,
-    });
+    const { output } = await projectDetailsPrompt(
+      { title, description },
+      { model }
+    );
 
     // Handle cases where the model might not return an output
     if (!output) {

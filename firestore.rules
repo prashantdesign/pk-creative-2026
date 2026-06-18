@@ -173,5 +173,10 @@ service cloud.firestore {
       allow read: if request.auth == null || request.auth != null;
       allow write: if isAdmin();
     }
+    
+    match /pkcreative_websiteProjects/{projectId} {
+      allow read: if request.auth == null || request.auth != null;
+      allow write: if isAdmin();
+    }
   }
 }

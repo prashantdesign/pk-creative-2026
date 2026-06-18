@@ -1,5 +1,5 @@
 'use client';
-import React, { useMemo } from 'react';
+import React, { useMemo, use } from 'react';
 import ProjectForm from '@/components/admin/project-form';
 import { useFirestore, useDoc } from '@/firebase';
 import { doc } from 'firebase/firestore';
@@ -7,7 +7,8 @@ import type { Project } from '@/types';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card';
 import { Skeleton } from '@/components/ui/skeleton';
 
-export default function EditProjectPage({ params }: { params: { projectId: string } }) {
+export default function EditProjectPage(props: { params: Promise<{ projectId: string }> }) {
+  const params = use(props.params);
   const firestore = useFirestore();
   
   const projectRef = useMemo(() => {

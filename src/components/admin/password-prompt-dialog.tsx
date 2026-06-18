@@ -20,7 +20,7 @@ interface PasswordPromptDialogProps {
   onOpenChange: (open: boolean) => void;
   onConfirm: () => void;
   isSubmitting: boolean;
-  action: 'fill' | 'reset' | null;
+  action: 'fill' | 'reset' | 'migrate' | null;
 }
 
 export default function PasswordPromptDialog({

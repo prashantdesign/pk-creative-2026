@@ -38,7 +38,7 @@ export default function GalleryCategoriesClient() {
     return query(collection(firestore, 'pkcreative_galleryCategories'), orderBy('order', 'asc'));
   }, [firestore]);
 
-  const { data: categories, loading } = useCollection<GalleryCategory>(categoriesQuery);
+  const { data: categories, isLoading: loading } = useCollection<GalleryCategory>(categoriesQuery);
 
   const handleDelete = (id: string) => {
       if (!firestore || !window.confirm("Are you sure you want to delete this category? This might affect existing gallery images.")) return;

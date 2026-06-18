@@ -16,12 +16,16 @@ export const DEMO_SITE_CONTENT: Omit<SiteContent, 'id'> = {
     instagram: 'https://instagram.com/pkcreative.in',
     email: 'info@pkcreative.in'
   },
-  adminEmail: 'info@pkcreative.in',
   theme: 'light',
   isMaintenanceModeEnabled: false,
   areAnimationsEnabled: true,
+  isGallerySectionVisible: true,
   isPortfolioSectionVisible: true,
+  isServicesSectionVisible: true,
   isTestimonialsSectionVisible: true,
+  isWebsiteShowcaseVisible: true,
+  websiteShowcaseTitle: "Websites We've Built",
+  websiteShowcaseDescription: "Check out some of the live websites we've designed and developed.",
   services: [
     { title: 'Website Design & Dev', description: 'Business, Portfolio, and E-commerce websites built with modern technologies.', icon: 'monitor' },
     { title: 'UI/UX Design', description: 'Beautiful, intuitive user interfaces and landing pages that convert.', icon: 'layout' },

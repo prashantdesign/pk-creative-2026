@@ -10,6 +10,7 @@ import Header from '@/components/public/header';
 import HeroSection from '@/components/public/hero-section';
 import ServicesSection from '@/components/public/services-section';
 import TargetAudienceSection from '@/components/public/target-audience-section';
+import WebsiteShowcaseSection from '@/components/public/website-showcase-section';
 import PortfolioSection from '@/components/public/portfolio-section';
 import TestimonialsSection from '@/components/public/testimonials-section';
 import ContactSection from '@/components/public/contact-section';
@@ -71,6 +72,7 @@ export default function Home() {
         <HeroSection content={siteContent} />
         {(siteContent?.isServicesSectionVisible ?? true) && <ServicesSection content={siteContent} />}
         {(siteContent?.isTargetAudienceSectionVisible ?? true) && <TargetAudienceSection content={siteContent} />}
+        {(siteContent?.isWebsiteShowcaseVisible ?? true) && <WebsiteShowcaseSection content={siteContent} />}
         {(siteContent?.isPortfolioSectionVisible ?? true) && <PortfolioSection content={siteContent} onProjectClick={handleProjectClick} />}
         {(siteContent?.isTestimonialsSectionVisible ?? true) && <TestimonialsSection content={siteContent} />}
         <ContactSection content={siteContent} />

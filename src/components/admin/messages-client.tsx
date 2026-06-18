@@ -152,10 +152,10 @@ export default function MessagesClient() {
                                 </Button>
                                 </DropdownMenuTrigger>
                                 <DropdownMenuContent align="end">
-                                <DropdownMenuItem onClick={() => setViewMessage(message)}>
+                                <DropdownMenuItem onSelect={() => setTimeout(() => setViewMessage(message), 0)}>
                                     <Eye className="mr-2 h-4 w-4" /> View Details
                                 </DropdownMenuItem>
-                                <DropdownMenuItem onClick={() => setReplyMessage(message)}>
+                                <DropdownMenuItem onSelect={() => setTimeout(() => setReplyMessage(message), 0)}>
                                     <Reply className="mr-2 h-4 w-4" /> Reply
                                 </DropdownMenuItem>
                                 <DropdownMenuItem onClick={() => toggleReadStatus(message.id, message.isRead)}>
@@ -217,10 +217,10 @@ export default function MessagesClient() {
                         </Button>
                         </DropdownMenuTrigger>
                         <DropdownMenuContent align="end">
-                        <DropdownMenuItem onClick={() => setViewMessage(message)}>
+                        <DropdownMenuItem onSelect={() => setTimeout(() => setViewMessage(message), 0)}>
                             <Eye className="mr-2 h-4 w-4" /> View Details
                         </DropdownMenuItem>
-                        <DropdownMenuItem onClick={() => setReplyMessage(message)}>
+                        <DropdownMenuItem onSelect={() => setTimeout(() => setReplyMessage(message), 0)}>
                             <Reply className="mr-2 h-4 w-4" /> Reply
                         </DropdownMenuItem>
                         <DropdownMenuItem onClick={() => toggleReadStatus(message.id, message.isRead)}>

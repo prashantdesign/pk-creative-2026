@@ -1,5 +1,5 @@
 'use client';
-import React, { useMemo } from 'react';
+import React, { useMemo, use } from 'react';
 import { useFirestore, useDoc } from '@/firebase';
 import { doc } from 'firebase/firestore';
 import type { ProjectCategory } from '@/types';
@@ -7,7 +7,8 @@ import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/com
 import { Skeleton } from '@/components/ui/skeleton';
 import ProjectCategoryForm from '@/components/admin/project-category-form';
 
-export default function EditProjectCategoryPage({ params }: { params: { categoryId: string } }) {
+export default function EditProjectCategoryPage(props: { params: Promise<{ categoryId: string }> }) {
+  const params = use(props.params);
   const firestore = useFirestore();
   
   const categoryRef = useMemo(() => {

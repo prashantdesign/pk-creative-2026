@@ -1,5 +1,5 @@
 'use client';
-import React, { useMemo } from 'react';
+import React, { useMemo, use } from 'react';
 import GalleryForm from '@/components/admin/gallery-form';
 import { useFirestore, useDoc } from '@/firebase';
 import { doc } from 'firebase/firestore';
@@ -7,7 +7,8 @@ import type { GalleryImage } from '@/types';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card';
 import { Skeleton } from '@/components/ui/skeleton';
 
-export default function EditGalleryImagePage({ params }: { params: { imageId: string } }) {
+export default function EditGalleryImagePage(props: { params: Promise<{ imageId: string }> }) {
+  const params = use(props.params);
   const firestore = useFirestore();
   
   const imageRef = useMemo(() => {

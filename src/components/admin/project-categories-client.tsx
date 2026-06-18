@@ -38,7 +38,7 @@ export default function ProjectCategoriesClient() {
     return query(collection(firestore, 'pkcreative_projectCategories'), orderBy('order', 'asc'));
   }, [firestore]);
 
-  const { data: categories, loading } = useCollection<ProjectCategory>(categoriesQuery);
+  const { data: categories, isLoading: loading } = useCollection<ProjectCategory>(categoriesQuery);
 
   const handleDelete = (id: string) => {
       if (!firestore || !window.confirm("Are you sure you want to delete this category? This might affect existing projects.")) return;

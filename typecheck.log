@@ -1,0 +1,53 @@
+
+> nextn@0.1.0 typecheck
+> tsc --noEmit
+
+.next/types/app/admin/gallery-categories/edit/[categoryId]/page.ts(34,29): error TS2344: Type '{ params: { categoryId: string; }; }' does not satisfy the constraint 'PageProps'.
+  Types of property 'params' are incompatible.
+    Type '{ categoryId: string; }' is missing the following properties from type 'Promise<any>': then, catch, finally, [Symbol.toStringTag]
+.next/types/app/admin/gallery/edit/[imageId]/page.ts(34,29): error TS2344: Type '{ params: { imageId: string; }; }' does not satisfy the constraint 'PageProps'.
+  Types of property 'params' are incompatible.
+    Type '{ imageId: string; }' is missing the following properties from type 'Promise<any>': then, catch, finally, [Symbol.toStringTag]
+.next/types/app/admin/project-categories/edit/[categoryId]/page.ts(34,29): error TS2344: Type '{ params: { categoryId: string; }; }' does not satisfy the constraint 'PageProps'.
+  Types of property 'params' are incompatible.
+    Type '{ categoryId: string; }' is missing the following properties from type 'Promise<any>': then, catch, finally, [Symbol.toStringTag]
+.next/types/app/admin/projects/edit/[projectId]/page.ts(34,29): error TS2344: Type '{ params: { projectId: string; }; }' does not satisfy the constraint 'PageProps'.
+  Types of property 'params' are incompatible.
+    Type '{ projectId: string; }' is missing the following properties from type 'Promise<any>': then, catch, finally, [Symbol.toStringTag]
+src/ai/flows/generate-project-details.ts(59,7): error TS2353: Object literal may only specify known properties, and 'input' does not exist in type '{ title: string; description: string; }'.
+src/components/admin/demo-data-controls.tsx(221,9): error TS2322: Type '"fill" | "reset" | "migrate" | null' is not assignable to type '"fill" | "reset" | null'.
+  Type '"migrate"' is not assignable to type '"fill" | "reset" | null'.
+src/components/admin/gallery-categories-client.tsx(41,29): error TS2339: Property 'loading' does not exist on type 'UseCollectionResult<GalleryCategory>'.
+src/components/admin/gallery-client.tsx(42,25): error TS2339: Property 'loading' does not exist on type 'UseCollectionResult<GalleryImage>'.
+src/components/admin/project-categories-client.tsx(41,29): error TS2339: Property 'loading' does not exist on type 'UseCollectionResult<ProjectCategory>'.
+src/components/admin/project-form.tsx(109,5): error TS2322: Type 'string' is not assignable to type 'never'.
+src/components/admin/projects-client.tsx(46,27): error TS2339: Property 'loading' does not exist on type 'UseCollectionResult<Project>'.
+src/components/admin/projects-client.tsx(47,29): error TS2339: Property 'loading' does not exist on type 'UseCollectionResult<ProjectCategory>'.
+src/components/admin/site-content-form.tsx(149,9): error TS2322: Type '"light" | "dark" | "system"' is not assignable to type '"light" | "dark" | undefined'.
+  Type '"system"' is not assignable to type '"light" | "dark" | undefined'.
+src/components/admin/site-content-form.tsx(178,25): error TS2345: Argument of type '`tools.${number}.iconUrl` | "aboutImageUrl"' is not assignable to parameter of type '"theme" | "services" | "email" | "siteName" | "logoUrl" | "heroTitle" | "heroSubtitle" | "ctaText" | "ctaLink" | "gallerySectionTitle" | "gallerySectionDescription" | "portfolioSectionTitle" | ... 19 more ... | `targetAudience.${number}`'.
+  Type '`tools.${number}.iconUrl`' is not assignable to type '"theme" | "services" | "email" | "siteName" | "logoUrl" | "heroTitle" | "heroSubtitle" | "ctaText" | "ctaLink" | "gallerySectionTitle" | "gallerySectionDescription" | "portfolioSectionTitle" | ... 19 more ... | `targetAudience.${number}`'.
+src/components/admin/site-content-form.tsx(232,36): error TS2769: No overload matches this call.
+  Overload 1 of 4, '(names: readonly ("theme" | "services" | "email" | "siteName" | "logoUrl" | "heroTitle" | "heroSubtitle" | "ctaText" | "ctaLink" | "gallerySectionTitle" | "gallerySectionDescription" | "portfolioSectionTitle" | ... 19 more ... | `targetAudience.${number}`)[], defaultValue?: { ...; } | undefined): readonly (string | ... 4 more ... | undefined)[]', gave the following error.
+    Argument of type 'string' is not assignable to parameter of type 'readonly ("theme" | "services" | "email" | "siteName" | "logoUrl" | "heroTitle" | "heroSubtitle" | "ctaText" | "ctaLink" | "gallerySectionTitle" | "gallerySectionDescription" | "portfolioSectionTitle" | ... 19 more ... | `targetAudience.${number}`)[]'.
+  Overload 2 of 4, '(name: "theme" | "services" | "email" | "siteName" | "logoUrl" | "heroTitle" | "heroSubtitle" | "ctaText" | "ctaLink" | "gallerySectionTitle" | "gallerySectionDescription" | "portfolioSectionTitle" | ... 19 more ... | `targetAudience.${number}`, defaultValue?: string | ... 4 more ... | undefined): string | ... 4 more ... | undefined', gave the following error.
+    Argument of type '"aboutImageUrl"' is not assignable to parameter of type '"theme" | "services" | "email" | "siteName" | "logoUrl" | "heroTitle" | "heroSubtitle" | "ctaText" | "ctaLink" | "gallerySectionTitle" | "gallerySectionDescription" | "portfolioSectionTitle" | ... 19 more ... | `targetAudience.${number}`'.
+  Overload 3 of 4, '(callback: WatchObserver<{ theme: "light" | "dark"; heroTitle: string; heroSubtitle: string; isAiFeatureEnabled: boolean; services?: { title: string; description: string; icon?: string | undefined; }[] | undefined; ... 21 more ...; geminiModel?: string | undefined; }>, defaultValues?: { ...; } | undefined): Subscription', gave the following error.
+    Argument of type 'string' is not assignable to parameter of type 'WatchObserver<{ theme: "light" | "dark"; heroTitle: string; heroSubtitle: string; isAiFeatureEnabled: boolean; services?: { title: string; description: string; icon?: string | undefined; }[] | undefined; ... 21 more ...; geminiModel?: string | undefined; }>'.
+src/components/public/about-section.tsx(15,25): error TS2339: Property 'aboutText' does not exist on type 'SiteContent'.
+src/components/public/about-section.tsx(20,23): error TS2339: Property 'aboutImageUrl' does not exist on type 'SiteContent'.
+src/components/public/about-section.tsx(22,30): error TS2339: Property 'aboutImageUrl' does not exist on type 'SiteContent'.
+src/components/public/project-card.tsx(22,26): error TS2551: Property 'mainImageUrl' does not exist on type 'Project'. Did you mean 'imageUrl'?
+src/components/public/project-card.tsx(39,76): error TS2551: Property 'shortDescription' does not exist on type 'Project'. Did you mean 'description'?
+src/components/public/project-card.tsx(43,49): error TS2339: Property 'category' does not exist on type 'Project'.
+src/components/public/project-card.tsx(44,22): error TS2339: Property 'tags' does not exist on type 'Project'.
+src/components/public/project-card.tsx(44,43): error TS7006: Parameter 'tag' implicitly has an 'any' type.
+src/components/public/stats-section.tsx(6,17): error TS2339: Property 'stats' does not exist on type 'SiteContent'.
+src/components/public/stats-section.tsx(6,34): error TS2339: Property 'stats' does not exist on type 'SiteContent'.
+src/components/public/stats-section.tsx(14,20): error TS2339: Property 'stats' does not exist on type 'SiteContent'.
+src/components/public/stats-section.tsx(14,31): error TS7006: Parameter 'stat' implicitly has an 'any' type.
+src/components/public/stats-section.tsx(14,37): error TS7006: Parameter 'index' implicitly has an 'any' type.
+src/components/ui/calendar.tsx(57,9): error TS2353: Object literal may only specify known properties, and 'IconLeft' does not exist in type 'Partial<CustomComponents>'.
+src/components/ui/calendar.tsx(57,22): error TS7031: Binding element 'className' implicitly has an 'any' type.
+src/components/ui/calendar.tsx(60,23): error TS7031: Binding element 'className' implicitly has an 'any' type.
+src/lib/demo-data.ts(19,3): error TS2353: Object literal may only specify known properties, and 'adminEmail' does not exist in type 'Omit<SiteContent, "id">'.

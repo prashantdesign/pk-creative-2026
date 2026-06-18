@@ -19,7 +19,7 @@ const ProjectCard = ({ project, onProjectClick }: ProjectCardProps) => {
       <CardHeader className="p-0">
         <div className="relative h-60 w-full">
           <Image
-            src={project.mainImageUrl}
+            src={project.imageUrl}
             alt={project.title}
             fill
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
@@ -36,13 +36,12 @@ const ProjectCard = ({ project, onProjectClick }: ProjectCardProps) => {
         </div>
       </CardHeader>
       <CardContent className="p-4">
-        <p className="text-sm text-muted-foreground line-clamp-2">{project.shortDescription}</p>
+        <p className="text-sm text-muted-foreground line-clamp-2">{project.description}</p>
       </CardContent>
       <CardFooter className="p-4 pt-0">
         <div className="flex flex-wrap gap-2">
-            <Badge variant="secondary">{project.category}</Badge>
-            {project.tags.slice(0, 2).map(tag => (
-                <Badge key={tag} variant="outline">{tag}</Badge>
+            {project.toolsUsed && project.toolsUsed.split(',').slice(0, 3).map((tool, idx) => (
+                <Badge key={idx} variant="outline">{tool.trim()}</Badge>
             ))}
         </div>
       </CardFooter>

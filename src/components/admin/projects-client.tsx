@@ -43,8 +43,8 @@ export default function ProjectsClient() {
     return query(collection(firestore, 'pkcreative_projectCategories'));
   }, [firestore]);
   
-  const { data: projects, loading: projectsLoading } = useCollection<Project>(projectsQuery);
-  const { data: categories, loading: categoriesLoading } = useCollection<ProjectCategory>(categoriesQuery);
+  const { data: projects, isLoading: projectsLoading } = useCollection<Project>(projectsQuery);
+  const { data: categories, isLoading: categoriesLoading } = useCollection<ProjectCategory>(categoriesQuery);
 
   const categoryMap = useMemo(() => {
     if (!categories) return {};

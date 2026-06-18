@@ -110,6 +110,22 @@ export interface SiteContent {
   isTeamSectionVisible?: boolean;
   teamSectionTitle?: string;
   teamSectionDescription?: string;
+  aboutText?: string;
+  aboutImageUrl?: string;
+  stats?: { label: string; value: string }[];
+  isWebsiteShowcaseVisible?: boolean;
+  websiteShowcaseTitle?: string;
+  websiteShowcaseDescription?: string;
+}
+
+export interface WebsiteProject {
+  id: string;
+  name: string;
+  url: string;
+  logoUrl?: string;
+  order: number;
+  createdAt?: Timestamp;
+  updatedAt?: Timestamp;
 }
 
 export interface TeamMember {
