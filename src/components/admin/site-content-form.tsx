@@ -374,21 +374,7 @@ export default function SiteContentForm() {
           <AccordionItem value="websiteShowcase">
             <AccordionTrigger className="text-xl font-semibold">Website Showcase Section</AccordionTrigger>
             <AccordionContent className="pt-4 space-y-4">
-              <FormField
-                control={form.control}
-                name="isWebsiteShowcaseVisible"
-                render={({ field }) => (
-                  <FormItem className="flex flex-row items-center justify-between rounded-lg border p-4">
-                    <div className="space-y-0.5">
-                      <FormLabel>Show Website Showcase Section</FormLabel>
-                      <FormDescription>Toggle the visibility of the website showcase grid on the home page.</FormDescription>
-                    </div>
-                    <FormControl>
-                      <Switch checked={field.value} onCheckedChange={field.onChange} />
-                    </FormControl>
-                  </FormItem>
-                )}
-              />
+
               <FormField control={form.control} name="websiteShowcaseTitle" render={({ field }) => (
                   <FormItem><FormLabel>Section Title</FormLabel><FormControl><Input placeholder="Websites We've Built" {...field} value={field.value ?? ''} /></FormControl><FormMessage /></FormItem>
               )} />

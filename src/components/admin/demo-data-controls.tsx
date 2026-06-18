@@ -144,7 +144,6 @@ export default function DemoDataControls() {
       // Then clone the old data into the empty collections using a new batch
       const cloneBatch = writeBatch(firestore);
       const collectionsToMigrate = [
-        { from: 'siteContent', to: 'pkcreative_siteContent' },
         { from: 'projects', to: 'pkcreative_projects' },
         { from: 'projectCategories', to: 'pkcreative_projectCategories' },
         { from: 'galleryImages', to: 'pkcreative_galleryImages' },
@@ -156,34 +155,13 @@ export default function DemoDataControls() {
         const snapshot = await getDocs(collection(firestore, coll.from));
         snapshot.forEach(docSnap => {
           const newDocRef = doc(firestore, coll.to, docSnap.id);
-          let data = docSnap.data();
-
-          if (coll.from === 'siteContent' && docSnap.id === 'global') {
-            // Merge in all the new agency default texts if they are missing in the old database
-            data = {
-              ...data,
-              services: data.services && data.services.length > 0 ? data.services : DEMO_SITE_CONTENT.services,
-              targetAudience: data.targetAudience && data.targetAudience.length > 0 ? data.targetAudience : DEMO_SITE_CONTENT.targetAudience,
-              isServicesSectionVisible: data.isServicesSectionVisible !== undefined ? data.isServicesSectionVisible : true,
-              isTargetAudienceSectionVisible: data.isTargetAudienceSectionVisible !== undefined ? data.isTargetAudienceSectionVisible : true,
-              servicesSectionTitle: data.servicesSectionTitle || DEMO_SITE_CONTENT.servicesSectionTitle,
-              servicesSectionDescription: data.servicesSectionDescription || DEMO_SITE_CONTENT.servicesSectionDescription,
-              targetAudienceSectionTitle: data.targetAudienceSectionTitle || DEMO_SITE_CONTENT.targetAudienceSectionTitle,
-              targetAudienceSectionDescription: data.targetAudienceSectionDescription || DEMO_SITE_CONTENT.targetAudienceSectionDescription,
-              contactSectionTitle: data.contactSectionTitle || DEMO_SITE_CONTENT.contactSectionTitle,
-              contactSectionDescription: data.contactSectionDescription || DEMO_SITE_CONTENT.contactSectionDescription,
-              footerDescription: data.footerDescription || DEMO_SITE_CONTENT.footerDescription,
-              footerCopyrightText: data.footerCopyrightText || DEMO_SITE_CONTENT.footerCopyrightText,
-            };
-            
-            if (data.portfolioSectionTitle === "My Work") {
-               data.portfolioSectionTitle = "Our Work";
-            }
-          }
-
-          cloneBatch.set(newDocRef, data);
+          cloneBatch.set(newDocRef, docSnap.data());
         });
       }
+
+      // Instead of migrating old siteContent (which has "I/My" text), we inject the clean DEMO_SITE_CONTENT
+      const siteContentRef = doc(firestore, 'pkcreative_siteContent', 'global');
+      cloneBatch.set(siteContentRef, DEMO_SITE_CONTENT);
 
       await cloneBatch.commit();
       toast({ title: 'Success!', description: 'Database successfully cloned from your personal site!' });

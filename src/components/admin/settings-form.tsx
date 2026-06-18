@@ -23,6 +23,7 @@ const formSchema = z.object({
   isTestimonialsSectionVisible: z.boolean().default(true),
   isTargetAudienceSectionVisible: z.boolean().default(true),
   isPortfolioSectionVisible: z.boolean().default(true),
+  isWebsiteShowcaseVisible: z.boolean().default(true),
   isTeamSectionVisible: z.boolean().default(true),
 });
 
@@ -43,6 +44,7 @@ export default function SettingsForm() {
       isTestimonialsSectionVisible: true,
       isTargetAudienceSectionVisible: true,
       isPortfolioSectionVisible: true,
+      isWebsiteShowcaseVisible: true,
       isTeamSectionVisible: true,
     },
   });
@@ -56,6 +58,7 @@ export default function SettingsForm() {
         isTestimonialsSectionVisible: siteContent.isTestimonialsSectionVisible === undefined ? true : siteContent.isTestimonialsSectionVisible,
         isTargetAudienceSectionVisible: siteContent.isTargetAudienceSectionVisible === undefined ? true : siteContent.isTargetAudienceSectionVisible,
         isPortfolioSectionVisible: siteContent.isPortfolioSectionVisible === undefined ? true : siteContent.isPortfolioSectionVisible,
+        isWebsiteShowcaseVisible: siteContent.isWebsiteShowcaseVisible === undefined ? true : siteContent.isWebsiteShowcaseVisible,
         isTeamSectionVisible: siteContent.isTeamSectionVisible === undefined ? true : siteContent.isTeamSectionVisible,
       });
     }
@@ -209,6 +212,26 @@ export default function SettingsForm() {
                     <FormLabel>Show Portfolio Section</FormLabel>
                      <FormDescription>
                       Control the visibility of the project portfolio section.
+                    </FormDescription>
+                  </div>
+                  <FormControl>
+                    <Switch
+                      checked={field.value}
+                      onCheckedChange={field.onChange}
+                    />
+                  </FormControl>
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="isWebsiteShowcaseVisible"
+              render={({ field }) => (
+                <FormItem className="flex flex-row items-center justify-between rounded-lg border p-4">
+                  <div className="space-y-0.5">
+                    <FormLabel>Show Website Showcase Section</FormLabel>
+                     <FormDescription>
+                      Control the visibility of the website showcase grid section.
                     </FormDescription>
                   </div>
                   <FormControl>
