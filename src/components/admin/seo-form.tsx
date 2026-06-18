@@ -125,20 +125,22 @@ export default function SeoForm() {
                   <FormItem><FormLabel>Keywords</FormLabel><FormDescription>Comma separated (e.g., UI design, web development, branding)</FormDescription><FormControl><Input {...field} value={field.value ?? ''} /></FormControl><FormMessage /></FormItem>
               )} />
                <FormField control={form.control} name="ogImageUrl" render={({ field }) => (
-                  <FormItem>
-                      <FormLabel>Open Graph Image URL</FormLabel>
-                      <FormDescription>The image shown when your website is shared on Twitter, LinkedIn, Facebook, etc.</FormDescription>
-                      <FormControl><Input {...field} value={field.value ?? ''} /></FormControl>
+                  <FormItem className="space-y-4">
+                      <div className="space-y-2">
+                        <FormLabel>Open Graph Image URL</FormLabel>
+                        <FormControl><Input placeholder="https://..." {...field} value={field.value ?? ''} /></FormControl>
+                      </div>
+                      <div className="space-y-2">
+                        <FormLabel>Or upload an image file</FormLabel>
+                        <FormControl>
+                          <Input type="file" onChange={handleImageUpload} disabled={isUploading} />
+                        </FormControl>
+                        {isUploading && <p className="text-sm text-muted-foreground mt-2">Uploading...</p>}
+                        <FormDescription>The image shown when your website is shared on Twitter, LinkedIn, Facebook, etc.</FormDescription>
+                      </div>
                       <FormMessage />
                   </FormItem>
               )} />
-               <FormItem>
-                <FormLabel>Upload Open Graph Image</FormLabel>
-                <FormControl>
-                  <Input type="file" onChange={handleImageUpload} disabled={isUploading} />
-                </FormControl>
-                {isUploading && <p className="text-sm text-muted-foreground mt-2">Uploading...</p>}
-              </FormItem>
             </CardContent>
         </Card>
 

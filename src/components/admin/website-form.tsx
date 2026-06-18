@@ -137,9 +137,10 @@ export default function WebsiteForm({ website, onSuccess }: Props) {
                 </div>
               )}
               <div className="flex-1 space-y-2">
+                 <FormControl><Input placeholder="https://..." {...field} value={field.value || ''} /></FormControl>
                  <FormControl><Input type="file" accept="image/jpeg,image/png,image/webp,image/svg+xml" onChange={handlePhotoUpload} disabled={isUploading} /></FormControl>
                  {isUploading && <p className="text-sm text-muted-foreground">Uploading...</p>}
-                 <FormDescription>If left empty, we will try to auto-fetch the logo from the URL.</FormDescription>
+                 <FormDescription>Paste a URL or upload a file. If left empty, we will try to auto-fetch the logo from the URL.</FormDescription>
               </div>
             </div>
             <FormMessage />

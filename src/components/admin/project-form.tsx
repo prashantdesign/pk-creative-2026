@@ -241,31 +241,28 @@ export default function ProjectForm({ project }: { project?: Project }) {
             <AccordionContent className="pt-4 space-y-6">
               <div className="space-y-2 p-4 border rounded-lg">
                 <FormLabel className="font-semibold">Main Image</FormLabel>
-                <Tabs defaultValue="url" className="w-full">
-                  <TabsList className="grid w-full grid-cols-2">
-                    <TabsTrigger value="url">URL</TabsTrigger>
-                    <TabsTrigger value="upload">Upload</TabsTrigger>
-                  </TabsList>
-                  <TabsContent value="url" className="pt-4">
-                    <FormField control={form.control} name="imageUrl" render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Image URL</FormLabel>
-                        <FormControl><Input placeholder="https://..." {...field} onBlur={(e) => handleUrlBlur(e, field)} /></FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )} />
-                  </TabsContent>
-                  <TabsContent value="upload" className="pt-4">
-                    <FormItem>
-                      <FormLabel>Upload an image file</FormLabel>
-                      <FormControl>
-                        <Input type="file" onChange={(e) => handleImageUpload(e, 'imageUrl')} disabled={isUploading} />
-                      </FormControl>
-                      {isUploading && <p className="text-sm text-muted-foreground mt-2">Uploading...</p>}
+                <FormField
+                  control={form.control}
+                  name="imageUrl"
+                  render={({ field }) => (
+                    <FormItem className="space-y-4">
+                      <div className="space-y-2">
+                        <FormLabel>Image URL (Optional)</FormLabel>
+                        <FormControl>
+                          <Input placeholder="https://..." {...field} onBlur={(e) => handleUrlBlur(e, field)} />
+                        </FormControl>
+                      </div>
+                      <div className="space-y-2">
+                        <FormLabel>Or upload an image file</FormLabel>
+                        <FormControl>
+                          <Input type="file" onChange={(e) => handleImageUpload(e, 'imageUrl')} disabled={isUploading} />
+                        </FormControl>
+                        {isUploading && <p className="text-sm text-muted-foreground mt-2">Uploading...</p>}
+                      </div>
                       <FormMessage />
                     </FormItem>
-                  </TabsContent>
-                </Tabs>
+                  )}
+                />
                 {mainImageUrl && (
                   <div className="mt-4">
                     <FormLabel>Preview</FormLabel>

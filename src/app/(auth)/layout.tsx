@@ -1,4 +1,10 @@
 import React from 'react';
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'PK Creative Admin Login',
+  manifest: '/admin/manifest.webmanifest',
+};
 
 export default function AuthLayout({
   children,

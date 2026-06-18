@@ -260,21 +260,22 @@ export default function SiteContentForm() {
                   <FormItem><FormLabel>Site Name (Text Logo)</FormLabel><FormControl><Input placeholder="PK Creative" {...field} value={field.value ?? ''} /></FormControl><FormMessage /></FormItem>
               )} />
               <FormField control={form.control} name="logoUrl" render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Custom Logo URL (Optional)</FormLabel>
-                    <FormDescription>If provided, this image will be used instead of the Site Name text in the header and footer.</FormDescription>
-                    <FormControl><Input placeholder="https://..." {...field} value={field.value ?? ''} onBlur={(e) => handleUrlBlur(e, field)} /></FormControl>
-                    <FormMessage />
+                  <FormItem className="space-y-4">
+                      <div className="space-y-2">
+                        <FormLabel>Logo URL (Optional)</FormLabel>
+                        <FormControl><Input placeholder="https://..." {...field} value={field.value ?? ''} onBlur={(e) => handleUrlBlur(e, field)} /></FormControl>
+                      </div>
+                      <div className="space-y-2">
+                        <FormLabel>Or upload a custom logo</FormLabel>
+                        <FormControl>
+                          <Input type="file" onChange={(e) => handleImageUpload(e, 'logoUrl' as any)} disabled={isUploading} />
+                        </FormControl>
+                        {isUploading && <p className="text-sm text-muted-foreground mt-2">Uploading...</p>}
+                        <FormDescription>If provided, this image will be used instead of the Site Name text in the header and footer.</FormDescription>
+                      </div>
+                      <FormMessage />
                   </FormItem>
               )} />
-              <FormItem>
-                <FormLabel>Upload Custom Logo</FormLabel>
-                <FormControl>
-                  <Input type="file" onChange={(e) => handleImageUpload(e, 'logoUrl' as any)} disabled={isUploading} />
-                </FormControl>
-                {isUploading && <p className="text-sm text-muted-foreground mt-2">Uploading...</p>}
-                <FormMessage />
-              </FormItem>
               <FormField control={form.control} name="heroTitle" render={({ field }) => (
                 <FormItem><FormLabel>Title</FormLabel><FormControl><Input {...field} /></FormControl><FormMessage /></FormItem>
               )} />

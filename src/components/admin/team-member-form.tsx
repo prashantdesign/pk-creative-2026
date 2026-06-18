@@ -102,9 +102,10 @@ export default function TeamMemberForm({ member, onSuccess }: Props) {
                 </div>
               )}
               <div className="flex-1 space-y-2">
+                 <FormControl><Input placeholder="https://..." {...field} value={field.value || ''} /></FormControl>
                  <FormControl><Input type="file" accept="image/jpeg,image/png,image/webp" onChange={handlePhotoUpload} disabled={isUploading} /></FormControl>
                  {isUploading && <p className="text-sm text-muted-foreground">Uploading...</p>}
-                 <FormDescription>Vertical portraits (3:4 ratio) work best.</FormDescription>
+                 <FormDescription>Paste a URL or upload a file. Vertical portraits (3:4 ratio) work best.</FormDescription>
               </div>
             </div>
             <FormMessage />
