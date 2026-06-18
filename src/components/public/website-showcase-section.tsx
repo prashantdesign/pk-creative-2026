@@ -26,6 +26,77 @@ const getFaviconUrl = (url: string) => {
   }
 };
 
+const WebsiteCard = ({ 
+  website, 
+  index, 
+  current, 
+  api 
+}: { 
+  website: WebsiteProject; 
+  index: number; 
+  current: number; 
+  api: CarouselApi | undefined 
+}) => {
+  const [imgError, setImgError] = useState(false);
+  const displayLogo = website.logoUrl || getFaviconUrl(website.url);
+  const isActive = current === index;
+
+  return (
+    <CarouselItem 
+      className="pl-4 md:pl-8 basis-full sm:basis-[70%] md:basis-[50%] lg:basis-[40%] xl:basis-[35%] max-w-lg transition-transform duration-500"
+      onClick={() => api?.scrollTo(index)}
+    >
+      <div 
+        className={`group relative flex flex-col items-center justify-center p-8 rounded-2xl border transition-all duration-700 ease-out h-full cursor-pointer
+          ${isActive 
+            ? 'bg-secondary/80 border-primary/40 scale-100 sm:scale-110 shadow-2xl z-10 opacity-100' 
+            : 'bg-secondary/20 border-border/50 scale-90 sm:scale-95 opacity-50 hover:opacity-80'
+          }
+        `}
+      >
+        <div className={`w-full max-w-[200px] h-24 mb-6 rounded-2xl bg-background border flex items-center justify-center shadow-sm overflow-hidden p-4 transition-transform duration-700 ${isActive ? 'scale-110' : ''}`}>
+          {displayLogo && !imgError ? (
+            <img 
+               src={displayLogo} 
+               alt={website.name} 
+               className="object-contain w-full h-full" 
+               onError={() => setImgError(true)}
+            />
+          ) : (
+            <span className="text-4xl font-bold text-muted-foreground tracking-tight">{website.name.charAt(0)}</span>
+          )}
+        </div>
+        
+        <h3 className={`font-bold mb-2 text-foreground text-center line-clamp-1 transition-all duration-700 ${isActive ? 'text-2xl sm:text-3xl' : 'text-xl'}`}>
+          {website.name}
+        </h3>
+        
+        <a 
+          href={website.url} 
+          target="_blank" 
+          rel="noopener noreferrer" 
+          className="text-sm text-muted-foreground mb-6 hover:text-primary transition-colors line-clamp-1 break-all text-center"
+          onClick={(e) => e.stopPropagation()}
+        >
+          {website.url.replace(/^https?:\/\//, '').replace(/\/$/, '')}
+        </a>
+
+        <div className={`w-full mt-auto transition-all duration-700 ${isActive ? 'opacity-100 h-auto translate-y-0' : 'opacity-0 h-0 overflow-hidden translate-y-4'}`}>
+          <Button 
+            asChild 
+            variant="default" 
+            className="w-full mt-4"
+          >
+            <a href={website.url} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()}>
+              Visit Website <ExternalLink className="ml-2 h-4 w-4" />
+            </a>
+          </Button>
+        </div>
+      </div>
+    </CarouselItem>
+  );
+};
+
 export default function WebsiteShowcaseSection({ content }: { content: SiteContent | null }) {
   const firestore = useFirestore();
   const [api, setApi] = useState<CarouselApi>();
@@ -70,75 +141,25 @@ export default function WebsiteShowcaseSection({ content }: { content: SiteConte
           opts={{
             align: "center",
             loop: true,
+            containScroll: false,
           }}
           setApi={setApi}
-          className="w-full max-w-6xl mx-auto"
+          className="w-full max-w-7xl mx-auto"
         >
-          <CarouselContent className="-ml-4 md:-ml-8 py-10">
-            {websites.map((website, index) => {
-              const displayLogo = website.logoUrl || getFaviconUrl(website.url);
-              const isActive = current === index;
-
-              return (
-                <CarouselItem 
-                  key={website.id} 
-                  className="pl-4 md:pl-8 basis-full sm:basis-[60%] lg:basis-[40%] xl:basis-[33%] max-w-md"
-                  onClick={() => api?.scrollTo(index)}
-                >
-                  <div 
-                    className={`group relative flex flex-col items-center justify-center p-8 rounded-2xl border transition-all duration-500 ease-out h-full cursor-pointer
-                      ${isActive 
-                        ? 'bg-secondary/80 border-primary/40 scale-100 md:scale-110 shadow-2xl z-10 opacity-100' 
-                        : 'bg-secondary/20 border-border/50 scale-90 opacity-40 hover:opacity-70'
-                      }
-                    `}
-                  >
-                    {/* Adjusted container to allow wide logos to fit without being forced into a small square */}
-                    <div className={`w-full max-w-[200px] h-24 mb-6 rounded-2xl bg-background border flex items-center justify-center shadow-sm overflow-hidden p-4 transition-transform duration-500 ${isActive ? 'scale-110' : ''}`}>
-                      {displayLogo ? (
-                        <img 
-                           src={displayLogo} 
-                           alt={website.name} 
-                           className="object-contain w-full h-full" 
-                        />
-                      ) : (
-                        <span className="text-3xl font-bold text-muted-foreground">{website.name.charAt(0)}</span>
-                      )}
-                    </div>
-                    
-                    <h3 className={`font-bold mb-2 text-foreground text-center line-clamp-1 transition-all ${isActive ? 'text-2xl' : 'text-xl'}`}>
-                      {website.name}
-                    </h3>
-                    
-                    <a 
-                      href={website.url} 
-                      target="_blank" 
-                      rel="noopener noreferrer" 
-                      className="text-sm text-muted-foreground mb-6 hover:text-primary transition-colors line-clamp-1 break-all text-center"
-                    >
-                      {website.url.replace(/^https?:\/\//, '').replace(/\/$/, '')}
-                    </a>
-
-                    {/* Button only visible on active card, taking up space to prevent layout shift */}
-                    <div className={`w-full mt-auto transition-all duration-500 ${isActive ? 'opacity-100 h-auto translate-y-0' : 'opacity-0 h-0 overflow-hidden translate-y-4'}`}>
-                      <Button 
-                        asChild 
-                        variant="default" 
-                        className="w-full mt-4"
-                      >
-                        <a href={website.url} target="_blank" rel="noopener noreferrer">
-                          Visit Website <ExternalLink className="ml-2 h-4 w-4" />
-                        </a>
-                      </Button>
-                    </div>
-                  </div>
-                </CarouselItem>
-              );
-            })}
+          <CarouselContent className="-ml-4 md:-ml-8 py-12">
+            {websites.map((website, index) => (
+              <WebsiteCard 
+                key={website.id} 
+                website={website} 
+                index={index} 
+                current={current} 
+                api={api} 
+              />
+            ))}
           </CarouselContent>
           <div className="flex justify-center gap-4 mt-8">
-            <CarouselPrevious className="static transform-none h-12 w-12 border-primary/20 hover:bg-primary hover:text-primary-foreground" />
-            <CarouselNext className="static transform-none h-12 w-12 border-primary/20 hover:bg-primary hover:text-primary-foreground" />
+            <CarouselPrevious className="static transform-none h-12 w-12 border-primary/20 hover:bg-primary hover:text-primary-foreground transition-all active:scale-95" />
+            <CarouselNext className="static transform-none h-12 w-12 border-primary/20 hover:bg-primary hover:text-primary-foreground transition-all active:scale-95" />
           </div>
         </Carousel>
       </div>
