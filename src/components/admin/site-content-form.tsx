@@ -285,10 +285,10 @@ export default function SiteContentForm() {
         { id: "w2", title: "Nexus Corporate", url: "https://example.com", imageUrl: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=2000&auto=format&fit=crop" }
       ],
       targetAudience: [
-        { title: "Startups & Tech Companies" },
-        { title: "E-commerce & Retail Brands" },
-        { title: "Corporate Enterprises" },
-        { title: "Creative Professionals" }
+        "Startups & Tech Companies",
+        "E-commerce & Retail Brands",
+        "Corporate Enterprises",
+        "Creative Professionals"
       ],
       contactSectionTitle: "Let's Build Something Extraordinary",
       contactSectionDescription: "Ready to elevate your brand? Fill out the form below and our team will get back to you within 24 hours.",
