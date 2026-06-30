@@ -1,91 +1,25 @@
-"use client";
+import { firebaseConfig } from '@/firebase/config';
+import { initializeApp, getApps } from 'firebase/app';
+import { getFirestore, doc, getDoc } from 'firebase/firestore';
+import type { SiteContent } from '@/types';
+import HomeClient from '@/components/public/home-client';
 
-import React, { useState, useEffect, useMemo } from 'react';
-import { useRouter } from 'next/navigation';
-import type { Project, SiteContent } from '@/types';
-import { useFirestore, useDoc, useMemoFirebase } from '@/firebase';
-import { doc } from 'firebase/firestore';
-
-import Header from '@/components/public/header';
-import HeroSection from '@/components/public/hero-section';
-import dynamic from 'next/dynamic';
-
-const ServicesSection = dynamic(() => import('@/components/public/services-section'));
-const TargetAudienceSection = dynamic(() => import('@/components/public/target-audience-section'));
-const WebsiteShowcaseSection = dynamic(() => import('@/components/public/website-showcase-section'));
-const PortfolioSection = dynamic(() => import('@/components/public/portfolio-section'));
-const TestimonialsSection = dynamic(() => import('@/components/public/testimonials-section'));
-const ContactSection = dynamic(() => import('@/components/public/contact-section'));
-const Footer = dynamic(() => import('@/components/public/footer'));
-import ProjectModal from '@/components/public/project-modal';
-
-import Preloader from '@/components/public/preloader';
-
-export default function Home() {
-  const [selectedProject, setSelectedProject] = useState<Project | null>(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const router = useRouter();
-  const firestore = useFirestore();
-
-  const siteContentRef = useMemoFirebase(() => firestore ? doc(firestore, 'pkcreative_siteContent', 'global') : null, [firestore]);
-  const { data: siteContent, loading } = useDoc<SiteContent>(siteContentRef);
-
-  useEffect(() => {
-    if (!loading && typeof window !== 'undefined' && window.location.hash) {
-      const id = window.location.hash.substring(1);
-      setTimeout(() => {
-        const element = document.getElementById(id);
-        if (element) {
-          element.scrollIntoView({ behavior: 'smooth' });
-        }
-      }, 100);
+export default async function Home() {
+  let initialSiteContent: SiteContent | null = null;
+  
+  try {
+    // Fetch data server-side for perfect SEO indexing
+    const app = getApps().length === 0 ? initializeApp(firebaseConfig) : getApps()[0];
+    const db = getFirestore(app);
+    const snap = await getDoc(doc(db, 'pkcreative_siteContent', 'global'));
+    
+    if (snap.exists()) {
+      initialSiteContent = snap.data() as SiteContent;
     }
-  }, [loading]);
-
-  const handleProjectClick = (project: Project) => {
-    setSelectedProject(project);
-    setIsModalOpen(true);
-  };
-
-  const handleCloseModal = () => {
-    setIsModalOpen(false);
-    setSelectedProject(null);
-  };
-
-  if (siteContent?.isMaintenanceModeEnabled) {
-    return (
-      <div className="flex flex-col min-h-screen items-center justify-center text-center p-4">
-          <h1 className="text-4xl font-bold tracking-tight mb-4">Under Maintenance</h1>
-          <p className="text-muted-foreground">My portfolio is currently undergoing some updates. Please check back soon!</p>
-      </div>
-    );
+  } catch (error) {
+    console.error("Error fetching initial site content for SSR:", error);
   }
 
-  return (
-    <>
-      <Preloader />
-      <div className={`flex flex-col min-h-screen bg-background ${siteContent?.areAnimationsEnabled ? '' : 'no-animations'} ${loading ? 'opacity-0' : 'opacity-100 transition-opacity duration-500'}`}>
-        <Header content={siteContent} />
-      <main className="flex-grow">
-        <HeroSection content={siteContent} />
-        {(siteContent?.isServicesSectionVisible ?? true) && <ServicesSection content={siteContent} />}
-        {(siteContent?.isTargetAudienceSectionVisible ?? true) && <TargetAudienceSection content={siteContent} />}
-        {(siteContent?.isWebsiteShowcaseVisible ?? true) && <WebsiteShowcaseSection content={siteContent} />}
-        {(siteContent?.isPortfolioSectionVisible ?? true) && <PortfolioSection content={siteContent} onProjectClick={handleProjectClick} />}
-        {(siteContent?.isTestimonialsSectionVisible ?? true) && <TestimonialsSection content={siteContent} />}
-        <ContactSection content={siteContent} />
-      </main>
-      <Footer content={siteContent} />
-      {selectedProject && (
-        <ProjectModal
-          project={selectedProject}
-          isOpen={isModalOpen}
-          onClose={handleCloseModal}
-        />
-      )}
-    </div>
-    </>
-  );
+  // Pass the fetched data to the Client Component for hydration
+  return <HomeClient initialSiteContent={initialSiteContent} />;
 }
-
-    
