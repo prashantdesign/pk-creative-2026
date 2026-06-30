@@ -256,6 +256,50 @@ export default function SiteContentForm() {
         });
   };
 
+  const applyProfessionalContent = () => {
+    const professionalContent = {
+      heroTitle: "Elevating Brands Through Stunning Digital Experiences",
+      heroSubtitle: "We are a premier creative agency specializing in cutting-edge website design, UI/UX, branding, and comprehensive social media management. We transform your vision into an impactful digital reality.",
+      heroMediaUrl: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=2072&auto=format&fit=crop",
+      ctaText: "Explore Our Work",
+      ctaLink: "#portfolio",
+      aboutText: "At PK Creative, we believe that exceptional design is the cornerstone of business success. Our team of visionary designers, strategists, and developers work seamlessly to craft bespoke digital experiences. We don't just build websites; we build digital legacies that resonate with your audience and drive measurable growth.",
+      aboutImageUrl: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=2070&auto=format&fit=crop",
+      services: [
+        { title: "Premium Website Design", description: "Custom, responsive websites built with modern frameworks that captivate and convert.", icon: "Globe" },
+        { title: "UI/UX Architecture", description: "Intuitive user interfaces and seamless user experiences designed around your customers.", icon: "Layout" },
+        { title: "Strategic Branding", description: "Cohesive visual identities, logos, and brand guidelines that set you apart.", icon: "PenTool" },
+        { title: "Social Media Mastery", description: "Engaging content creation and management to grow your online community.", icon: "Share2" }
+      ],
+      portfolio: [
+        { id: "1", title: "Ethereal Skincare", category: "E-Commerce", description: "A minimalist, high-performance Shopify experience for a luxury skincare brand.", imageUrl: "https://images.unsplash.com/photo-1556228578-0d85b1a4d571?q=80&w=2000&auto=format&fit=crop", client: "Ethereal Skincare", date: "2025" },
+        { id: "2", title: "Nexus Tech Solutions", category: "Corporate", description: "A sleek, modern corporate website with advanced animations and lead generation.", imageUrl: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=2000&auto=format&fit=crop", client: "Nexus Tech", date: "2025" },
+        { id: "3", title: "Aura Coffee Roasters", category: "Branding", description: "Complete brand identity overhaul including packaging and social media assets.", imageUrl: "https://images.unsplash.com/photo-1497935586351-b67a49e012bf?q=80&w=2000&auto=format&fit=crop", client: "Aura Coffee", date: "2024" }
+      ],
+      testimonials: [
+        { id: "t1", name: "Sarah Jenkins", role: "CEO, Ethereal Skincare", content: "PK Creative transformed our online presence. Our conversion rates doubled within the first month of launching the new site.", rating: 5 },
+        { id: "t2", name: "Marcus Chen", role: "Founder, Nexus Tech", content: "Their attention to detail and understanding of modern UI/UX is unmatched. A truly world-class agency.", rating: 5 }
+      ],
+      websites: [
+        { id: "w1", title: "Ethereal Skincare", url: "https://example.com", imageUrl: "https://images.unsplash.com/photo-1556228578-0d85b1a4d571?q=80&w=2000&auto=format&fit=crop" },
+        { id: "w2", title: "Nexus Corporate", url: "https://example.com", imageUrl: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=2000&auto=format&fit=crop" }
+      ],
+      targetAudience: [
+        { title: "Startups & Tech Companies" },
+        { title: "E-commerce & Retail Brands" },
+        { title: "Corporate Enterprises" },
+        { title: "Creative Professionals" }
+      ],
+      contactSectionTitle: "Let's Build Something Extraordinary",
+      contactSectionDescription: "Ready to elevate your brand? Fill out the form below and our team will get back to you within 24 hours.",
+      contactImageUrl: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=2070&auto=format&fit=crop",
+      footerDescription: "Elevating Brands Through Stunning Digital Experiences. \nWebsite Design • UI/UX • Branding • Social Media",
+      footerCopyrightText: "© 2026 PK Creative. All Rights Reserved."
+    };
+    form.reset({ ...form.getValues(), ...professionalContent });
+    toast({ title: "Professional Content Applied!", description: "Scroll down and click 'Save Content' to publish it." });
+  };
+
   const aboutImageUrl = form.watch('aboutImageUrl');
 
   if (isFetching) {
@@ -265,6 +309,15 @@ export default function SiteContentForm() {
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 bg-primary/10 p-6 rounded-xl border border-primary/20 animate-fade-in-up">
+          <div>
+            <h3 className="font-semibold text-lg flex items-center gap-2">🚀 Launch Ready Template</h3>
+            <p className="text-sm text-muted-foreground mt-1">Instantly fill all fields with professional agency copywriting and high-quality dummy images.</p>
+          </div>
+          <Button type="button" onClick={applyProfessionalContent} variant="default" className="whitespace-nowrap h-11 px-6 shadow-md hover:shadow-lg transition-all">
+            ✨ Apply Professional Content
+          </Button>
+        </div>
         <Accordion type="multiple" defaultValue={['hero', 'about', 'services', 'audience', 'stats', 'skills', 'tools', 'gallery', 'portfolio', 'theme', 'socials', 'ai']} className="w-full">
           <AccordionItem value="hero">
             <AccordionTrigger className="text-xl font-semibold">Hero Section</AccordionTrigger>
