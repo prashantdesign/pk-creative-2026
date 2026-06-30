@@ -1,7 +1,7 @@
 'use client';
 import React from 'react';
 import type { SiteContent } from '@/types';
-import { Linkedin, Twitter, Instagram, Mail } from 'lucide-react';
+import { Linkedin, Twitter, Instagram, Mail, MessageCircle } from 'lucide-react';
 import Logo from '../logo';
 
 import { useFirestore, useDoc, useMemoFirebase } from '@/firebase';
@@ -24,8 +24,8 @@ const Footer = ({ content: initialContent }: { content?: SiteContent | null }) =
             {content?.footerDescription || "Creative Solutions For Modern Brands. \n Website Design • Branding • Social Media"}
           </p>
           <div className="flex flex-col gap-1 text-sm font-medium mt-2">
-            {socialLinks?.email && <span className="flex items-center gap-2"><span className="text-primary">📧</span> <a href={`mailto:${socialLinks.email}`} className="hover:text-primary transition-colors">{socialLinks.email}</a></span>}
-            {socialLinks?.whatsapp && <span className="flex items-center gap-2"><span className="text-primary">💬</span> <a href={socialLinks.whatsapp.startsWith('http') ? socialLinks.whatsapp : `https://wa.me/${socialLinks.whatsapp.replace(/[^0-9]/g, '')}`} target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors">WhatsApp</a></span>}
+            {socialLinks?.email && <span className="flex items-center gap-2"><Mail className="h-4 w-4 text-primary" /> <a href={`mailto:${socialLinks.email}`} className="hover:text-primary transition-colors">{socialLinks.email}</a></span>}
+            {socialLinks?.whatsapp && <span className="flex items-center gap-2"><MessageCircle className="h-4 w-4 text-primary" /> <a href={socialLinks.whatsapp.startsWith('http') ? socialLinks.whatsapp : `https://wa.me/${socialLinks.whatsapp.replace(/[^0-9]/g, '')}`} target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors">WhatsApp</a></span>}
           </div>
         </div>
         
