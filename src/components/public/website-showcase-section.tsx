@@ -58,8 +58,9 @@ const WebsiteCard = ({
           {displayLogo && !imgError ? (
             <img 
                src={displayLogo} 
-               alt={website.name} 
+               alt={`${website.name} logo`}
                className="object-contain w-full h-full" 
+               loading="lazy"
                onError={() => setImgError(true)}
             />
           ) : (

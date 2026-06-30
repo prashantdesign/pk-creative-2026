@@ -24,7 +24,8 @@ const GalleryImageItem = ({ image, index, onClick }: { image: GalleryImage, inde
           {!isLoaded && <Skeleton className="w-full h-64 rounded-lg" />}
           <img
              src={image.imageUrl}
-             alt={image.title}
+             alt={image.title || 'Gallery image'}
+             loading="lazy"
              className={`w-full h-auto rounded-lg transition-all duration-700 ${isLoaded ? 'block opacity-100 group-hover:scale-[1.02]' : 'hidden opacity-0'}`}
              onLoad={() => setIsLoaded(true)}
              onError={() => setIsLoaded(true)}
@@ -215,7 +216,8 @@ export default function GallerySection({ content }: GallerySectionProps) {
           <div className="relative w-full h-full max-w-7xl max-h-screen p-4 md:p-12 flex flex-col justify-center items-center" onClick={() => setLightboxIndex(null)}>
             <img 
               src={filteredImages[lightboxIndex].imageUrl} 
-              alt={filteredImages[lightboxIndex].title}
+              alt={filteredImages[lightboxIndex].title || 'Lightbox image'}
+              loading="lazy"
               className="max-w-full max-h-[85vh] object-contain shadow-2xl rounded-sm"
               onClick={(e) => e.stopPropagation()}
             />
