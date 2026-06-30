@@ -45,6 +45,7 @@ export interface SiteContent {
   logoUrl?: string;
   heroTitle: string;
   heroSubtitle: string;
+  heroMediaUrl?: string;
   ctaText: string;
   ctaLink: string;
   socials?: {
@@ -99,6 +100,7 @@ export interface SiteContent {
   }[];
   contactSectionTitle?: string;
   contactSectionDescription?: string;
+  contactImageUrl?: string;
   footerDescription?: string;
   footerCopyrightText?: string;
   seoSettings?: {

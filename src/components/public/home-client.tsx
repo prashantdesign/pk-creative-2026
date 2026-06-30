@@ -9,6 +9,7 @@ import Header from '@/components/public/header';
 import HeroSection from '@/components/public/hero-section';
 import dynamic from 'next/dynamic';
 
+const AboutSection = dynamic(() => import('@/components/public/about-section'));
 const ServicesSection = dynamic(() => import('@/components/public/services-section'));
 const TargetAudienceSection = dynamic(() => import('@/components/public/target-audience-section'));
 const WebsiteShowcaseSection = dynamic(() => import('@/components/public/website-showcase-section'));
@@ -66,6 +67,7 @@ export default function HomeClient({ initialSiteContent }: { initialSiteContent:
         <Header content={siteContent} />
         <main className="flex-grow">
           <HeroSection content={siteContent} />
+          <AboutSection content={siteContent} />
           {(siteContent?.isServicesSectionVisible ?? true) && <ServicesSection content={siteContent} />}
           {(siteContent?.isTargetAudienceSectionVisible ?? true) && <TargetAudienceSection content={siteContent} />}
           {(siteContent?.isWebsiteShowcaseVisible ?? true) && <WebsiteShowcaseSection content={siteContent} />}

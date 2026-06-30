@@ -30,6 +30,7 @@ const formSchema = z.object({
   logoUrl: z.string().url({ message: "Please enter a valid URL." }).optional().or(z.literal('')),
   heroTitle: z.string().min(1, "Title is required."),
   heroSubtitle: z.string().min(1, "Subtitle is required."),
+  heroMediaUrl: z.string().optional().or(z.literal('')),
   ctaText: z.string().optional(),
   ctaLink: z.string().optional(),
   
@@ -56,6 +57,7 @@ const formSchema = z.object({
 
   contactSectionTitle: z.string().optional(),
   contactSectionDescription: z.string().optional(),
+  contactImageUrl: z.string().optional().or(z.literal('')),
 
   footerDescription: z.string().optional(),
   footerCopyrightText: z.string().optional(),
@@ -69,7 +71,8 @@ const formSchema = z.object({
   geminiModel: z.string().optional(),
   isAiFeatureEnabled: z.boolean().default(true),
   
-  aboutImageUrl: z.string().optional(),
+  aboutImageUrl: z.string().optional().or(z.literal('')),
+  aboutText: z.string().optional(),
 
   isWebsiteShowcaseVisible: z.boolean().default(true),
   websiteShowcaseTitle: z.string().optional(),
@@ -95,6 +98,7 @@ export default function SiteContentForm() {
       logoUrl: "",
       heroTitle: "Creative Graphic & Brand Design Agency",
       heroSubtitle: "We design impactful visuals and digital experiences using creativity, strategy, and AI-powered tools. With years of experience, we help brands grow through strong visual identity, e-commerce design, and engaging digital content.",
+      heroMediaUrl: "",
       ctaText: "View Our Work",
       ctaLink: "",
       gallerySectionTitle: "Gallery",
@@ -109,6 +113,7 @@ export default function SiteContentForm() {
       targetAudience: [],
       contactSectionTitle: "Get in Touch",
       contactSectionDescription: "Have a project in mind or just want to say hello? Drop us a line.",
+      contactImageUrl: "",
       footerDescription: "Creative Solutions For Modern Brands.\nWebsite Design • Branding • Social Media",
       footerCopyrightText: "© 2026 PK Creative. All Rights Reserved.",
       theme: 'dark',
@@ -120,6 +125,7 @@ export default function SiteContentForm() {
       geminiModel: "models/gemini-1.5-flash",
       isAiFeatureEnabled: true,
       aboutImageUrl: "",
+      aboutText: "We are a passionate team of designers with a love for creating beautiful and intuitive digital experiences.",
       isWebsiteShowcaseVisible: true,
       websiteShowcaseTitle: "Websites We've Built",
       websiteShowcaseDescription: "Check out some of the live websites we've designed and developed.",
@@ -142,6 +148,7 @@ export default function SiteContentForm() {
         logoUrl: siteContent.logoUrl || '',
         heroTitle: siteContent.heroTitle,
         heroSubtitle: siteContent.heroSubtitle,
+        heroMediaUrl: siteContent.heroMediaUrl || '',
         ctaText: siteContent.ctaText,
         ctaLink: siteContent.ctaLink,
         gallerySectionTitle: siteContent.gallerySectionTitle || "Gallery",
@@ -156,6 +163,7 @@ export default function SiteContentForm() {
         targetAudience: siteContent.targetAudience || [],
         contactSectionTitle: siteContent.contactSectionTitle || "Get in Touch",
         contactSectionDescription: siteContent.contactSectionDescription || "Have a project in mind or just want to say hello? Drop us a line.",
+        contactImageUrl: siteContent.contactImageUrl || '',
         footerDescription: siteContent.footerDescription || "Creative Solutions For Modern Brands.\nWebsite Design • Branding • Social Media",
         footerCopyrightText: siteContent.footerCopyrightText || "© 2026 PK Creative. All Rights Reserved.",
         theme: siteContent.theme || 'dark',
@@ -167,6 +175,7 @@ export default function SiteContentForm() {
         geminiModel: siteContent.aiSettings?.geminiModel || 'models/gemini-1.5-flash',
         isAiFeatureEnabled: siteContent.aiSettings?.isAiFeatureEnabled === undefined ? true : siteContent.aiSettings.isAiFeatureEnabled,
         aboutImageUrl: siteContent.aboutImageUrl || "",
+        aboutText: siteContent.aboutText || "We are a passionate team of designers with a love for creating beautiful and intuitive digital experiences.",
         isWebsiteShowcaseVisible: siteContent.isWebsiteShowcaseVisible === undefined ? true : siteContent.isWebsiteShowcaseVisible,
         websiteShowcaseTitle: siteContent.websiteShowcaseTitle || "Websites We've Built",
         websiteShowcaseDescription: siteContent.websiteShowcaseDescription || "Check out some of the live websites we've designed and developed.",
@@ -286,11 +295,52 @@ export default function SiteContentForm() {
               <FormField control={form.control} name="heroSubtitle" render={({ field }) => (
                 <FormItem><FormLabel>Subtitle</FormLabel><FormControl><Textarea {...field} /></FormControl><FormMessage /></FormItem>
               )} />
+              <FormField control={form.control} name="heroMediaUrl" render={({ field }) => (
+                  <FormItem className="space-y-4">
+                      <div className="space-y-2">
+                        <FormLabel>Hero Media URL (Image or MP4 Video)</FormLabel>
+                        <FormControl><Input placeholder="https://..." {...field} value={field.value ?? ''} onBlur={(e) => handleUrlBlur(e, field)} /></FormControl>
+                      </div>
+                      <div className="space-y-2">
+                        <FormLabel>Or upload a file</FormLabel>
+                        <FormControl>
+                          <Input type="file" accept="image/*,video/mp4" onChange={(e) => handleImageUpload(e, 'heroMediaUrl' as any)} disabled={isUploading} />
+                        </FormControl>
+                        {isUploading && <p className="text-sm text-muted-foreground mt-2">Uploading...</p>}
+                        <FormDescription>Uploading media here will automatically convert the Hero section to a beautiful split-screen layout.</FormDescription>
+                      </div>
+                      <FormMessage />
+                  </FormItem>
+              )} />
               <FormField control={form.control} name="ctaText" render={({ field }) => (
                 <FormItem><FormLabel>CTA Button Text</FormLabel><FormControl><Input {...field} value={field.value ?? ''} /></FormControl><FormMessage /></FormItem>
               )} />
               <FormField control={form.control} name="ctaLink" render={({ field }) => (
                 <FormItem><FormLabel>CTA Button Link</FormLabel><FormControl><Input {...field} placeholder="#work" value={field.value ?? ''}/></FormControl><FormMessage /></FormItem>
+              )} />
+            </AccordionContent>
+          </AccordionItem>
+          <AccordionItem value="about">
+            <AccordionTrigger className="text-xl font-semibold">About Section</AccordionTrigger>
+            <AccordionContent className="pt-4 space-y-4">
+              <FormField control={form.control} name="aboutText" render={({ field }) => (
+                  <FormItem><FormLabel>About Us Text</FormLabel><FormControl><Textarea className="min-h-[120px]" {...field} value={field.value ?? ''} /></FormControl><FormMessage /></FormItem>
+              )} />
+              <FormField control={form.control} name="aboutImageUrl" render={({ field }) => (
+                  <FormItem className="space-y-4">
+                      <div className="space-y-2">
+                        <FormLabel>About Us Image URL</FormLabel>
+                        <FormControl><Input placeholder="https://..." {...field} value={field.value ?? ''} onBlur={(e) => handleUrlBlur(e, field)} /></FormControl>
+                      </div>
+                      <div className="space-y-2">
+                        <FormLabel>Or upload an image</FormLabel>
+                        <FormControl>
+                          <Input type="file" accept="image/*" onChange={(e) => handleImageUpload(e, 'aboutImageUrl' as any)} disabled={isUploading} />
+                        </FormControl>
+                        {isUploading && <p className="text-sm text-muted-foreground mt-2">Uploading...</p>}
+                      </div>
+                      <FormMessage />
+                  </FormItem>
               )} />
             </AccordionContent>
           </AccordionItem>
@@ -497,6 +547,23 @@ export default function SiteContentForm() {
               )} />
               <FormField control={form.control} name="contactSectionDescription" render={({ field }) => (
                   <FormItem><FormLabel>Section Description</FormLabel><FormControl><Textarea {...field} value={field.value ?? ''} /></FormControl><FormMessage /></FormItem>
+              )} />
+              <FormField control={form.control} name="contactImageUrl" render={({ field }) => (
+                  <FormItem className="space-y-4">
+                      <div className="space-y-2">
+                        <FormLabel>Contact Section Image URL</FormLabel>
+                        <FormControl><Input placeholder="https://..." {...field} value={field.value ?? ''} onBlur={(e) => handleUrlBlur(e, field)} /></FormControl>
+                      </div>
+                      <div className="space-y-2">
+                        <FormLabel>Or upload an image</FormLabel>
+                        <FormControl>
+                          <Input type="file" accept="image/*" onChange={(e) => handleImageUpload(e, 'contactImageUrl' as any)} disabled={isUploading} />
+                        </FormControl>
+                        {isUploading && <p className="text-sm text-muted-foreground mt-2">Uploading...</p>}
+                        <FormDescription>If uploaded, the contact form will be displayed next to this image.</FormDescription>
+                      </div>
+                      <FormMessage />
+                  </FormItem>
               )} />
             </AccordionContent>
           </AccordionItem>
