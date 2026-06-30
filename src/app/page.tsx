@@ -8,13 +8,15 @@ import { doc } from 'firebase/firestore';
 
 import Header from '@/components/public/header';
 import HeroSection from '@/components/public/hero-section';
-import ServicesSection from '@/components/public/services-section';
-import TargetAudienceSection from '@/components/public/target-audience-section';
-import WebsiteShowcaseSection from '@/components/public/website-showcase-section';
-import PortfolioSection from '@/components/public/portfolio-section';
-import TestimonialsSection from '@/components/public/testimonials-section';
-import ContactSection from '@/components/public/contact-section';
-import Footer from '@/components/public/footer';
+import dynamic from 'next/dynamic';
+
+const ServicesSection = dynamic(() => import('@/components/public/services-section'));
+const TargetAudienceSection = dynamic(() => import('@/components/public/target-audience-section'));
+const WebsiteShowcaseSection = dynamic(() => import('@/components/public/website-showcase-section'));
+const PortfolioSection = dynamic(() => import('@/components/public/portfolio-section'));
+const TestimonialsSection = dynamic(() => import('@/components/public/testimonials-section'));
+const ContactSection = dynamic(() => import('@/components/public/contact-section'));
+const Footer = dynamic(() => import('@/components/public/footer'));
 import ProjectModal from '@/components/public/project-modal';
 
 import Preloader from '@/components/public/preloader';
