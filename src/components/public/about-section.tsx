@@ -17,16 +17,12 @@ const AboutSection = ({ content }: { content: SiteContent | null }) => {
             </p>
           </div>
           <div className="relative aspect-square max-w-sm mx-auto w-full animate-fade-in-up animation-delay-300">
-            {content?.aboutImageUrl ? (
-                <Image
-                src={content.aboutImageUrl}
-                alt="About us"
-                fill
-                className="rounded-lg object-cover shadow-lg"
-                />
-            ) : (
-                <div className="w-full h-full bg-muted rounded-lg shadow-lg"></div>
-            )}
+            <Image
+              src={content?.aboutImageUrl || "https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=2070&auto=format&fit=crop"}
+              alt="About us"
+              fill
+              className="rounded-lg object-cover shadow-lg"
+            />
           </div>
         </div>
       </div>

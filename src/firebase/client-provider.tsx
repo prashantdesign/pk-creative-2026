@@ -27,10 +27,7 @@ export function FirebaseClientProvider({ children }: FirebaseClientProviderProps
   }, []); // Empty dependency array ensures this runs only once on mount
 
   // During SSR and the initial client render before useEffect runs, services will be null.
-  // We'll show a blank screen to prevent double-loaders from conflicting with Preloader.
-  if (!services) {
-    return null;
-  }
+  // We no longer return null here, allowing the SSR HTML to be visible immediately!
 
   return (
     <FirebaseProvider

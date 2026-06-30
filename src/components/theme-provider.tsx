@@ -34,11 +34,7 @@ export function ThemeProvider({ children }: ThemeProviderProps) {
     root.classList.add(theme);
   }, [theme]);
 
-  if (loading) {
-    // This will prevent FOUC by showing a blank screen until the theme is fetched,
-    // avoiding a double-loader conflict with the page's Preloader.
-    return null;
-  }
+  // We no longer block render while loading the theme, to allow instant SSR display.
 
   return (
       <ThemeProviderContext.Provider value={{ theme, setTheme }}>

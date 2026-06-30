@@ -6,8 +6,10 @@ import { Button } from '@/components/ui/button';
 import { ArrowRight, Sparkles } from 'lucide-react';
 
 const HeroSection = ({ content }: { content: SiteContent | null }) => {
-  const hasMedia = !!content?.heroMediaUrl;
-  const isVideo = hasMedia && content.heroMediaUrl!.toLowerCase().includes('.mp4');
+  const defaultHeroMedia = "https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=2072&auto=format&fit=crop";
+  const mediaUrl = content?.heroMediaUrl || defaultHeroMedia;
+  const hasMedia = true;
+  const isVideo = mediaUrl.toLowerCase().includes('.mp4');
 
   return (
     <section id="home" className={`relative min-h-[90vh] flex items-center justify-center overflow-hidden bg-background ${hasMedia ? 'py-24' : ''}`}>
@@ -71,7 +73,7 @@ const HeroSection = ({ content }: { content: SiteContent | null }) => {
               <div className="absolute inset-0 bg-gradient-to-tr from-primary/20 to-transparent mix-blend-overlay z-10 pointer-events-none group-hover:opacity-0 transition-opacity duration-700" />
               {isVideo ? (
                 <video 
-                  src={content.heroMediaUrl} 
+                  src={mediaUrl} 
                   autoPlay 
                   loop 
                   muted 
@@ -80,7 +82,7 @@ const HeroSection = ({ content }: { content: SiteContent | null }) => {
                 />
               ) : (
                 <Image
-                  src={content.heroMediaUrl!}
+                  src={mediaUrl}
                   alt="Hero Visual"
                   fill
                   priority

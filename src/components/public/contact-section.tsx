@@ -63,7 +63,9 @@ export default function ContactSection({ content }: { content?: SiteContent | nu
     }
   }, [state, toast]);
 
-  const hasImage = !!content?.contactImageUrl;
+  const defaultContactImage = "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=2070&auto=format&fit=crop";
+  const contactImage = content?.contactImageUrl || defaultContactImage;
+  const hasImage = true;
 
   return (
     <section id="contact" className="py-24 bg-secondary">
@@ -82,7 +84,7 @@ export default function ContactSection({ content }: { content?: SiteContent | nu
             {hasImage && (
               <div className="relative hidden lg:block h-full min-h-[600px] bg-muted">
                 <Image 
-                  src={content.contactImageUrl!} 
+                  src={contactImage} 
                   alt="Contact Us" 
                   fill 
                   className="object-cover"
