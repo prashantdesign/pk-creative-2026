@@ -1,5 +1,6 @@
 'use client';
 import React from 'react';
+import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { signOut } from 'firebase/auth';
 import { useAuth } from '@/firebase';
@@ -82,10 +83,10 @@ const AdminSidebar = () => {
                 asChild
                 isActive={pathname === item.href || (item.href !== '/admin' && pathname.startsWith(item.href))}
               >
-                <a href={item.href}>
+                <Link href={item.href}>
                   <item.icon className="size-4" />
                   <span>{item.label}</span>
-                </a>
+                </Link>
               </SidebarMenuButton>
             </SidebarMenuItem>
           ))}
