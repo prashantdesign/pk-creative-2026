@@ -101,10 +101,16 @@ export default function TeamMemberForm({ member, onSuccess }: Props) {
                   <Image src={photoUrl} alt="Preview" fill className="object-cover" />
                 </div>
               )}
-              <div className="flex-1 space-y-2">
-                 <FormControl><Input placeholder="https://..." {...field} value={field.value || ''} /></FormControl>
-                 <FormControl><Input type="file" accept="image/jpeg,image/png,image/webp" onChange={handlePhotoUpload} disabled={isUploading} /></FormControl>
-                 {isUploading && <p className="text-sm text-muted-foreground">Uploading...</p>}
+              <div className="flex-1 space-y-3">
+                 <div className="space-y-1">
+                   <FormLabel className="text-xs text-muted-foreground">Image URL</FormLabel>
+                   <FormControl><Input placeholder="https://..." {...field} value={field.value || ''} /></FormControl>
+                 </div>
+                 <div className="space-y-1">
+                   <FormLabel className="text-xs text-muted-foreground">Or Upload File</FormLabel>
+                   <FormControl><Input type="file" accept="image/jpeg,image/png,image/webp" onChange={handlePhotoUpload} disabled={isUploading} /></FormControl>
+                   {isUploading && <p className="text-sm text-muted-foreground">Uploading...</p>}
+                 </div>
                  <FormDescription>Paste a URL or upload a file. Vertical portraits (3:4 ratio) work best.</FormDescription>
               </div>
             </div>
