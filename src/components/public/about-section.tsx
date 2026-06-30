@@ -18,7 +18,7 @@ const AboutSection = ({ content }: { content: SiteContent | null }) => {
           </div>
           <div className="relative aspect-square max-w-sm mx-auto w-full animate-fade-in-up animation-delay-300">
             <Image
-              src={content?.aboutImageUrl || "https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=2070&auto=format&fit=crop"}
+              src={content?.aboutImageUrl || "/pk_about_visual.png"}
               alt="About us"
               fill
               className="rounded-lg object-cover shadow-lg"

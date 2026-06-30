@@ -76,12 +76,14 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   let gaTrackingId = '';
+  let theme = 'dark';
   try {
     const app = getApps().length === 0 ? initializeApp(firebaseConfig) : getApps()[0];
     const db = getFirestore(app);
     const snap = await getDoc(doc(db, 'pkcreative_siteContent', 'global'));
     if (snap.exists()) {
       gaTrackingId = snap.data()?.seoSettings?.gaTrackingId || '';
+      theme = snap.data()?.theme || 'dark';
     }
   } catch (error) {}
 
@@ -100,7 +102,7 @@ export default async function RootLayout({
   };
 
   return (
-    <html lang="en" suppressHydrationWarning className="scroll-smooth">
+    <html lang="en" suppressHydrationWarning className={`scroll-smooth ${theme}`}>
       <head>
         <script
           type="application/ld+json"

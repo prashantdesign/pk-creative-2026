@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button';
 import { ArrowRight, Sparkles } from 'lucide-react';
 
 const HeroSection = ({ content }: { content: SiteContent | null }) => {
-  const defaultHeroMedia = "https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=2072&auto=format&fit=crop";
+  const defaultHeroMedia = "/pk_hero_visual.png";
   const mediaUrl = content?.heroMediaUrl || defaultHeroMedia;
   const hasMedia = true;
   const isVideo = mediaUrl.toLowerCase().includes('.mp4');

@@ -63,7 +63,7 @@ export default function ContactSection({ content }: { content?: SiteContent | nu
     }
   }, [state, toast]);
 
-  const defaultContactImage = "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=2070&auto=format&fit=crop";
+  const defaultContactImage = "/pk_contact_visual.png";
   const contactImage = content?.contactImageUrl || defaultContactImage;
   const hasImage = true;
 
