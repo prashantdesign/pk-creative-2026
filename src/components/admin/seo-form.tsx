@@ -102,6 +102,17 @@ export default function SeoForm() {
         });
   };
 
+  const applyProfessionalSeo = () => {
+    form.reset({
+      ...form.getValues(),
+      metaTitle: "PK Creative | Premium Design & UI/UX Agency",
+      metaDescription: "We are a premier creative agency specializing in cutting-edge website design, UI/UX, branding, and comprehensive social media management. We transform your vision into an impactful digital reality.",
+      keywords: "design agency, website design, ui ux, branding, premium portfolio, creative studio",
+      ogImageUrl: "/pk_hero_visual.png"
+    });
+    toast({ title: "Professional SEO Applied!", description: "Scroll down and click 'Save SEO Settings' to publish." });
+  };
+
   if (isFetching) {
     return <Skeleton className="h-96 w-full" />
   }
@@ -109,6 +120,15 @@ export default function SeoForm() {
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 bg-primary/10 p-6 rounded-xl border border-primary/20 animate-fade-in-up">
+          <div>
+            <h3 className="font-semibold text-lg flex items-center gap-2">🚀 Launch Ready SEO Template</h3>
+            <p className="text-sm text-muted-foreground mt-1">Instantly fill SEO metadata with professional keywords and descriptions.</p>
+          </div>
+          <Button type="button" onClick={applyProfessionalSeo} variant="default" className="whitespace-nowrap h-11 px-6 shadow-md hover:shadow-lg transition-all">
+            ✨ Apply Professional SEO
+          </Button>
+        </div>
         <Card>
             <CardHeader>
                 <CardTitle>Global Meta Tags</CardTitle>
