@@ -35,8 +35,10 @@ const Header = ({ content: initialContent }: { content?: SiteContent | null }) =
 
   return (
     <header
-      className={`sticky top-0 z-40 w-full transition-all duration-300 ${
-        isScrolled ? 'bg-background/80 backdrop-blur-sm shadow-md' : 'bg-transparent'
+      className={`sticky top-0 z-40 w-full transition-all duration-300 border-b ${
+        isScrolled || isOpen 
+          ? 'bg-background/90 backdrop-blur-md shadow-md border-border/40' 
+          : 'bg-transparent border-transparent'
       }`}
     >
       <div className="container mx-auto flex h-20 items-center justify-between px-4 md:px-6">
