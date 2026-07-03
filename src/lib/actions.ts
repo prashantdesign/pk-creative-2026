@@ -92,19 +92,19 @@ export async function submitContactForm(
         if (settingsResponse.ok) {
             const settingsData = await settingsResponse.json();
             const fields = settingsData.fields;
-            if (fields && fields.smtpHost?.stringValue && fields.smtpUsername?.stringValue && fields.smtpPassword?.stringValue) {
+            if (fields && fields.smtpHost?.stringValue && fields.smtpUser?.stringValue && fields.smtpPass?.stringValue) {
                 const transporter = nodemailer.createTransport({
                     host: fields.smtpHost.stringValue,
                     port: parseInt(fields.smtpPort?.stringValue || '587'),
                     secure: fields.smtpPort?.stringValue === '465',
                     auth: {
-                        user: fields.smtpUsername.stringValue,
-                        pass: fields.smtpPassword.stringValue,
+                        user: fields.smtpUser.stringValue,
+                        pass: fields.smtpPass.stringValue,
                     }
                 });
 
-                const adminEmail = fields.adminEmail?.stringValue || fields.smtpUsername.stringValue;
-                const senderEmail = fields.senderEmail?.stringValue || fields.smtpUsername.stringValue;
+                const adminEmail = fields.adminEmail?.stringValue || fields.smtpUser.stringValue;
+                const senderEmail = fields.smtpSender?.stringValue || fields.smtpUser.stringValue;
 
                 const mailOptions = {
                     from: `"${name} via Website" <${senderEmail}>`,
@@ -178,7 +178,7 @@ export async function sendAdminReply(
       const settingsData = await settingsResponse.json();
       const fields = settingsData.fields;
       
-      if (!fields || !fields.smtpHost?.stringValue || !fields.smtpUsername?.stringValue || !fields.smtpPassword?.stringValue) {
+      if (!fields || !fields.smtpHost?.stringValue || !fields.smtpUser?.stringValue || !fields.smtpPass?.stringValue) {
           return { message: 'SMTP settings are not configured in the Admin Panel.', error: true };
       }
 
@@ -187,12 +187,12 @@ export async function sendAdminReply(
           port: parseInt(fields.smtpPort?.stringValue || '587'),
           secure: fields.smtpPort?.stringValue === '465',
           auth: {
-              user: fields.smtpUsername.stringValue,
-              pass: fields.smtpPassword.stringValue,
+              user: fields.smtpUser.stringValue,
+              pass: fields.smtpPass.stringValue,
           }
       });
 
-      const senderEmail = fields.senderEmail?.stringValue || fields.smtpUsername.stringValue;
+      const senderEmail = fields.smtpSender?.stringValue || fields.smtpUser.stringValue;
 
       const mailOptions = {
           from: `"${fields.adminEmail?.stringValue || 'Admin'}" <${senderEmail}>`,

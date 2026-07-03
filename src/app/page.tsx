@@ -4,6 +4,8 @@ import { getFirestore, doc, getDoc } from 'firebase/firestore';
 import type { SiteContent } from '@/types';
 import HomeClient from '@/components/public/home-client';
 
+export const dynamic = 'force-dynamic';
+
 export default async function Home() {
   let initialSiteContent: SiteContent | null = null;
   
