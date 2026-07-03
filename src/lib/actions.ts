@@ -15,6 +15,23 @@ export type FormState = {
   error?: boolean;
 };
 
+async function fetchBranding(projectId: string) {
+  let logoUrl = '';
+  let siteName = 'PK Creative';
+  try {
+    const siteContentUrl = `https://firestore.googleapis.com/v1/projects/${projectId}/databases/(default)/documents/pkcreative_siteContent/global`;
+    const response = await fetch(siteContentUrl);
+    if (response.ok) {
+      const data = await response.json();
+      logoUrl = data.fields?.logoUrl?.stringValue || '';
+      siteName = data.fields?.siteName?.stringValue || 'PK Creative';
+    }
+  } catch (error) {
+    console.error("Failed to fetch branding for emails:", error);
+  }
+  return { logoUrl, siteName };
+}
+
 export async function submitContactForm(
   prevState: FormState,
   formData: FormData
@@ -126,18 +143,110 @@ export async function submitContactForm(
                 const adminEmail = fields.adminEmail?.stringValue || fields.smtpUser.stringValue;
                 const senderEmail = fields.smtpSender?.stringValue || fields.smtpUser.stringValue;
 
+                const { logoUrl, siteName } = await fetchBranding(projectId);
+
                 const mailOptions = {
                     from: `"${name} via Website" <${senderEmail}>`,
                     to: adminEmail,
                     replyTo: email,
                     subject: `New Contact Form Submission from ${name}`,
                     html: `
-                        <h2>New Contact Form Submission</h2>
-                        <p><strong>Name:</strong> ${name}</p>
-                        <p><strong>Email:</strong> ${email}</p>
-                        ${servicesArray.length > 0 ? `<p><strong>Inquiring about:</strong> ${servicesArray.join(', ')}</p>` : ''}
-                        <p><strong>Message:</strong></p>
-                        <p style="white-space: pre-wrap;">${message}</p>
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>New Inquiry Received</title>
+</head>
+<body style="margin: 0; padding: 0; background-color: #f4f5f7; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
+  <table border="0" cellpadding="0" cellspacing="0" width="100%" style="background-color: #f4f5f7; padding: 40px 20px;">
+    <tr>
+      <td align="center">
+        <table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px; background-color: #ffffff; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.05); border: 1px solid #eef0f3;">
+          <!-- Top Accent Line -->
+          <tr>
+            <td height="6" style="background: linear-gradient(to right, #612af5, #7c3aed);"></td>
+          </tr>
+          
+          <!-- Header (Logo) -->
+          <tr>
+            <td align="center" style="padding: 32px 32px 24px 32px;">
+              ${logoUrl ? `
+                <img src="${logoUrl}" alt="${siteName}" style="max-height: 50px; width: auto; display: block;" />
+              ` : `
+                <span style="font-size: 24px; font-weight: bold; color: #1e1b4b; font-family: sans-serif;">${siteName}</span>
+              `}
+            </td>
+          </tr>
+
+          <!-- Heading -->
+          <tr>
+            <td align="center" style="padding: 0 32px 24px 32px; border-bottom: 1px solid #f0f1f4;">
+              <h1 style="margin: 0; font-size: 22px; font-weight: 700; color: #1e1b4b; font-family: sans-serif;">New Inquiry Received</h1>
+              <p style="margin: 8px 0 0 0; font-size: 14px; color: #64748b; font-family: sans-serif;">A visitor has submitted a new inquiry via the contact form.</p>
+            </td>
+          </tr>
+
+          <!-- Details Table -->
+          <tr>
+            <td style="padding: 32px;">
+              <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                <!-- Name -->
+                <tr>
+                  <td width="30%" valign="top" style="padding-bottom: 16px; font-size: 14px; font-weight: 600; color: #475569; font-family: sans-serif;">Name:</td>
+                  <td width="70%" valign="top" style="padding-bottom: 16px; font-size: 14px; color: #1e293b; font-family: sans-serif;">${name}</td>
+                </tr>
+                <!-- Email -->
+                <tr>
+                  <td width="30%" valign="top" style="padding-bottom: 16px; font-size: 14px; font-weight: 600; color: #475569; font-family: sans-serif;">Email:</td>
+                  <td width="70%" valign="top" style="padding-bottom: 16px; font-size: 14px; color: #1e293b; font-family: sans-serif;">
+                    <a href="mailto:${email}" style="color: #612af5; text-decoration: none;">${email}</a>
+                  </td>
+                </tr>
+                <!-- Services -->
+                ${servicesArray.length > 0 ? `
+                <tr>
+                  <td width="30%" valign="top" style="padding-bottom: 16px; font-size: 14px; font-weight: 600; color: #475569; font-family: sans-serif;">Services:</td>
+                  <td width="70%" valign="top" style="padding-bottom: 16px; font-size: 14px; color: #1e293b; font-family: sans-serif;">
+                    ${servicesArray.map(s => `<span style="display: inline-block; background-color: #f1f5f9; color: #475569; padding: 4px 10px; border-radius: 9999px; font-size: 12px; font-weight: 500; margin-right: 6px; margin-bottom: 6px; font-family: sans-serif;">${s}</span>`).join('')}
+                  </td>
+                </tr>
+                ` : ''}
+                <!-- Message -->
+                <tr>
+                  <td colspan="2" valign="top" style="padding-top: 8px;">
+                    <div style="font-size: 14px; font-weight: 600; color: #475569; margin-bottom: 8px; font-family: sans-serif;">Message:</div>
+                    <div style="font-size: 14px; color: #334155; line-height: 1.6; background-color: #fafafc; padding: 16px; border-radius: 8px; border: 1px solid #f0f1f4; white-space: pre-wrap; font-family: sans-serif;">${message}</div>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          <!-- Footer Action Button -->
+          <tr>
+            <td align="center" style="padding: 0 32px 40px 32px;">
+              <a href="https://pkcreative.in/admin" target="_blank" style="display: inline-block; background-color: #612af5; color: #ffffff; padding: 14px 28px; font-size: 14px; font-weight: 600; text-decoration: none; border-radius: 8px; font-family: sans-serif;">
+                Open Dashboard
+              </a>
+            </td>
+          </tr>
+        </table>
+        
+        <!-- Copyright Info -->
+        <table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px; margin-top: 24px;">
+          <tr>
+            <td align="center" style="font-size: 12px; color: #94a3b8; line-height: 1.5; font-family: sans-serif;">
+              &copy; ${new Date().getFullYear()} ${siteName}. All rights reserved.<br>
+              This is an automated operational notification.
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>
                     `
                 };
 
@@ -222,11 +331,70 @@ export async function sendAdminReply(
 
       const senderEmail = fields.smtpSender?.stringValue || fields.smtpUser.stringValue;
 
+      const { logoUrl, siteName } = await fetchBranding(projectId);
+
       const mailOptions = {
           from: `"${fields.adminEmail?.stringValue || 'Admin'}" <${senderEmail}>`,
           to: toEmail,
           subject: subject,
-          html: `<p style="white-space: pre-wrap;">${message}</p>`
+          html: `
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>${subject}</title>
+</head>
+<body style="margin: 0; padding: 0; background-color: #f8fafc; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
+  <table border="0" cellpadding="0" cellspacing="0" width="100%" style="background-color: #f8fafc; padding: 40px 20px;">
+    <tr>
+      <td align="center">
+        <table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px; background-color: #ffffff; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.03); border: 1px solid #e2e8f0;">
+          <!-- Top Accent Line -->
+          <tr>
+            <td height="6" style="background: linear-gradient(to right, #612af5, #7c3aed);"></td>
+          </tr>
+          
+          <!-- Header (Logo) -->
+          <tr>
+            <td align="left" style="padding: 32px 32px 20px 32px; border-bottom: 1px solid #f1f5f9;">
+              ${logoUrl ? `
+                <img src="${logoUrl}" alt="${siteName}" style="max-height: 40px; width: auto; display: block;" />
+              ` : `
+                <span style="font-size: 20px; font-weight: bold; color: #1e1b4b; font-family: sans-serif;">${siteName}</span>
+              `}
+            </td>
+          </tr>
+
+          <!-- Message Body -->
+          <tr>
+            <td style="padding: 32px; font-size: 16px; color: #334155; line-height: 1.7; font-family: sans-serif;">
+              <p style="margin: 0 0 20px 0; font-family: sans-serif;">Hello,</p>
+              <div style="white-space: pre-wrap; color: #1e293b; font-family: sans-serif;">${message}</div>
+              
+              <div style="margin-top: 40px; padding-top: 24px; border-top: 1px solid #f1f5f9; font-family: sans-serif;">
+                <p style="margin: 0; font-size: 14px; font-weight: 600; color: #475569; font-family: sans-serif;">Warm regards,</p>
+                <p style="margin: 4px 0 0 0; font-size: 14px; font-weight: 700; color: #612af5; font-family: sans-serif;">${siteName} Team</p>
+                <p style="margin: 4px 0 0 0; font-size: 12px; color: #94a3b8; font-family: sans-serif;"><a href="https://pkcreative.in" style="color: #94a3b8; text-decoration: none;">www.pkcreative.in</a></p>
+              </div>
+            </td>
+          </tr>
+        </table>
+        
+        <!-- Copyright Info -->
+        <table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px; margin-top: 24px;">
+          <tr>
+            <td align="center" style="font-size: 12px; color: #94a3b8; line-height: 1.5; font-family: sans-serif;">
+              &copy; ${new Date().getFullYear()} ${siteName}. All rights reserved.
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>
+          `
       };
 
       await transporter.sendMail(mailOptions);
