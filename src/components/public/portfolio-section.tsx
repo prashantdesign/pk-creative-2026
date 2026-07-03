@@ -12,9 +12,10 @@ import { Skeleton } from '../ui/skeleton';
 interface PortfolioSectionProps {
   content: SiteContent | null;
   onProjectClick: (project: Project) => void;
+  hideHeader?: boolean;
 }
 
-export default function PortfolioSection({ content, onProjectClick }: PortfolioSectionProps) {
+export default function PortfolioSection({ content, onProjectClick, hideHeader = false }: PortfolioSectionProps) {
   const firestore = useFirestore();
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
 
@@ -40,18 +41,20 @@ export default function PortfolioSection({ content, onProjectClick }: PortfolioS
   return (
     <section id="work" className="py-24 bg-background relative">
       <div className="container mx-auto px-4 md:px-6">
-        <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-8">
-          <div className="max-w-2xl">
-            <h2 className="text-4xl md:text-5xl lg:text-6xl font-headline font-black tracking-tighter mb-4 animate-fade-in-up">
-              {content?.portfolioSectionTitle || 'Selected Work'}
-            </h2>
-            {content?.portfolioSectionDescription && (
-              <p className="text-xl text-muted-foreground animate-fade-in-up animation-delay-300">
-                {content.portfolioSectionDescription}
-              </p>
-            )}
+        {!hideHeader && (
+          <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-8">
+            <div className="max-w-2xl">
+              <h2 className="text-4xl md:text-5xl lg:text-6xl font-headline font-black tracking-tighter mb-4 animate-fade-in-up">
+                {content?.portfolioSectionTitle || 'Selected Work'}
+              </h2>
+              {content?.portfolioSectionDescription && (
+                <p className="text-xl text-muted-foreground animate-fade-in-up animation-delay-300">
+                  {content.portfolioSectionDescription}
+                </p>
+              )}
+            </div>
           </div>
-        </div>
+        )}
 
         {isLoading ? (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">

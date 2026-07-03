@@ -28,13 +28,13 @@ export default function WorkTabs() {
         
         <TabsContent value="projects" className="mt-0 outline-none focus:ring-0">
           <div className="-mt-16 sm:-mt-24">
-            <PortfolioSection content={siteContent || null} onProjectClick={(p) => setSelectedProject(p)} />
+            <PortfolioSection content={siteContent || null} onProjectClick={(p) => setSelectedProject(p)} hideHeader={true} />
           </div>
         </TabsContent>
         
         <TabsContent value="gallery" className="mt-0 outline-none focus:ring-0">
           <div className="-mt-16 sm:-mt-24">
-            <GallerySection content={siteContent || null} />
+            <GallerySection content={siteContent || null} hideHeader={true} />
           </div>
         </TabsContent>
       </Tabs>

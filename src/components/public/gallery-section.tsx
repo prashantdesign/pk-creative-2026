@@ -18,15 +18,15 @@ const GalleryImageItem = ({ image, index, onClick }: { image: GalleryImage, inde
   const [isLoaded, setIsLoaded] = useState(false);
   
   return (
-    <div className="break-inside-avoid mb-4 animate-fade-in-up" style={{animationDelay: `${(index % 10) * 50}ms`}}>
+    <div className="animate-fade-in-up" style={{animationDelay: `${(index % 10) * 50}ms`}}>
       <Card className="overflow-hidden group cursor-pointer border-none bg-transparent shadow-none" onClick={onClick}>
-        <CardContent className="p-0 relative">
-          {!isLoaded && <Skeleton className="w-full h-64 rounded-lg" />}
+        <CardContent className="p-0 relative aspect-[4/3] w-full overflow-hidden bg-muted rounded-lg">
+          {!isLoaded && <Skeleton className="w-full h-full rounded-lg" />}
           <img
              src={image.imageUrl}
              alt={image.title || 'Gallery image'}
              loading="lazy"
-             className={`w-full h-auto rounded-lg transition-all duration-700 ${isLoaded ? 'opacity-100 scale-100 group-hover:scale-[1.02]' : 'absolute inset-0 opacity-0 scale-95'}`}
+             className={`w-full h-full object-cover rounded-lg transition-all duration-700 ${isLoaded ? 'opacity-100 scale-100 group-hover:scale-[1.02]' : 'absolute inset-0 opacity-0 scale-95'}`}
              onLoad={() => setIsLoaded(true)}
              onError={() => setIsLoaded(true)}
           />
@@ -36,7 +36,7 @@ const GalleryImageItem = ({ image, index, onClick }: { image: GalleryImage, inde
   );
 };
 
-export default function GallerySection({ content }: GallerySectionProps) {
+export default function GallerySection({ content, hideHeader = false }: GallerySectionProps) {
   const firestore = useFirestore();
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [visibleCount, setVisibleCount] = useState<number>(10);
@@ -59,9 +59,13 @@ export default function GallerySection({ content }: GallerySectionProps) {
     return images.filter(img => img.galleryCategoryId === selectedCategory);
   }, [images, selectedCategory]);
 
+  const sortedImages = useMemo(() => {
+    return [...filteredImages].sort((a, b) => (a.title || '').localeCompare(b.title || ''));
+  }, [filteredImages]);
+
   const visibleImages = useMemo(() => {
-    return filteredImages.slice(0, visibleCount);
-  }, [filteredImages, visibleCount]);
+    return sortedImages.slice(0, visibleCount);
+  }, [sortedImages, visibleCount]);
   
   const isLoading = imagesLoading || categoriesLoading;
 
@@ -71,13 +75,13 @@ export default function GallerySection({ content }: GallerySectionProps) {
     if (observer.current) observer.current.disconnect();
 
     observer.current = new IntersectionObserver((entries) => {
-      if (entries[0].isIntersecting && visibleCount < filteredImages.length) {
+      if (entries[0].isIntersecting && visibleCount < sortedImages.length) {
         setVisibleCount((prev) => prev + 10);
       }
     }, { rootMargin: '200px' });
 
     if (node) observer.current.observe(node);
-  }, [visibleCount, filteredImages.length]);
+  }, [visibleCount, sortedImages.length]);
 
   // Reset visible count when category changes
   useEffect(() => {
@@ -93,9 +97,9 @@ export default function GallerySection({ content }: GallerySectionProps) {
     } else if (e.key === 'ArrowLeft') {
       setLightboxIndex((prev) => (prev !== null && prev > 0 ? prev - 1 : prev));
     } else if (e.key === 'ArrowRight') {
-      setLightboxIndex((prev) => (prev !== null && prev < filteredImages.length - 1 ? prev + 1 : prev));
+      setLightboxIndex((prev) => (prev !== null && prev < sortedImages.length - 1 ? prev + 1 : prev));
     }
-  }, [lightboxIndex, filteredImages.length]);
+  }, [lightboxIndex, sortedImages.length]);
 
   useEffect(() => {
     window.addEventListener('keydown', handleKeyDown);
@@ -117,23 +121,25 @@ export default function GallerySection({ content }: GallerySectionProps) {
   return (
     <section id="gallery" className="py-16 md:py-24">
       <div className="container mx-auto px-4">
-        <div className="text-center max-w-3xl mx-auto mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold tracking-tight animate-fade-in-up">
-            {content?.gallerySectionTitle || 'Gallery'}
-          </h2>
-          {content?.gallerySectionDescription && (
-            <p className="mt-4 text-lg text-muted-foreground animate-fade-in-up animation-delay-300">
-              {content.gallerySectionDescription}
-            </p>
-          )}
-        </div>
+        {!hideHeader && (
+          <div className="text-center max-w-3xl mx-auto mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold tracking-tight animate-fade-in-up">
+              {content?.gallerySectionTitle || 'Gallery'}
+            </h2>
+            {content?.gallerySectionDescription && (
+              <p className="mt-4 text-lg text-muted-foreground animate-fade-in-up animation-delay-300">
+                {content.gallerySectionDescription}
+              </p>
+            )}
+          </div>
+        )}
 
         {isLoading ? (
-            <div className="columns-1 sm:columns-2 md:columns-3 lg:columns-4 gap-4">
-                <Skeleton className="w-full h-64 rounded-lg break-inside-avoid mb-4" />
-                <Skeleton className="w-full h-48 rounded-lg break-inside-avoid mb-4" />
-                <Skeleton className="w-full h-80 rounded-lg break-inside-avoid mb-4" />
-                <Skeleton className="w-full h-64 rounded-lg break-inside-avoid mb-4" />
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                <Skeleton className="w-full aspect-[4/3] rounded-lg" />
+                <Skeleton className="w-full aspect-[4/3] rounded-lg" />
+                <Skeleton className="w-full aspect-[4/3] rounded-lg" />
+                <Skeleton className="w-full aspect-[4/3] rounded-lg" />
             </div>
         ) : (
             <>
@@ -157,7 +163,7 @@ export default function GallerySection({ content }: GallerySectionProps) {
                     ))}
                 </div>
 
-                <div className="columns-1 sm:columns-2 md:columns-3 lg:columns-4 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
                     {visibleImages.map((image, index) => (
                         <GalleryImageItem 
                           key={image.id} 
@@ -169,13 +175,13 @@ export default function GallerySection({ content }: GallerySectionProps) {
                 </div>
                 
                 {/* Infinite Scroll trigger point */}
-                {visibleCount < filteredImages.length && (
+                {visibleCount < sortedImages.length && (
                   <div ref={lastElementRef} className="py-12 flex justify-center opacity-70">
                     <PKLoader size="sm" />
                   </div>
                 )}
 
-                {filteredImages.length === 0 && (
+                {sortedImages.length === 0 && (
                     <div className="text-center col-span-full py-12 text-muted-foreground">
                         No images found in this category.
                     </div>
@@ -205,19 +211,19 @@ export default function GallerySection({ content }: GallerySectionProps) {
 
           <div className="relative w-full h-full max-w-7xl max-h-screen p-4 md:p-12 flex flex-col justify-center items-center" onClick={() => setLightboxIndex(null)}>
             <img 
-              src={filteredImages[lightboxIndex].imageUrl} 
-              alt={filteredImages[lightboxIndex].title || 'Lightbox image'}
+              src={sortedImages[lightboxIndex].imageUrl} 
+              alt={sortedImages[lightboxIndex].title || 'Lightbox image'}
               loading="lazy"
               className="max-w-full max-h-[85vh] object-contain shadow-2xl rounded-sm"
               onClick={(e) => e.stopPropagation()}
             />
             <div className="mt-6 text-center" onClick={(e) => e.stopPropagation()}>
-              <h3 className="text-white text-xl font-medium">{filteredImages[lightboxIndex].title}</h3>
-              <p className="text-gray-400 text-sm mt-2">{lightboxIndex + 1} of {filteredImages.length}</p>
+              <h3 className="text-white text-xl font-medium">{sortedImages[lightboxIndex].title}</h3>
+              <p className="text-gray-400 text-sm mt-2">{lightboxIndex + 1} of {sortedImages.length}</p>
             </div>
           </div>
 
-          {lightboxIndex < filteredImages.length - 1 && (
+          {lightboxIndex < sortedImages.length - 1 && (
             <button 
               className="absolute right-4 md:right-8 top-1/2 -translate-y-1/2 text-white hover:text-gray-300 transition-colors z-50 p-3 rounded-full bg-black/50 hover:bg-black/80 hidden md:block"
               onClick={(e) => { e.stopPropagation(); setLightboxIndex(lightboxIndex + 1); }}

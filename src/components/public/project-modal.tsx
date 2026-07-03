@@ -34,7 +34,7 @@ const ProjectModal = ({ project, isOpen, onClose }: ProjectModalProps) => {
               </div>
           )}
         </DialogHeader>
-        <div className="flex-grow overflow-y-auto pr-6 -mr-6 space-y-8">
+        <div className="flex-grow overflow-y-auto overflow-x-hidden pr-2 space-y-8">
             {allImages.length > 0 && (
                 <Carousel className="w-full">
                 <CarouselContent>
