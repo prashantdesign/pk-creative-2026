@@ -41,7 +41,6 @@ export default function GallerySection({ content }: GallerySectionProps) {
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [visibleCount, setVisibleCount] = useState<number>(10);
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
-  const loaderRef = useRef<HTMLDivElement>(null);
 
   const imagesQuery = useMemoFirebase(() => 
     firestore ? query(collection(firestore, 'pkcreative_galleryImages'), orderBy('order', 'asc')) : null
@@ -66,25 +65,19 @@ export default function GallerySection({ content }: GallerySectionProps) {
   
   const isLoading = imagesLoading || categoriesLoading;
 
-  // Infinite Scroll Observer
-  useEffect(() => {
-    const observer = new IntersectionObserver((entries) => {
-      const target = entries[0];
-      if (target.isIntersecting) {
+  // Infinite Scroll Observer using Callback Ref pattern
+  const observer = useRef<IntersectionObserver | null>(null);
+  const lastElementRef = useCallback((node: HTMLDivElement | null) => {
+    if (observer.current) observer.current.disconnect();
+
+    observer.current = new IntersectionObserver((entries) => {
+      if (entries[0].isIntersecting && visibleCount < filteredImages.length) {
         setVisibleCount((prev) => prev + 10);
       }
     }, { rootMargin: '200px' });
 
-    if (loaderRef.current) {
-      observer.observe(loaderRef.current);
-    }
-
-    return () => {
-      if (loaderRef.current) {
-        observer.unobserve(loaderRef.current);
-      }
-    };
-  }, [filteredImages.length, visibleCount]);
+    if (node) observer.current.observe(node);
+  }, [visibleCount, filteredImages.length]);
 
   // Reset visible count when category changes
   useEffect(() => {
@@ -177,7 +170,7 @@ export default function GallerySection({ content }: GallerySectionProps) {
                 
                 {/* Infinite Scroll trigger point */}
                 {visibleCount < filteredImages.length && (
-                  <div ref={loaderRef} className="py-12 flex justify-center opacity-70">
+                  <div ref={lastElementRef} className="py-12 flex justify-center opacity-70">
                     <PKLoader size="sm" />
                   </div>
                 )}
