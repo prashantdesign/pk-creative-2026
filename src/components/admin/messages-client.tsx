@@ -2,7 +2,7 @@
 
 import React, { useMemo } from 'react';
 import { collection, query, orderBy, doc, updateDoc, deleteDoc } from 'firebase/firestore';
-import { useFirestore, useCollection } from '@/firebase';
+import { useFirestore, useCollection, useUser } from '@/firebase';
 import type { ContactMessage } from '@/types';
 import { format } from 'date-fns';
 import {
@@ -56,8 +56,16 @@ function SubmitReplyButton() {
 export default function MessagesClient() {
   const firestore = useFirestore();
   const { toast } = useToast();
+  const { user } = useUser();
+  const [idToken, setIdToken] = React.useState<string>('');
   const [viewMessage, setViewMessage] = React.useState<ContactMessage | null>(null);
   const [replyMessage, setReplyMessage] = React.useState<ContactMessage | null>(null);
+
+  React.useEffect(() => {
+    if (user) {
+      user.getIdToken().then(token => setIdToken(token));
+    }
+  }, [user]);
   const [replyState, replyAction] = useActionState(sendAdminReply, initialReplyState);
 
   useEffect(() => {
@@ -299,6 +307,7 @@ export default function MessagesClient() {
                 </DialogHeader>
                 {replyMessage && (
                     <form action={replyAction} className="space-y-4">
+                        <input type="hidden" name="idToken" value={idToken} />
                         <div className="space-y-2">
                             <Label htmlFor="toEmail">To</Label>
                             <Input id="toEmail" name="toEmail" value={replyMessage.email} readOnly className="bg-muted" />

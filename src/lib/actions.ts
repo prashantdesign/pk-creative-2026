@@ -87,8 +87,28 @@ export async function submitContactForm(
     
     // Attempt to send email notification using SMTP settings from Firestore
     try {
+        // Fetch GCP service account access token from metadata server if available (timeout after 1s to not block local dev)
+        let gcpToken: string | null = null;
+        try {
+            const metadataResponse = await fetch('http://metadata.google.internal/computeMetadata/v1/instance/service-accounts/default/token', {
+                headers: { 'Metadata-Flavor': 'Google' },
+                signal: AbortSignal.timeout(1000)
+            });
+            if (metadataResponse.ok) {
+                const tokenData = await metadataResponse.json();
+                gcpToken = tokenData.access_token;
+            }
+        } catch (metadataError) {
+            // Silently ignore metadata server failures (e.g. running in local development)
+        }
+
         const settingsUrl = `https://firestore.googleapis.com/v1/projects/${projectId}/databases/(default)/documents/pkcreative_privateSettings/global`;
-        const settingsResponse = await fetch(settingsUrl);
+        const settingsResponse = await fetch(settingsUrl, {
+            headers: {
+                ...(gcpToken ? { 'Authorization': `Bearer ${gcpToken}` } : {})
+            }
+        });
+        
         if (settingsResponse.ok) {
             const settingsData = await settingsResponse.json();
             const fields = settingsData.fields;
@@ -123,6 +143,8 @@ export async function submitContactForm(
 
                 await transporter.sendMail(mailOptions);
             }
+        } else {
+            console.error("Firestore REST API returned error status:", settingsResponse.status);
         }
     } catch (emailError) {
         console.error("Email notification failed to send:", emailError);
@@ -167,12 +189,18 @@ export async function sendAdminReply(
      return { message: 'Server configuration error.', error: true };
   }
 
+  const idToken = formData.get('idToken') as string;
+
   try {
       const settingsUrl = `https://firestore.googleapis.com/v1/projects/${projectId}/databases/(default)/documents/pkcreative_privateSettings/global`;
-      const settingsResponse = await fetch(settingsUrl);
+      const settingsResponse = await fetch(settingsUrl, {
+          headers: {
+              ...(idToken ? { 'Authorization': `Bearer ${idToken}` } : {})
+          }
+      });
       
       if (!settingsResponse.ok) {
-          return { message: 'Failed to fetch SMTP settings.', error: true };
+          return { message: `Failed to fetch SMTP settings. (Status ${settingsResponse.status})`, error: true };
       }
       
       const settingsData = await settingsResponse.json();
