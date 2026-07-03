@@ -14,19 +14,49 @@ interface GallerySectionProps {
   content: SiteContent | null;
 }
 
+function useWindowColumns() {
+  const [columns, setColumns] = useState(1);
+
+  useEffect(() => {
+    const updateColumns = () => {
+      const width = window.innerWidth;
+      if (width >= 1280) {
+        setColumns(4);
+      } else if (width >= 1024) {
+        setColumns(3);
+      } else if (width >= 640) {
+        setColumns(2);
+      } else {
+        setColumns(1);
+      }
+    };
+
+    updateColumns();
+    window.addEventListener('resize', updateColumns);
+    return () => window.removeEventListener('resize', updateColumns);
+  }, []);
+
+  return columns;
+}
+
 const GalleryImageItem = ({ image, index, onClick }: { image: GalleryImage, index: number, onClick: () => void }) => {
   const [isLoaded, setIsLoaded] = useState(false);
+  
+  const skeletonHeight = useMemo(() => {
+    const heights = ['h-48', 'h-64', 'h-80', 'h-56', 'h-72'];
+    return heights[index % heights.length];
+  }, [index]);
   
   return (
     <div className="animate-fade-in-up" style={{animationDelay: `${(index % 10) * 50}ms`}}>
       <Card className="overflow-hidden group cursor-pointer border-none bg-transparent shadow-none" onClick={onClick}>
-        <CardContent className="p-0 relative aspect-[4/3] w-full overflow-hidden bg-muted rounded-lg">
-          {!isLoaded && <Skeleton className="w-full h-full rounded-lg" />}
+        <CardContent className="p-0 relative w-full overflow-hidden">
+          {!isLoaded && <Skeleton className={`w-full ${skeletonHeight} rounded-lg`} />}
           <img
              src={image.imageUrl}
              alt={image.title || 'Gallery image'}
              loading="lazy"
-             className={`w-full h-full object-cover rounded-lg transition-all duration-700 ${isLoaded ? 'opacity-100 scale-100 group-hover:scale-[1.02]' : 'absolute inset-0 opacity-0 scale-95'}`}
+             className={`w-full h-auto rounded-lg transition-all duration-700 ${isLoaded ? 'opacity-100 scale-100 group-hover:scale-[1.02]' : 'absolute inset-0 opacity-0 scale-95'}`}
              onLoad={() => setIsLoaded(true)}
              onError={() => setIsLoaded(true)}
           />
@@ -66,6 +96,16 @@ export default function GallerySection({ content, hideHeader = false }: GalleryS
   const visibleImages = useMemo(() => {
     return sortedImages.slice(0, visibleCount);
   }, [sortedImages, visibleCount]);
+
+  const columnsCount = useWindowColumns();
+
+  const columns = useMemo(() => {
+    const cols: GalleryImage[][] = Array.from({ length: columnsCount }, () => []);
+    visibleImages.forEach((img, idx) => {
+      cols[idx % columnsCount].push(img);
+    });
+    return cols;
+  }, [visibleImages, columnsCount]);
   
   const isLoading = imagesLoading || categoriesLoading;
 
@@ -135,11 +175,13 @@ export default function GallerySection({ content, hideHeader = false }: GalleryS
         )}
 
         {isLoading ? (
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-                <Skeleton className="w-full aspect-[4/3] rounded-lg" />
-                <Skeleton className="w-full aspect-[4/3] rounded-lg" />
-                <Skeleton className="w-full aspect-[4/3] rounded-lg" />
-                <Skeleton className="w-full aspect-[4/3] rounded-lg" />
+            <div className="flex gap-4">
+              {Array.from({ length: columnsCount }).map((_, colIdx) => (
+                <div key={colIdx} className="flex-1 flex flex-col gap-4">
+                  <Skeleton className="w-full h-64 rounded-lg" />
+                  <Skeleton className="w-full h-48 rounded-lg" />
+                </div>
+              ))}
             </div>
         ) : (
             <>
@@ -163,14 +205,21 @@ export default function GallerySection({ content, hideHeader = false }: GalleryS
                     ))}
                 </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-                    {visibleImages.map((image, index) => (
-                        <GalleryImageItem 
-                          key={image.id} 
-                          image={image} 
-                          index={index} 
-                          onClick={() => setLightboxIndex(index)} 
-                        />
+                <div className="flex gap-4 items-start">
+                    {columns.map((colImages, colIdx) => (
+                        <div key={colIdx} className="flex-1 flex flex-col gap-4">
+                            {colImages.map((image) => {
+                                const globalIndex = sortedImages.findIndex(img => img.id === image.id);
+                                return (
+                                    <GalleryImageItem 
+                                      key={image.id} 
+                                      image={image} 
+                                      index={globalIndex} 
+                                      onClick={() => setLightboxIndex(globalIndex)} 
+                                    />
+                                );
+                            })}
+                        </div>
                     ))}
                 </div>
                 
