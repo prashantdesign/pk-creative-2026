@@ -26,13 +26,10 @@ const GalleryImageItem = ({ image, index, onClick }: { image: GalleryImage, inde
              src={image.imageUrl}
              alt={image.title || 'Gallery image'}
              loading="lazy"
-             className={`w-full h-auto rounded-lg transition-all duration-700 ${isLoaded ? 'block opacity-100 group-hover:scale-[1.02]' : 'hidden opacity-0'}`}
+             className={`w-full h-auto rounded-lg transition-all duration-700 ${isLoaded ? 'opacity-100 scale-100 group-hover:scale-[1.02]' : 'absolute inset-0 opacity-0 scale-95'}`}
              onLoad={() => setIsLoaded(true)}
              onError={() => setIsLoaded(true)}
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4 rounded-lg pointer-events-none">
-            <p className="text-white text-sm font-medium drop-shadow-md translate-y-4 group-hover:translate-y-0 transition-transform duration-300">{image.title}</p>
-          </div>
         </CardContent>
       </Card>
     </div>
