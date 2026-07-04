@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from 'react';
-import type { Project, SiteContent } from '@/types';
+import type { SiteContent } from '@/types';
 import { useFirestore, useDoc, useMemoFirebase } from '@/firebase';
 import { doc } from 'firebase/firestore';
 
@@ -13,15 +13,11 @@ const AboutSection = dynamic(() => import('@/components/public/about-section'));
 const ServicesSection = dynamic(() => import('@/components/public/services-section'));
 const TargetAudienceSection = dynamic(() => import('@/components/public/target-audience-section'));
 const WebsiteShowcaseSection = dynamic(() => import('@/components/public/website-showcase-section'));
-const PortfolioSection = dynamic(() => import('@/components/public/portfolio-section'));
 const TestimonialsSection = dynamic(() => import('@/components/public/testimonials-section'));
 const ContactSection = dynamic(() => import('@/components/public/contact-section'));
 const Footer = dynamic(() => import('@/components/public/footer'));
-import ProjectModal from '@/components/public/project-modal';
 
 export default function HomeClient({ initialSiteContent }: { initialSiteContent: SiteContent | null }) {
-  const [selectedProject, setSelectedProject] = useState<Project | null>(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const firestore = useFirestore();
 
   const siteContentRef = useMemoFirebase(() => firestore ? doc(firestore, 'pkcreative_siteContent', 'global') : null, [firestore]);
@@ -42,16 +38,6 @@ export default function HomeClient({ initialSiteContent }: { initialSiteContent:
     }
   }, []);
 
-  const handleProjectClick = (project: Project) => {
-    setSelectedProject(project);
-    setIsModalOpen(true);
-  };
-
-  const handleCloseModal = () => {
-    setIsModalOpen(false);
-    setSelectedProject(null);
-  };
-
   if (siteContent?.isMaintenanceModeEnabled) {
     return (
       <div className="flex flex-col min-h-screen items-center justify-center text-center p-4">
@@ -71,18 +57,10 @@ export default function HomeClient({ initialSiteContent }: { initialSiteContent:
           {(siteContent?.isServicesSectionVisible ?? true) && <ServicesSection content={siteContent} />}
           {(siteContent?.isTargetAudienceSectionVisible ?? true) && <TargetAudienceSection content={siteContent} />}
           {(siteContent?.isWebsiteShowcaseVisible ?? true) && <WebsiteShowcaseSection content={siteContent} />}
-          {(siteContent?.isPortfolioSectionVisible ?? true) && <PortfolioSection content={siteContent} onProjectClick={handleProjectClick} />}
           {(siteContent?.isTestimonialsSectionVisible ?? true) && <TestimonialsSection content={siteContent} />}
           <ContactSection content={siteContent} />
         </main>
         <Footer content={siteContent} />
-        {selectedProject && (
-          <ProjectModal
-            project={selectedProject}
-            isOpen={isModalOpen}
-            onClose={handleCloseModal}
-          />
-        )}
       </div>
     </>
   );
