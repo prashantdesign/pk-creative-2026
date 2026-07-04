@@ -41,7 +41,7 @@ const Header = ({ content: initialContent }: { content?: SiteContent | null }) =
           : 'bg-transparent border-transparent'
       }`}
     >
-      <div className="container mx-auto flex h-20 items-center justify-between px-4 md:px-6">
+      <div className="container mx-auto flex h-16 items-center justify-between px-4 md:px-6">
         <a href="/" className="flex items-center">
           <Logo siteName={content?.siteName} logoUrl={content?.logoUrl} />
         </a>
