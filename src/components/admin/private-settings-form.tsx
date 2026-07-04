@@ -1,7 +1,8 @@
 "use client";
 
 import React, { useEffect, useState, useMemo } from 'react';
-import { useForm } from 'react-hook-form';
+import { useForm, useFieldArray } from 'react-hook-form';
+import { Plus, Trash2 } from 'lucide-react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
 import { doc, setDoc } from 'firebase/firestore';
@@ -23,7 +24,9 @@ const formSchema = z.object({
   smtpUser: z.string().optional(),
   smtpPass: z.string().optional(),
   smtpSender: z.string().email({ message: "Invalid email" }).optional().or(z.literal('')),
-  adminEmail: z.string().email({ message: "Invalid email" }).optional().or(z.literal('')),
+  adminEmails: z.array(z.object({
+    email: z.string().email({ message: "Invalid email" }).or(z.literal(''))
+  })),
   
   metaAppId: z.string().optional(),
   metaAppSecret: z.string().optional(),
@@ -47,7 +50,7 @@ export default function PrivateSettingsForm() {
       smtpUser: "pkcreative.in@gmail.com",
       smtpPass: "",
       smtpSender: "info@pkcreative.in",
-      adminEmail: "info@pkcreative.in",
+      adminEmails: [{ email: "info@pkcreative.in" }],
       metaAppId: "",
       metaAppSecret: "",
       instagramAccountId: "",
@@ -55,15 +58,24 @@ export default function PrivateSettingsForm() {
     },
   });
 
+  const { fields, append, remove } = useFieldArray({
+    control: form.control,
+    name: "adminEmails"
+  });
+
   useEffect(() => {
     if (settings) {
+      const emailList = settings.adminEmail
+        ? settings.adminEmail.split(',').map(e => ({ email: e.trim() }))
+        : [{ email: "info@pkcreative.in" }];
+
       form.reset({
         smtpHost: settings.smtpHost || "smtp.gmail.com",
         smtpPort: settings.smtpPort || "587",
         smtpUser: settings.smtpUser || "pkcreative.in@gmail.com",
         smtpPass: settings.smtpPass || "",
         smtpSender: settings.smtpSender || "info@pkcreative.in",
-        adminEmail: settings.adminEmail || "info@pkcreative.in",
+        adminEmails: emailList,
         metaAppId: settings.metaAppId || "",
         metaAppSecret: settings.metaAppSecret || "",
         instagramAccountId: settings.instagramAccountId || "",
@@ -76,7 +88,25 @@ export default function PrivateSettingsForm() {
     if(!firestore || !settingsRef) return;
     setIsLoading(true);
 
-    setDoc(settingsRef, values, { merge: true })
+    const emailString = values.adminEmails
+      .map(item => item.email.trim())
+      .filter(Boolean)
+      .join(',');
+
+    const submitValues = {
+      smtpHost: values.smtpHost,
+      smtpPort: values.smtpPort,
+      smtpUser: values.smtpUser,
+      smtpPass: values.smtpPass,
+      smtpSender: values.smtpSender,
+      adminEmail: emailString,
+      metaAppId: values.metaAppId,
+      metaAppSecret: values.metaAppSecret,
+      instagramAccountId: values.instagramAccountId,
+      metaAccessToken: values.metaAccessToken,
+    };
+
+    setDoc(settingsRef, submitValues, { merge: true })
         .then(() => {
             toast({
                 title: "Settings Saved",
@@ -92,7 +122,7 @@ export default function PrivateSettingsForm() {
             const permissionError = new FirestorePermissionError({
               path: settingsRef.path,
               operation: 'update',
-              requestResourceData: values,
+              requestResourceData: submitValues,
             });
             errorEmitter.emit('permission-error', permissionError);
         })
@@ -133,14 +163,57 @@ export default function PrivateSettingsForm() {
                 <FormField control={form.control} name="smtpSender" render={({ field }) => (
                     <FormItem><FormLabel>Sender Email ("From")</FormLabel><FormControl><Input placeholder="noreply@pkcreative.in" type="email" {...field} value={field.value ?? ''} /></FormControl><FormMessage /></FormItem>
                 )} />
-                <FormField control={form.control} name="adminEmail" render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Admin Notification Email ("To")</FormLabel>
-                      <FormDescription>Where should cron job reminders be sent?</FormDescription>
-                      <FormControl><Input placeholder="admin@pkcreative.in" type="email" {...field} value={field.value ?? ''} /></FormControl>
-                      <FormMessage />
-                    </FormItem>
-                )} />
+              </div>
+
+              <div className="space-y-4 pt-4 border-t border-border/40">
+                <div>
+                  <FormLabel className="text-base font-semibold block">Admin Notification Emails ("To")</FormLabel>
+                  <FormDescription className="mt-1">Where should contact form inquiries and reminders be sent? Add one or more emails.</FormDescription>
+                </div>
+                
+                <div className="space-y-3 max-w-md">
+                  {fields.map((fieldItem, index) => (
+                    <div key={fieldItem.id} className="flex gap-2 items-center">
+                      <FormField 
+                        control={form.control} 
+                        name={`adminEmails.${index}.email`} 
+                        render={({ field }) => (
+                          <FormItem className="flex-grow space-y-0">
+                            <FormControl>
+                              <Input 
+                                placeholder="admin@pkcreative.in" 
+                                type="email" 
+                                {...field} 
+                              />
+                            </FormControl>
+                            <FormMessage className="mt-1" />
+                          </FormItem>
+                        )} 
+                      />
+                      {fields.length > 1 && (
+                        <Button 
+                          type="button" 
+                          variant="ghost" 
+                          size="icon" 
+                          onClick={() => remove(index)}
+                          className="text-destructive hover:text-destructive/80 hover:bg-destructive/10 shrink-0"
+                        >
+                          <Trash2 className="h-5 w-5" />
+                        </Button>
+                      )}
+                    </div>
+                  ))}
+                </div>
+
+                <Button 
+                  type="button" 
+                  variant="outline" 
+                  size="sm" 
+                  onClick={() => append({ email: "" })}
+                  className="flex items-center gap-1.5"
+                >
+                  <Plus className="h-4 w-4" /> Add Email
+                </Button>
               </div>
             </AccordionContent>
           </AccordionItem>
