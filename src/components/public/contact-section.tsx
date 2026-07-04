@@ -11,7 +11,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import type { SiteContent } from '@/types';
 import { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
-import { ChevronDown, User, Mail, LayoutGrid, PenLine, Send } from 'lucide-react';
+import { ChevronDown, User, Mail, LayoutGrid, PenLine, Send, Phone } from 'lucide-react';
 import Image from 'next/image';
 
 const initialState: FormState = {
@@ -134,38 +134,55 @@ export default function ContactSection({ content }: { content?: SiteContent | nu
                   </div>
                 </div>
 
-                <div className="space-y-2 flex flex-col">
-                  <Label className="text-base font-medium text-foreground">I'm inquiring about...</Label>
-                  <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
-                      <Button 
-                        variant="outline" 
-                        className="w-full justify-between font-normal h-14 pl-12 pr-4 bg-[#fcfcfd] dark:bg-zinc-900/50 border-border/85 hover:bg-background/80 hover:text-foreground rounded-2xl text-base relative text-muted-foreground transition-all focus:border-primary/50"
-                      >
-                        <span className="absolute left-4 flex items-center">
-                          <LayoutGrid className="h-5 w-5 text-muted-foreground/60" />
-                        </span>
-                        {selectedServices.length > 0 ? (
-                          <span className="text-foreground truncate font-medium">{selectedServices.join(', ')}</span>
-                        ) : (
-                          <span className="text-muted-foreground/50">Select services...</span>
-                        )}
-                        <ChevronDown className="h-5 w-5 opacity-60 text-muted-foreground" />
-                      </Button>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent className="w-[var(--radix-dropdown-menu-trigger-width)] max-h-64 overflow-y-auto rounded-xl">
-                      {availableServices.map((service) => (
-                        <DropdownMenuCheckboxItem
-                          key={service}
-                          checked={selectedServices.includes(service)}
-                          onCheckedChange={() => handleServiceToggle(service)}
-                          onSelect={(e) => e.preventDefault()}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div className="space-y-2">
+                    <Label htmlFor="phone" className="text-base font-medium text-foreground">Phone <span className="text-muted-foreground/60 text-sm font-normal">(Optional)</span></Label>
+                    <div className="relative flex items-center">
+                      <Phone className="absolute left-4 h-5 w-5 text-muted-foreground/60" />
+                      <Input 
+                        id="phone" 
+                        name="phone" 
+                        type="tel" 
+                        placeholder="+91 98765 43210" 
+                        className="pl-12 h-14 bg-[#fcfcfd] dark:bg-zinc-900/50 border-border/85 focus:border-primary/50 focus:bg-background transition-all rounded-2xl text-base placeholder:text-muted-foreground/50" 
+                      />
+                    </div>
+                  </div>
+
+                  <div className="space-y-2 flex flex-col">
+                    <Label className="text-base font-medium text-foreground">I'm inquiring about...</Label>
+                    <DropdownMenu>
+                      <DropdownMenuTrigger asChild>
+                        <Button 
+                          variant="outline" 
+                          className="w-full justify-between font-normal h-14 pl-12 pr-4 bg-[#fcfcfd] dark:bg-zinc-900/50 border-border/85 hover:bg-background/80 hover:text-foreground rounded-2xl text-base relative text-muted-foreground transition-all focus:border-primary/50"
+                          type="button"
                         >
-                          {service}
-                        </DropdownMenuCheckboxItem>
-                      ))}
-                    </DropdownMenuContent>
-                  </DropdownMenu>
+                          <span className="absolute left-4 flex items-center">
+                            <LayoutGrid className="h-5 w-5 text-muted-foreground/60" />
+                          </span>
+                          {selectedServices.length > 0 ? (
+                            <span className="text-foreground truncate font-medium">{selectedServices.join(', ')}</span>
+                          ) : (
+                            <span className="text-muted-foreground/50">Select services...</span>
+                          )}
+                          <ChevronDown className="h-5 w-5 opacity-60 text-muted-foreground" />
+                        </Button>
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent className="w-[var(--radix-dropdown-menu-trigger-width)] max-h-64 overflow-y-auto rounded-xl">
+                        {availableServices.map((service) => (
+                          <DropdownMenuCheckboxItem
+                            key={service}
+                            checked={selectedServices.includes(service)}
+                            onCheckedChange={() => handleServiceToggle(service)}
+                            onSelect={(e) => e.preventDefault()}
+                          >
+                            {service}
+                          </DropdownMenuCheckboxItem>
+                        ))}
+                      </DropdownMenuContent>
+                    </DropdownMenu>
+                  </div>
                 </div>
 
                 <div className="space-y-2">

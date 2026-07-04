@@ -8,6 +8,7 @@ const contactSchema = z.object({
   email: z.string().email({ message: 'A valid email is required.' }),
   message: z.string().min(1, { message: 'Message is required.' }),
   services: z.string().optional(),
+  phone: z.string().optional(),
 });
 
 export type FormState = {
@@ -41,6 +42,7 @@ export async function submitContactForm(
     email: formData.get('email'),
     message: formData.get('message'),
     services: formData.get('services'),
+    phone: formData.get('phone'),
   });
 
   if (!parsed.success) {
@@ -50,7 +52,7 @@ export async function submitContactForm(
     };
   }
 
-  const { name, email, message, services: servicesString } = parsed.data;
+  const { name, email, message, services: servicesString, phone } = parsed.data;
   
   let servicesArray: string[] = [];
   try {
@@ -78,6 +80,7 @@ export async function submitContactForm(
       message: { stringValue: message },
       isRead: { booleanValue: false },
       timestamp: { timestampValue: now },
+      ...(phone && { phone: { stringValue: phone } }),
       ...(servicesArray.length > 0 && {
           services: {
               arrayValue: {
@@ -203,6 +206,15 @@ export async function submitContactForm(
                     <a href="mailto:${email}" style="color: #612af5; text-decoration: none;">${email}</a>
                   </td>
                 </tr>
+                <!-- Phone -->
+                ${phone ? `
+                <tr>
+                  <td width="30%" valign="top" style="padding-bottom: 16px; font-size: 14px; font-weight: 600; color: #475569; font-family: sans-serif;">Phone:</td>
+                  <td width="70%" valign="top" style="padding-bottom: 16px; font-size: 14px; color: #1e293b; font-family: sans-serif;">
+                    <a href="tel:${phone}" style="color: #612af5; text-decoration: none;">${phone}</a>
+                  </td>
+                </tr>
+                ` : ''}
                 <!-- Services -->
                 ${servicesArray.length > 0 ? `
                 <tr>
