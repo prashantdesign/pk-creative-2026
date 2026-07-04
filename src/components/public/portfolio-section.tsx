@@ -96,16 +96,16 @@ export default function PortfolioSection({ content, onProjectClick, hideHeader =
                     className="overflow-hidden group cursor-pointer border-none bg-transparent shadow-none" 
                     onClick={() => onProjectClick(project)}
                   >
-                    <CardContent className="p-0 relative aspect-[4/5] sm:aspect-[4/3] md:aspect-[4/5] lg:aspect-square overflow-hidden rounded-3xl">
-                      <Image
+                    <CardContent className="p-0 relative w-full h-auto overflow-hidden rounded-3xl bg-secondary/10">
+                      <img
                         src={project.imageUrl}
                         alt={project.title}
-                        fill
-                        className="object-cover group-hover:scale-105 transition-transform duration-700 ease-in-out"
+                        className="w-full h-auto object-contain group-hover:scale-[1.02] transition-transform duration-700 ease-in-out"
                         data-ai-hint="project image"
+                        loading="lazy"
                       />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-60 group-hover:opacity-80 transition-opacity duration-500" />
-                      <div className="absolute bottom-0 left-0 w-full p-8 translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-60 group-hover:opacity-80 transition-opacity duration-500 pointer-events-none" />
+                      <div className="absolute bottom-0 left-0 w-full p-8 translate-y-4 group-hover:translate-y-0 transition-transform duration-500 pointer-events-none">
                         <h3 className="text-3xl font-bold text-white drop-shadow-lg mb-2">{project.title}</h3>
                         <p className="text-lg text-white/80 drop-shadow-md line-clamp-2">{project.description}</p>
                       </div>

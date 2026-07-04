@@ -16,12 +16,11 @@ const AboutSection = ({ content }: { content: SiteContent | null }) => {
                 "We are a passionate team of designers with a love for creating beautiful and intuitive digital experiences."}
             </p>
           </div>
-          <div className="relative aspect-square max-w-sm mx-auto w-full animate-fade-in-up animation-delay-300">
-            <Image
+          <div className="max-w-sm mx-auto w-full animate-fade-in-up animation-delay-300">
+            <img
               src={content?.aboutImageUrl || "/pk_about_visual.png"}
               alt="About us"
-              fill
-              className="rounded-lg object-cover shadow-lg"
+              className="rounded-lg w-full h-auto object-contain shadow-lg"
             />
           </div>
         </div>
