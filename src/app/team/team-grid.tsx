@@ -45,16 +45,15 @@ export default function TeamGrid() {
         <div className="flex justify-center animate-fade-in-up">
           <Card className="overflow-hidden border-2 border-primary/20 bg-white dark:bg-card/50 rounded-2xl shadow-md hover:shadow-lg transition-all duration-300 max-w-sm w-full p-6 flex flex-col items-center text-center group">
             <CardContent className="p-0 w-full flex flex-col items-center">
-              <div className="relative aspect-square w-full rounded-xl overflow-hidden mb-6 bg-muted border border-border/20 shadow-inner">
+              <div className="w-full rounded-xl overflow-hidden mb-6 bg-muted/20 border border-border/10 shadow-inner flex items-center justify-center">
                 {leadMember.photoUrl ? (
-                  <Image 
+                  <img 
                     src={leadMember.photoUrl} 
                     alt={leadMember.name} 
-                    fill 
-                    className="object-cover transition-transform duration-500 group-hover:scale-[1.03]" 
+                    className="w-full h-auto object-contain transition-transform duration-500 group-hover:scale-[1.02]" 
                   />
                 ) : (
-                  <div className="w-full h-full flex items-center justify-center text-muted-foreground bg-secondary">
+                  <div className="w-full aspect-square flex items-center justify-center text-muted-foreground bg-secondary">
                     No Photo
                   </div>
                 )}
@@ -82,16 +81,16 @@ export default function TeamGrid() {
               style={{ animationDelay: `${150 + index * 50}ms` }}
             >
               <CardContent className="p-0 w-full flex flex-col items-center">
-                <div className="relative aspect-square w-full rounded-xl overflow-hidden mb-4 bg-muted border border-border/10 shadow-inner">
+                <div className="w-full rounded-xl overflow-hidden mb-4 bg-muted/20 border border-border/10 shadow-inner flex items-center justify-center">
                   {member.photoUrl ? (
-                    <Image 
+                    <img 
                       src={member.photoUrl} 
                       alt={member.name} 
-                      fill 
-                      className="object-cover transition-transform duration-500 group-hover:scale-[1.03]" 
+                      className="w-full h-auto object-contain transition-transform duration-500 group-hover:scale-[1.02]" 
+                      loading="lazy"
                     />
                   ) : (
-                    <div className="w-full h-full flex items-center justify-center text-muted-foreground bg-secondary">
+                    <div className="w-full aspect-square flex items-center justify-center text-muted-foreground bg-secondary">
                       No Photo
                     </div>
                   )}
