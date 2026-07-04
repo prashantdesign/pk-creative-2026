@@ -95,6 +95,9 @@
   html {
     scroll-behavior: smooth;
   }
+  #about, #services, #contact, #testimonials {
+    scroll-margin-top: 5rem;
+  }
 
   .animation-delay-300 {
     animation-delay: 300ms;
@@ -124,5 +127,14 @@
   .animate-fade-in-up {
     animation: fade-in-up 0.5s ease-out forwards;
     opacity: 0;
+  }
+
+  @keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-6px); }
+    75% { transform: translateX(6px); }
+  }
+  .animate-shake {
+    animation: shake 0.2s ease-in-out 0s 2;
   }
 }

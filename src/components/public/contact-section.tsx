@@ -36,6 +36,7 @@ function SubmitButton() {
 export default function ContactSection({ content }: { content?: SiteContent | null }) {
   const [state, formAction] = useActionState(submitContactForm, initialState);
   const [selectedServices, setSelectedServices] = useState<string[]>([]);
+  const [errorCount, setErrorCount] = useState(0);
   const { toast } = useToast();
   const formRef = useRef<HTMLFormElement>(null);
 
@@ -52,6 +53,7 @@ export default function ContactSection({ content }: { content?: SiteContent | nu
   useEffect(() => {
     if (state.message) {
       if (state.error) {
+        setErrorCount(prev => prev + 1);
         toast({
           variant: 'destructive',
           title: 'Error',
@@ -99,7 +101,10 @@ export default function ContactSection({ content }: { content?: SiteContent | nu
             )}
 
             {/* Form Column */}
-            <div className="p-5 sm:p-8 md:p-12 bg-white dark:bg-card/50 flex flex-col justify-center animate-fade-in-up animation-delay-300">
+            <div 
+              key={errorCount}
+              className={`p-5 sm:p-8 md:p-12 bg-white dark:bg-card/50 flex flex-col justify-center animate-fade-in-up animation-delay-300 ${state.error ? 'animate-shake' : ''}`}
+            >
               <form ref={formRef} action={formAction} className="space-y-4 sm:space-y-6">
                 <input type="hidden" name="services" value={JSON.stringify(selectedServices)} />
                 

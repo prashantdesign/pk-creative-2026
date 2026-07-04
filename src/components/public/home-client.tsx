@@ -57,8 +57,8 @@ export default function HomeClient({ initialSiteContent }: { initialSiteContent:
           {(siteContent?.isServicesSectionVisible ?? true) && <ServicesSection content={siteContent} />}
           {(siteContent?.isTargetAudienceSectionVisible ?? true) && <TargetAudienceSection content={siteContent} />}
           {(siteContent?.isWebsiteShowcaseVisible ?? true) && <WebsiteShowcaseSection content={siteContent} />}
-          {(siteContent?.isTestimonialsSectionVisible ?? true) && <TestimonialsSection content={siteContent} />}
           <ContactSection content={siteContent} />
+          {(siteContent?.isTestimonialsSectionVisible ?? true) && <TestimonialsSection content={siteContent} />}
         </main>
         <Footer content={siteContent} />
       </div>

@@ -1,38 +1,32 @@
-'use client';
-
 import React from 'react';
-import { useFirestore, useDoc, useMemoFirebase } from '@/firebase';
-import { doc } from 'firebase/firestore';
+import { firebaseConfig } from '@/firebase/config';
+import { initializeApp, getApps } from 'firebase/app';
+import { getFirestore, doc, getDoc } from 'firebase/firestore';
 import type { SiteContent } from '@/types';
+import GalleryClient from './gallery-client';
+import { Metadata } from 'next';
 
-import PKLoader from '@/components/pk-loader';
-import Header from '@/components/public/header';
-import Footer from '@/components/public/footer';
-import GallerySection from '@/components/public/gallery-section';
+export const dynamic = 'force-dynamic';
 
-export default function GalleryPage() {
-  const firestore = useFirestore();
+export const metadata: Metadata = {
+  title: 'Gallery | PK Creative',
+  description: 'Explore our visual portfolio, graphics showcase, and creative gallery projects.',
+};
 
-  const siteContentRef = useMemoFirebase(() => firestore ? doc(firestore, 'pkcreative_siteContent', 'global') : null, [firestore]);
-  const { data: siteContent, loading } = useDoc<SiteContent>(siteContentRef);
-
-  if (loading) {
-    return (
-      <div className="flex h-screen w-full items-center justify-center bg-background">
-        <PKLoader />
-      </div>
-    );
+export default async function GalleryPage() {
+  let initialSiteContent: SiteContent | null = null;
+  
+  try {
+    const app = getApps().length === 0 ? initializeApp(firebaseConfig) : getApps()[0];
+    const db = getFirestore(app);
+    const snap = await getDoc(doc(db, 'pkcreative_siteContent', 'global'));
+    
+    if (snap.exists()) {
+      initialSiteContent = snap.data() as SiteContent;
+    }
+  } catch (error) {
+    console.error("Error fetching initial site content for Gallery SSR:", error);
   }
 
-  return (
-    <div className={`flex flex-col min-h-screen bg-background ${siteContent?.areAnimationsEnabled ? '' : 'no-animations'}`}>
-      <Header content={siteContent || undefined} />
-      <main className="flex-grow">
-        <div className="container mx-auto px-4 md:px-6">
-          <GallerySection content={siteContent || null} />
-        </div>
-      </main>
-      <Footer content={siteContent || null} />
-    </div>
-  );
+  return <GalleryClient initialSiteContent={initialSiteContent} />;
 }
