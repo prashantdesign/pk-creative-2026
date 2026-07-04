@@ -12,7 +12,7 @@ const HeroSection = ({ content }: { content: SiteContent | null }) => {
   const isVideo = mediaUrl.toLowerCase().includes('.mp4');
 
   return (
-    <section id="home" className={`relative min-h-[75vh] md:min-h-[80vh] flex items-center justify-center overflow-hidden bg-background ${hasMedia ? 'pt-12 pb-24 md:pt-16 md:pb-28' : 'py-20'}`}>
+    <section id="home" className={`relative overflow-hidden bg-background ${hasMedia ? 'pt-4 pb-20 md:pt-6 md:pb-24 lg:pt-8 lg:pb-32' : 'py-16'}`}>
       {/* Background Glowing Blobs for Premium Agency Feel */}
       <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/20 rounded-full mix-blend-multiply filter blur-[128px] animate-blob" />
       <div className="absolute top-1/3 right-1/4 w-96 h-96 bg-purple-500/20 rounded-full mix-blend-multiply filter blur-[128px] animate-blob animation-delay-2000" />
