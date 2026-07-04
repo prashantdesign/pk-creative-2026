@@ -62,9 +62,8 @@ export default function TeamGrid() {
               <div className="space-y-3 w-full">
                 <h3 className="text-2xl font-bold tracking-tight text-foreground">{leadMember.name}</h3>
                 <div className="flex justify-center">
-                  <span className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-primary/10 text-primary border border-primary/20 text-xs sm:text-sm font-semibold tracking-wide">
-                    <span className="text-amber-500">★</span>
-                    <span>{leadMember.designation}</span>
+                  <span className="inline-flex items-center px-4 py-1.5 rounded-full bg-primary/10 text-primary border border-primary/20 text-xs sm:text-sm font-semibold tracking-wide">
+                    {leadMember.designation}
                   </span>
                 </div>
               </div>
