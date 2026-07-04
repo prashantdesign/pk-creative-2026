@@ -11,7 +11,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import type { SiteContent } from '@/types';
 import { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
-import { ChevronDown, User, Mail, LayoutGrid, PenLine, Send, Phone } from 'lucide-react';
+import { ChevronDown, User, Mail, LayoutGrid, PenLine, Send, Phone, MessageCircle } from 'lucide-react';
 import Image from 'next/image';
 
 const initialState: FormState = {
@@ -201,6 +201,21 @@ export default function ContactSection({ content }: { content?: SiteContent | nu
 
                 <SubmitButton />
               </form>
+
+              {content?.socials?.whatsapp && (
+                <div className="mt-8 pt-6 border-t border-border/40 text-center flex flex-col sm:flex-row items-center justify-center gap-2">
+                  <span className="text-muted-foreground text-sm font-medium">Or chat with us instantly:</span>
+                  <a 
+                    href={content.socials.whatsapp.startsWith('http') ? content.socials.whatsapp : `https://wa.me/${content.socials.whatsapp.replace(/[^0-9]/g, '')}`} 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-primary/10 hover:bg-primary/20 text-primary font-semibold text-sm transition-all hover:-translate-y-0.5 border border-primary/20 shadow-sm"
+                  >
+                    <MessageCircle className="h-4 w-4 text-primary" />
+                    <span>WhatsApp - {content.socials.whatsapp.startsWith('http') ? 'Chat Now' : content.socials.whatsapp}</span>
+                  </a>
+                </div>
+              )}
             </div>
 
           </div>
