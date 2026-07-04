@@ -19,7 +19,7 @@ const HeroSection = ({ content }: { content: SiteContent | null }) => {
       <div className="absolute -bottom-32 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-primary/10 rounded-full mix-blend-multiply filter blur-[128px] animate-blob animation-delay-4000" />
 
       <div className="container relative z-10 mx-auto px-4 md:px-6">
-        <div className={`grid gap-12 items-center ${hasMedia ? 'lg:grid-cols-2' : 'grid-cols-1 text-center justify-items-center'}`}>
+        <div className={`grid gap-12 items-center ${hasMedia ? 'lg:grid-cols-[1.25fr_0.75fr]' : 'grid-cols-1 text-center justify-items-center'}`}>
           
           {/* Text Column */}
           <div className={`space-y-8 animate-fade-in-up ${hasMedia ? 'max-w-2xl' : 'max-w-5xl mx-auto'}`}>
@@ -69,7 +69,7 @@ const HeroSection = ({ content }: { content: SiteContent | null }) => {
 
           {/* Media Column */}
           {hasMedia && (
-            <div className="relative w-full aspect-square lg:aspect-[4/5] rounded-3xl overflow-hidden shadow-2xl animate-fade-in-up animation-delay-300 group border border-border/50">
+            <div className="relative w-full max-w-[440px] rounded-3xl overflow-hidden shadow-2xl animate-fade-in-up animation-delay-300 group border border-border/50 mx-auto lg:mx-0 lg:justify-self-end">
               <div className="absolute inset-0 bg-gradient-to-tr from-primary/20 to-transparent mix-blend-overlay z-10 pointer-events-none group-hover:opacity-0 transition-opacity duration-700" />
               {isVideo ? (
                 <video 
@@ -78,15 +78,13 @@ const HeroSection = ({ content }: { content: SiteContent | null }) => {
                   loop 
                   muted 
                   playsInline
-                  className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                  className="w-full h-auto object-contain transition-transform duration-700 group-hover:scale-105"
                 />
               ) : (
-                <Image
+                <img
                   src={mediaUrl}
                   alt="Hero Visual"
-                  fill
-                  priority
-                  className="object-cover transition-transform duration-700 group-hover:scale-105"
+                  className="w-full h-auto object-contain transition-transform duration-700 group-hover:scale-105"
                 />
               )}
             </div>
