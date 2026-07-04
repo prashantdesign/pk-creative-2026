@@ -203,16 +203,16 @@ export default function ContactSection({ content }: { content?: SiteContent | nu
               </form>
 
               {content?.socials?.whatsapp && (
-                <div className="mt-8 pt-6 border-t border-border/40 text-center flex flex-col sm:flex-row items-center justify-center gap-2">
+                <div className="mt-8 pt-6 border-t border-border/40 text-center flex flex-col items-center justify-center gap-3 sm:flex-row sm:gap-2">
                   <span className="text-muted-foreground text-sm font-medium">Or chat with us instantly:</span>
                   <a 
                     href={content.socials.whatsapp.startsWith('http') ? content.socials.whatsapp : `https://wa.me/${content.socials.whatsapp.replace(/[^0-9]/g, '')}`} 
                     target="_blank" 
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-primary/10 hover:bg-primary/20 text-primary font-semibold text-sm transition-all hover:-translate-y-0.5 border border-primary/20 shadow-sm"
+                    className="inline-flex items-center justify-center gap-2 px-4 py-3 sm:px-5 sm:py-2.5 rounded-full bg-primary/10 hover:bg-primary/20 text-primary font-semibold text-xs sm:text-sm transition-all hover:-translate-y-0.5 border border-primary/20 shadow-sm w-full sm:w-auto max-w-[280px] sm:max-w-none"
                   >
-                    <MessageCircle className="h-4 w-4 text-primary" />
-                    <span>WhatsApp - {content.socials.whatsapp.startsWith('http') ? 'Chat Now' : content.socials.whatsapp}</span>
+                    <MessageCircle className="h-4 w-4 text-primary shrink-0" />
+                    <span className="truncate">WhatsApp - {content.socials.whatsapp.startsWith('http') ? 'Chat Now' : content.socials.whatsapp}</span>
                   </a>
                 </div>
               )}
