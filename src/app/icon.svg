@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32">
+  <style>
+    .letter-p { fill: #000000; font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, sans-serif; font-weight: 900; }
+    .letter-k { fill: #612af5; font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, sans-serif; font-weight: 900; }
+    @media (prefers-color-scheme: dark) {
+      .letter-p { fill: #ffffff; }
+      .letter-k { fill: #a78bfa; }
+    }
+  </style>
+  <text x="50%" y="58%" dominant-baseline="middle" text-anchor="middle" font-size="20">
+    <tspan class="letter-p">P</tspan><tspan class="letter-k">.K</tspan>
+  </text>
+</svg>
