@@ -94,7 +94,7 @@ export default function ContactSection({ content }: { content?: SiteContent | nu
                   src={contactImage} 
                   alt="Contact Us" 
                   fill 
-                  className="object-contain p-4"
+                  className="object-cover"
                   priority
                 />
               </div>
