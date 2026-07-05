@@ -10,7 +10,7 @@ export default function ProjectCategoriesPage() {
       <div className="flex items-center justify-between mb-8">
         <h1 className="text-3xl font-bold tracking-tight">Project Categories</h1>
         <Button asChild>
-          <Link href="/admin/project-categories/new">
+          <Link href="/pk-admin/project-categories/new">
             <PlusCircle className="mr-2 h-4 w-4" /> Add New Category
           </Link>
         </Button>

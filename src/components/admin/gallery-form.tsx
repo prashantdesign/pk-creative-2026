@@ -114,7 +114,7 @@ export default function GalleryForm({ image }: { image?: GalleryImage }) {
       title: image ? "Image Updated" : "Image Added",
       description: "Your gallery image has been saved.",
     });
-    router.push('/admin/gallery');
+    router.push('/pk-admin/gallery');
     router.refresh();
     setIsSaving(false);
   };

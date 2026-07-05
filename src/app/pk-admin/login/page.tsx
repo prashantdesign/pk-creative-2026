@@ -38,7 +38,7 @@ export default function LoginPage() {
 
   useEffect(() => {
     if (!loading && user) {
-      router.push('/admin');
+      router.push('/pk-admin');
     }
   }, [user, loading, router]);
   
@@ -60,7 +60,7 @@ export default function LoginPage() {
         title: "Login Successful",
         description: "Redirecting to admin dashboard...",
       });
-      router.push('/admin');
+      router.push('/pk-admin');
     } catch (error: any) {
       console.error("Login error:", error);
       let errorMessage = "An unknown error occurred.";

@@ -76,7 +76,7 @@ export default function GalleryCategoryForm({ category }: { category?: GalleryCa
       title: category ? "Category Updated" : "Category Added",
       description: "Your category has been saved.",
     });
-    router.push('/admin/gallery-categories');
+    router.push('/pk-admin/gallery-categories');
     router.refresh();
     setIsSaving(false);
   };

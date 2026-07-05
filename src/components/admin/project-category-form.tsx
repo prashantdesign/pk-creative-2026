@@ -76,7 +76,7 @@ export default function ProjectCategoryForm({ category }: { category?: ProjectCa
       title: category ? "Category Updated" : "Category Added",
       description: "Your category has been saved.",
     });
-    router.push('/admin/project-categories');
+    router.push('/pk-admin/project-categories');
     router.refresh();
     setIsSaving(false);
   };

@@ -238,7 +238,7 @@ export async function submitContactForm(
           <!-- Footer Action Button -->
           <tr>
             <td align="center" style="padding: 0 32px 40px 32px;">
-              <a href="https://pkcreative.in/admin" target="_blank" style="display: inline-block; background-color: #612af5; color: #ffffff; padding: 14px 28px; font-size: 14px; font-weight: 600; text-decoration: none; border-radius: 8px; font-family: sans-serif;">
+              <a href="https://pkcreative.in/pk-admin" target="_blank" style="display: inline-block; background-color: #612af5; color: #ffffff; padding: 14px 28px; font-size: 14px; font-weight: 600; text-decoration: none; border-radius: 8px; font-family: sans-serif;">
                 Open Dashboard
               </a>
             </td>

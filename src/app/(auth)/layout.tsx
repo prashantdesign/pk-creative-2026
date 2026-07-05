@@ -3,7 +3,7 @@ import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
   title: 'PK Creative Admin Login',
-  manifest: '/admin/manifest.webmanifest',
+  manifest: '/pk-admin/manifest.webmanifest',
 };
 
 export default function AuthLayout({

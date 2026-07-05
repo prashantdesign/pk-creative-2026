@@ -1,7 +1,7 @@
 'use client';
 import React, { useEffect } from 'react';
 import { useUser } from '@/firebase';
-import { useRouter } from 'next/navigation';
+import { useRouter, usePathname } from 'next/navigation';
 import { SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar';
 import AdminSidebar from '@/components/admin/admin-sidebar';
 
@@ -10,12 +10,22 @@ import PKLoader from '@/components/pk-loader';
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
   const { user, loading } = useUser();
   const router = useRouter();
+  const pathname = usePathname();
+  const isLoginPage = pathname === '/pk-admin/login';
 
   useEffect(() => {
-    if (!loading && !user) {
-      router.push('/pk-admin');
+    if (!loading && !user && !isLoginPage) {
+      router.push('/pk-admin/login');
     }
-  }, [user, loading, router]);
+  }, [user, loading, router, isLoginPage]);
+
+  if (isLoginPage) {
+    return (
+      <div className="flex min-h-screen w-full items-center justify-center bg-background p-4">
+        {children}
+      </div>
+    );
+  }
 
   if (loading || !user) {
     return (

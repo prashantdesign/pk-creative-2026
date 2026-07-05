@@ -177,7 +177,7 @@ export default function ProjectForm({ project }: { project?: Project }) {
       title: project ? "Project Updated" : "Project Created",
       description: "Your project has been saved successfully.",
     });
-    router.push('/admin/projects');
+    router.push('/pk-admin/projects');
     router.refresh();
     setIsSaving(false);
   };

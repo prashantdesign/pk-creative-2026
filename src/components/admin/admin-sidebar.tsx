@@ -56,18 +56,18 @@ const AdminSidebar = () => {
   };
 
   const menuItems = [
-    { href: '/admin', label: 'Dashboard', icon: LayoutDashboard },
-    { href: '/admin/site-content', label: 'Site Content', icon: Palette },
-    { href: '/admin/categories', label: 'Categories', icon: FolderKanban },
-    { href: '/admin/gallery', label: 'Gallery', icon: Images },
-    { href: '/admin/projects', label: 'Projects', icon: Briefcase },
-    { href: '/admin/websites', label: 'Websites', icon: Globe },
-    { href: '/admin/team', label: 'Team', icon: Users },
-    { href: '/admin/testimonials', label: 'Testimonials', icon: MessageSquareQuote },
-    { href: '/admin/instagram', label: 'Instagram', icon: Instagram },
-    { href: '/admin/seo', label: 'SEO', icon: Search },
-    { href: '/admin/messages', label: 'Messages', icon: Mails },
-    { href: '/admin/settings', label: 'Settings', icon: Settings },
+    { href: '/pk-admin', label: 'Dashboard', icon: LayoutDashboard },
+    { href: '/pk-admin/site-content', label: 'Site Content', icon: Palette },
+    { href: '/pk-admin/categories', label: 'Categories', icon: FolderKanban },
+    { href: '/pk-admin/gallery', label: 'Gallery', icon: Images },
+    { href: '/pk-admin/projects', label: 'Projects', icon: Briefcase },
+    { href: '/pk-admin/websites', label: 'Websites', icon: Globe },
+    { href: '/pk-admin/team', label: 'Team', icon: Users },
+    { href: '/pk-admin/testimonials', label: 'Testimonials', icon: MessageSquareQuote },
+    { href: '/pk-admin/instagram', label: 'Instagram', icon: Instagram },
+    { href: '/pk-admin/seo', label: 'SEO', icon: Search },
+    { href: '/pk-admin/messages', label: 'Messages', icon: Mails },
+    { href: '/pk-admin/settings', label: 'Settings', icon: Settings },
   ];
 
   return (
@@ -81,7 +81,7 @@ const AdminSidebar = () => {
             <SidebarMenuItem key={item.href}>
               <SidebarMenuButton
                 asChild
-                isActive={pathname === item.href || (item.href !== '/admin' && pathname.startsWith(item.href))}
+                isActive={pathname === item.href || (item.href !== '/pk-admin' && pathname.startsWith(item.href))}
               >
                 <Link href={item.href}>
                   <item.icon className="size-4" />

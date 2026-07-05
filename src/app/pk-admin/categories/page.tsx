@@ -19,7 +19,7 @@ export default function CategoriesPage() {
           </CardHeader>
           <CardContent>
             <Button asChild>
-              <Link href="/admin/project-categories">
+              <Link href="/pk-admin/project-categories">
                 Manage Project Categories <ArrowRight className="ml-2 h-4 w-4" />
               </Link>
             </Button>
@@ -35,7 +35,7 @@ export default function CategoriesPage() {
           </CardHeader>
           <CardContent>
             <Button asChild>
-              <Link href="/admin/gallery-categories">
+              <Link href="/pk-admin/gallery-categories">
                 Manage Gallery Categories <ArrowRight className="ml-2 h-4 w-4" />
               </Link>
             </Button>

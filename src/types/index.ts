@@ -94,7 +94,7 @@ export interface SiteContent {
   testimonialsSectionDescription?: string;
   testimonials?: {
     name: string;
-    role: string;
+    role?: string;
     content: string;
     avatarUrl?: string;
   }[];

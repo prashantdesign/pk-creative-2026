@@ -42,23 +42,21 @@ export default function TestimonialsSection({ content }: TestimonialsSectionProp
                   </p>
                   
                   <div className="flex items-center gap-4 mt-auto">
-                    {testimonial.avatarUrl ? (
-                      <div className="relative h-12 w-12 rounded-full overflow-hidden">
-                        <Image 
-                          src={testimonial.avatarUrl} 
-                          alt={testimonial.name}
-                          fill
-                          className="object-cover"
-                        />
-                      </div>
-                    ) : (
-                      <div className="h-12 w-12 rounded-full bg-primary/20 flex items-center justify-center text-primary font-bold">
-                        {testimonial.name.charAt(0)}
-                      </div>
-                    )}
+                    <div className="relative h-12 w-12 rounded-full overflow-hidden shrink-0 border border-muted">
+                      <Image 
+                        src={testimonial.avatarUrl && testimonial.avatarUrl.trim() !== '' 
+                          ? testimonial.avatarUrl 
+                          : 'https://res.cloudinary.com/djhqgz0vh/image/upload/v1783278488/kindpng_248253_gxapyn.png'} 
+                        alt={testimonial.name}
+                        fill
+                        className="object-cover"
+                      />
+                    </div>
                     <div>
                       <h4 className="font-semibold">{testimonial.name}</h4>
-                      <p className="text-sm text-muted-foreground">{testimonial.role}</p>
+                      {testimonial.role && testimonial.role.trim() !== '' && (
+                        <p className="text-sm text-muted-foreground">{testimonial.role}</p>
+                      )}
                     </div>
                   </div>
                 </CardContent>

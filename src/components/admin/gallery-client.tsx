@@ -90,7 +90,7 @@ export default function GalleryClient() {
                                     </Button>
                                 </DropdownMenuTrigger>
                                 <DropdownMenuContent align="end">
-                                    <DropdownMenuItem onClick={() => router.push(`/admin/gallery/edit/${image.id}`)}>
+                                    <DropdownMenuItem onClick={() => router.push(`/pk-admin/gallery/edit/${image.id}`)}>
                                         <Pencil className="mr-2 h-4 w-4" /> Edit
                                     </DropdownMenuItem>
                                     <DropdownMenuItem className="text-red-500" onClick={() => handleDelete(image.id)}>
@@ -147,7 +147,7 @@ export default function GalleryClient() {
                                 </DropdownMenuTrigger>
                                 <DropdownMenuContent align="end">
                                     <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                                    <DropdownMenuItem onClick={() => router.push(`/admin/gallery/edit/${image.id}`)}>
+                                    <DropdownMenuItem onClick={() => router.push(`/pk-admin/gallery/edit/${image.id}`)}>
                                         <Pencil className="mr-2 h-4 w-4" /> Edit
                                     </DropdownMenuItem>
                                     <DropdownMenuItem className="text-red-500" onClick={() => handleDelete(image.id)}>

@@ -99,7 +99,7 @@ export default function ProjectsClient() {
                                     </Button>
                                 </DropdownMenuTrigger>
                                 <DropdownMenuContent align="end">
-                                    <DropdownMenuItem onClick={() => router.push(`/admin/projects/edit/${project.id}`)}>
+                                    <DropdownMenuItem onClick={() => router.push(`/pk-admin/projects/edit/${project.id}`)}>
                                         <Pencil className="mr-2 h-4 w-4" /> Edit
                                     </DropdownMenuItem>
                                     <DropdownMenuItem className="text-red-500" onClick={() => handleDelete(project.id)}>
@@ -148,7 +148,7 @@ export default function ProjectsClient() {
                                 </DropdownMenuTrigger>
                                 <DropdownMenuContent align="end">
                                     <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                                    <DropdownMenuItem onClick={() => router.push(`/admin/projects/edit/${project.id}`)}>
+                                    <DropdownMenuItem onClick={() => router.push(`/pk-admin/projects/edit/${project.id}`)}>
                                         <Pencil className="mr-2 h-4 w-4" /> Edit
                                     </DropdownMenuItem>
                                     <DropdownMenuItem className="text-red-500" onClick={() => handleDelete(project.id)}>
