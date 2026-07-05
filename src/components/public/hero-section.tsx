@@ -32,7 +32,7 @@ const HeroSection = ({ content }: { content: SiteContent | null }) => {
     }
   };
 
-  const titleWords = (content?.heroTitle || 'We Are PK Creative').split(' ');
+
 
   return (
     <section id="home" className={`relative overflow-hidden bg-background ${hasMedia ? 'pt-4 pb-20 md:pt-6 md:pb-24 lg:pt-8 lg:pb-32' : 'py-16'}`}>
@@ -97,22 +97,7 @@ const HeroSection = ({ content }: { content: SiteContent | null }) => {
               className={`text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-headline font-black tracking-tighter text-foreground leading-[1.1] ${!hasMedia ? 'lg:text-9xl' : ''}`}
             >
               <span className="block text-transparent bg-clip-text bg-gradient-to-br from-foreground via-foreground to-muted-foreground">
-                {titleWords.map((word, idx) => (
-                  <motion.span 
-                    key={idx}
-                    className="inline-block mr-3 sm:mr-4"
-                    initial={{ y: 25, opacity: 0 }}
-                    animate={{ y: 0, opacity: 1 }}
-                    transition={{
-                      delay: idx * 0.08,
-                      type: "spring",
-                      stiffness: 140,
-                      damping: 14
-                    }}
-                  >
-                    {word}
-                  </motion.span>
-                ))}
+                {content?.heroTitle || 'We Are PK Creative'}
               </span>
             </motion.h1>
             
