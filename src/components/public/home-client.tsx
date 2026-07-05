@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import type { SiteContent } from '@/types';
 import { useFirestore, useDoc, useMemoFirebase } from '@/firebase';
 import { doc } from 'firebase/firestore';
+import { MotionConfig } from 'framer-motion';
 
 import Header from '@/components/public/header';
 import HeroSection from '@/components/public/hero-section';
@@ -48,7 +49,7 @@ export default function HomeClient({ initialSiteContent }: { initialSiteContent:
   }
 
   return (
-    <>
+    <MotionConfig reducedMotion={siteContent?.areAnimationsEnabled === false ? "always" : "user"}>
       <div className={`flex flex-col min-h-screen bg-background ${siteContent?.areAnimationsEnabled ? '' : 'no-animations'}`}>
         <Header content={siteContent} />
         <main className="flex-grow">
@@ -62,6 +63,6 @@ export default function HomeClient({ initialSiteContent }: { initialSiteContent:
         </main>
         <Footer content={siteContent} />
       </div>
-    </>
+    </MotionConfig>
   );
 }

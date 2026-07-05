@@ -13,6 +13,7 @@ import type { SiteContent } from '@/types';
 import { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { ChevronDown, User, Mail, LayoutGrid, PenLine, Send, Phone, MessageCircle } from 'lucide-react';
 import Image from 'next/image';
+import { motion } from 'framer-motion';
 
 const initialState: FormState = {
   message: '',
@@ -22,14 +23,19 @@ const initialState: FormState = {
 function SubmitButton() {
   const { pending } = useFormStatus();
   return (
-    <Button 
-      type="submit" 
-      disabled={pending} 
-      className="w-full h-12 sm:h-14 text-base sm:text-lg font-semibold rounded-xl sm:rounded-2xl bg-[#612af5] hover:bg-[#521ede] dark:bg-primary dark:hover:bg-primary/95 text-white transition-all duration-300 shadow-md hover:shadow-lg flex items-center justify-center gap-2"
+    <motion.div
+      whileHover={{ scale: 1.02 }}
+      whileTap={{ scale: 0.98 }}
     >
-      <Send className="h-5 w-5 shrink-0" />
-      {pending ? 'Sending...' : 'Send Message'}
-    </Button>
+      <Button 
+        type="submit" 
+        disabled={pending} 
+        className="w-full h-12 sm:h-14 text-base sm:text-lg font-semibold rounded-xl sm:rounded-2xl bg-[#612af5] hover:bg-[#521ede] dark:bg-primary dark:hover:bg-primary/95 text-white transition-all duration-300 shadow-md hover:shadow-lg flex items-center justify-center gap-2 cursor-pointer"
+      >
+        <Send className="h-5 w-5 shrink-0" />
+        {pending ? 'Sending...' : 'Send Message'}
+      </Button>
+    </motion.div>
   );
 }
 
@@ -75,16 +81,31 @@ export default function ContactSection({ content }: { content?: SiteContent | nu
   const hasImage = true;
 
   return (
-    <section id="contact" className="py-12 sm:py-16 md:py-24 bg-secondary">
+    <section id="contact" className="py-12 sm:py-16 md:py-24 bg-secondary overflow-hidden">
       <div className="container mx-auto px-4 md:px-6">
-        <div className="max-w-3xl mx-auto text-center mb-8 sm:mb-12 md:mb-16 px-4 animate-fade-in-up">
+        
+        {/* Title Scroll-Reveal */}
+        <motion.div 
+          initial={{ opacity: 0, y: 25 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
+          className="max-w-3xl mx-auto text-center mb-8 sm:mb-12 md:mb-16 px-4"
+        >
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-headline font-bold mb-3 sm:mb-4">{content?.contactSectionTitle || "Let's Work Together"}</h2>
           <p className="text-base sm:text-lg md:text-xl text-muted-foreground">
             {content?.contactSectionDescription || "Ready to elevate your brand? Fill out the form below and we'll be in touch shortly."}
           </p>
-        </div>
+        </motion.div>
 
-        <div className={`mx-auto ${hasImage ? 'max-w-6xl' : 'max-w-2xl'}`}>
+        {/* Card Scroll-Reveal */}
+        <motion.div 
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-80px" }}
+          transition={{ type: "spring" as const, stiffness: 80, damping: 15 }}
+          className={`mx-auto ${hasImage ? 'max-w-6xl' : 'max-w-2xl'}`}
+        >
           <div className={`bg-background rounded-2xl sm:rounded-[32px] shadow-[0_20px_60px_-15px_rgba(0,0,0,0.12)] border border-border/40 overflow-hidden ${hasImage ? 'grid lg:grid-cols-2' : ''}`}>
             
             {/* Visual Column */}
@@ -94,7 +115,7 @@ export default function ContactSection({ content }: { content?: SiteContent | nu
                   src={contactImage} 
                   alt="Contact Us" 
                   fill 
-                  className="object-cover"
+                  className="object-cover transition-transform duration-700 hover:scale-[1.01]"
                   priority
                 />
               </div>
@@ -103,7 +124,7 @@ export default function ContactSection({ content }: { content?: SiteContent | nu
             {/* Form Column */}
             <div 
               key={errorCount}
-              className={`p-5 sm:p-8 md:p-12 bg-white dark:bg-card/50 flex flex-col justify-center animate-fade-in-up animation-delay-300 ${state.error ? 'animate-shake' : ''}`}
+              className={`p-5 sm:p-8 md:p-12 bg-white dark:bg-card/50 flex flex-col justify-center ${state.error ? 'animate-shake' : ''}`}
             >
               <form ref={formRef} action={formAction} className="space-y-4 sm:space-y-6">
                 <input type="hidden" name="services" value={JSON.stringify(selectedServices)} />
@@ -160,7 +181,7 @@ export default function ContactSection({ content }: { content?: SiteContent | nu
                       <DropdownMenuTrigger asChild>
                         <Button 
                           variant="outline" 
-                          className="w-full justify-between font-normal h-12 sm:h-14 pl-10 sm:pl-12 pr-4 bg-[#fcfcfd] dark:bg-zinc-900/50 border-border/85 hover:bg-background/80 hover:text-foreground rounded-xl sm:rounded-2xl text-sm sm:text-base relative text-muted-foreground transition-all focus:border-primary/50"
+                          className="w-full justify-between font-normal h-12 sm:h-14 pl-10 sm:pl-12 pr-4 bg-[#fcfcfd] dark:bg-zinc-900/50 border-border/85 hover:bg-background/80 hover:text-foreground rounded-xl sm:rounded-2xl text-sm sm:text-base relative text-muted-foreground transition-all focus:border-primary/50 cursor-pointer"
                           type="button"
                         >
                           <span className="absolute left-3.5 sm:left-4 flex items-center">
@@ -210,21 +231,23 @@ export default function ContactSection({ content }: { content?: SiteContent | nu
               {content?.socials?.whatsapp && (
                 <div className="mt-8 pt-6 border-t border-border/40 text-center flex flex-col items-center justify-center gap-3 sm:flex-row sm:gap-2">
                   <span className="text-muted-foreground text-sm font-medium">Or chat with us instantly:</span>
-                  <a 
+                  <motion.a 
+                    whileHover={{ scale: 1.03, y: -1 }}
+                    whileTap={{ scale: 0.98 }}
                     href={content.socials.whatsapp.startsWith('http') ? content.socials.whatsapp : `https://wa.me/${content.socials.whatsapp.replace(/[^0-9]/g, '')}`} 
                     target="_blank" 
                     rel="noopener noreferrer"
-                    className="inline-flex items-center justify-center gap-2 px-4 py-3 sm:px-5 sm:py-2.5 rounded-full bg-primary/10 hover:bg-primary/20 text-primary font-semibold text-xs sm:text-sm transition-all hover:-translate-y-0.5 border border-primary/20 shadow-sm w-full sm:w-auto max-w-[280px] sm:max-w-none"
+                    className="inline-flex items-center justify-center gap-2 px-4 py-3 sm:px-5 sm:py-2.5 rounded-full bg-primary/10 hover:bg-primary/20 text-primary font-semibold text-xs sm:text-sm border border-primary/20 shadow-sm w-full sm:w-auto max-w-[280px] sm:max-w-none transition-colors"
                   >
                     <MessageCircle className="h-4 w-4 text-primary shrink-0" />
                     <span className="truncate">WhatsApp - {content.socials.whatsapp.startsWith('http') ? 'Chat Now' : content.socials.whatsapp}</span>
-                  </a>
+                  </motion.a>
                 </div>
               )}
             </div>
 
           </div>
-        </div>
+        </motion.div>
       </div>
     </section>
   );
