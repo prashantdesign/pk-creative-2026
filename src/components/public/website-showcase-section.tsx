@@ -7,6 +7,7 @@ import { collection, query, orderBy } from 'firebase/firestore';
 import { Button } from '@/components/ui/button';
 import { ExternalLink } from 'lucide-react';
 import Image from 'next/image';
+import { Skeleton } from '@/components/ui/skeleton';
 import {
   Carousel,
   CarouselContent,
@@ -122,7 +123,9 @@ export default function WebsiteShowcaseSection({ content }: { content: SiteConte
     });
   }, [api]);
 
-  if (!websites || websites.length === 0) {
+  const showSkeletons = (!websites || websites.length === 0) && isLoading;
+
+  if (!isLoading && (!websites || websites.length === 0)) {
     return null;
   }
 
@@ -138,31 +141,44 @@ export default function WebsiteShowcaseSection({ content }: { content: SiteConte
           </p>
         </div>
 
-        <Carousel
-          opts={{
-            align: "center",
-            loop: true,
-          }}
-          setApi={setApi}
-          className="w-full max-w-7xl mx-auto"
-        >
-          <CarouselContent className="-ml-4 md:-ml-8 py-12">
-            {/* Artificially duplicate items if there are too few, to force Embla into a seamless infinite loop */}
-            {(websites.length > 0 && websites.length < 5 ? [...websites, ...websites, ...websites, ...websites] : websites).map((website, index) => (
-              <WebsiteCard 
-                key={`${website.id}-${index}`} 
-                website={website} 
-                index={index} 
-                current={current} 
-                api={api} 
-              />
+        {showSkeletons ? (
+          <div className="flex gap-6 justify-center flex-wrap max-w-7xl mx-auto py-12">
+            {[1, 2, 3].map((i) => (
+              <div key={i} className="flex-1 min-w-[280px] max-w-lg p-8 rounded-2xl border border-border/50 bg-secondary/10 flex flex-col items-center h-[340px]">
+                <Skeleton className="w-[120px] h-24 mb-6 rounded-2xl bg-muted" />
+                <Skeleton className="w-40 h-8 mb-2 bg-muted animate-pulse" />
+                <Skeleton className="w-32 h-4 mb-6 bg-muted animate-pulse" />
+                <Skeleton className="w-full h-10 mt-auto bg-muted rounded-md animate-pulse" />
+              </div>
             ))}
-          </CarouselContent>
-          <div className="flex justify-center gap-4 mt-8">
-            <CarouselPrevious className="static transform-none h-12 w-12 border-primary/20 hover:bg-primary hover:text-primary-foreground transition-all active:scale-95" />
-            <CarouselNext className="static transform-none h-12 w-12 border-primary/20 hover:bg-primary hover:text-primary-foreground transition-all active:scale-95" />
           </div>
-        </Carousel>
+        ) : (
+          <Carousel
+            opts={{
+              align: "center",
+              loop: true,
+            }}
+            setApi={setApi}
+            className="w-full max-w-7xl mx-auto"
+          >
+            <CarouselContent className="-ml-4 md:-ml-8 py-12">
+              {/* Artificially duplicate items if there are too few, to force Embla into a seamless infinite loop */}
+              {((websites && websites.length > 0 && websites.length < 5) ? [...websites, ...websites, ...websites, ...websites] : (websites || [])).map((website, index) => (
+                <WebsiteCard 
+                  key={`${website.id}-${index}`} 
+                  website={website} 
+                  index={index} 
+                  current={current} 
+                  api={api} 
+                />
+              ))}
+            </CarouselContent>
+            <div className="flex justify-center gap-4 mt-8">
+              <CarouselPrevious className="static transform-none h-12 w-12 border-primary/20 hover:bg-primary hover:text-primary-foreground transition-all active:scale-95" />
+              <CarouselNext className="static transform-none h-12 w-12 border-primary/20 hover:bg-primary hover:text-primary-foreground transition-all active:scale-95" />
+            </div>
+          </Carousel>
+        )}
       </div>
     </section>
   );

@@ -8,15 +8,13 @@ import { MotionConfig } from 'framer-motion';
 
 import Header from '@/components/public/header';
 import HeroSection from '@/components/public/hero-section';
-import dynamic from 'next/dynamic';
-
-const AboutSection = dynamic(() => import('@/components/public/about-section'));
-const ServicesSection = dynamic(() => import('@/components/public/services-section'));
-const TargetAudienceSection = dynamic(() => import('@/components/public/target-audience-section'));
-const WebsiteShowcaseSection = dynamic(() => import('@/components/public/website-showcase-section'));
-const TestimonialsSection = dynamic(() => import('@/components/public/testimonials-section'));
-const ContactSection = dynamic(() => import('@/components/public/contact-section'));
-const Footer = dynamic(() => import('@/components/public/footer'));
+import AboutSection from '@/components/public/about-section';
+import ServicesSection from '@/components/public/services-section';
+import TargetAudienceSection from '@/components/public/target-audience-section';
+import WebsiteShowcaseSection from '@/components/public/website-showcase-section';
+import TestimonialsSection from '@/components/public/testimonials-section';
+import ContactSection from '@/components/public/contact-section';
+import Footer from '@/components/public/footer';
 
 export default function HomeClient({ initialSiteContent }: { initialSiteContent: SiteContent | null }) {
   const firestore = useFirestore();
