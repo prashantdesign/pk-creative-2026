@@ -76,7 +76,7 @@ export default function ServicesSection({ content }: { content: SiteContent | nu
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-80px" }}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 auto-rows-[320px]"
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
         >
           {services.map((service, index) => {
             return (
@@ -91,7 +91,7 @@ export default function ServicesSection({ content }: { content: SiteContent | nu
                   transition: { duration: 0.3, ease: "easeOut" }
                 }}
                 whileTap={{ scale: 0.99 }}
-                className="group relative overflow-hidden rounded-3xl bg-background border border-border p-8 cursor-pointer"
+                className="group relative overflow-hidden rounded-3xl bg-background border border-border p-8 min-h-[300px] cursor-pointer flex flex-col"
               >
                 <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                 

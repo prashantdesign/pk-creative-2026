@@ -3,6 +3,7 @@
 import React from 'react';
 import type { SiteContent } from '@/types';
 import { motion } from 'framer-motion';
+import Image from 'next/image';
 
 const AboutSection = ({ content }: { content: SiteContent | null }) => {
   return (
@@ -42,9 +43,11 @@ const AboutSection = ({ content }: { content: SiteContent | null }) => {
               }}
               className="rounded-2xl overflow-hidden shadow-lg border border-border/40 bg-background cursor-pointer"
             >
-              <img
+              <Image
                 src={content?.aboutImageUrl || "/pk_about_visual.png"}
                 alt="About us"
+                width={384}
+                height={384}
                 className="w-full h-auto object-contain transition-transform duration-700 hover:scale-[1.02]"
               />
             </motion.div>

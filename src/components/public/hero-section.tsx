@@ -186,9 +186,12 @@ const HeroSection = ({ content }: { content: SiteContent | null }) => {
                   className="w-full h-auto object-contain transition-transform duration-700 group-hover:scale-105"
                 />
               ) : (
-                <img
+                <Image
                   src={mediaUrl}
                   alt="Hero Visual"
+                  width={440}
+                  height={440}
+                  priority
                   className="w-full h-auto object-contain transition-transform duration-700 group-hover:scale-105"
                 />
               )}

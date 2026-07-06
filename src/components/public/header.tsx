@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { Menu, X } from 'lucide-react';
 import Logo from '@/components/logo';
 import type { SiteContent } from '@/types';
+import { motion, AnimatePresence } from 'framer-motion';
 
 import { useFirestore, useDoc, useMemoFirebase } from '@/firebase';
 import { doc } from 'firebase/firestore';
@@ -65,22 +66,30 @@ const Header = ({ content: initialContent }: { content?: SiteContent | null }) =
           {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
         </button>
       </div>
-      {isOpen && (
-        <div className="md:hidden">
-          <nav className="flex flex-col items-center gap-4 bg-background p-4">
-            {navItems.map((item) => (
-              <a
-                key={item.label}
-                href={item.href}
-                className="text-lg font-medium transition-colors hover:text-primary"
-                onClick={() => setIsOpen(false)}
-              >
-                {item.label}
-              </a>
-            ))}
-          </nav>
-        </div>
-      )}
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div 
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: "auto", opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.25, ease: "easeInOut" }}
+            className="md:hidden overflow-hidden border-b border-border/40 bg-background"
+          >
+            <nav className="flex flex-col items-center gap-4 p-4">
+              {navItems.map((item) => (
+                <a
+                  key={item.label}
+                  href={item.href}
+                  className="text-lg font-medium transition-colors hover:text-primary py-2 w-full text-center"
+                  onClick={() => setIsOpen(false)}
+                >
+                  {item.label}
+                </a>
+              ))}
+            </nav>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </header>
   );
 };
