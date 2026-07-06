@@ -109,6 +109,16 @@ const HeroSection = ({ content }: { content: SiteContent | null }) => {
                 'We deliver premium Website Design, UI/UX, Branding, and Social Media Management.'}
             </motion.p>
             
+            <motion.div
+              variants={itemVariants}
+              className={`inline-flex items-center gap-2.5 rounded-2xl bg-primary/5 border border-primary/10 px-4 py-2 text-sm font-semibold text-foreground ${!hasMedia ? 'mx-auto' : ''}`}
+            >
+              <span className="h-2.5 w-2.5 rounded-full bg-[#612af5] dark:bg-primary animate-pulse" />
+              <span>
+                Websites with <span className="text-primary font-bold">Admin Panels</span> starting at <span className="text-primary font-bold">₹10,000</span>
+              </span>
+            </motion.div>
+            
             <motion.div 
               variants={itemVariants}
               className={`pt-4 flex flex-col sm:flex-row items-center gap-4 ${!hasMedia ? 'justify-center' : ''}`}

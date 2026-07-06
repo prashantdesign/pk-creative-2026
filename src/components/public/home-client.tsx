@@ -14,6 +14,7 @@ import TargetAudienceSection from '@/components/public/target-audience-section';
 import WebsiteShowcaseSection from '@/components/public/website-showcase-section';
 import TestimonialsSection from '@/components/public/testimonials-section';
 import ContactSection from '@/components/public/contact-section';
+import FAQSection from '@/components/public/faq-section';
 import Footer from '@/components/public/footer';
 
 export default function HomeClient({ initialSiteContent }: { initialSiteContent: SiteContent | null }) {
@@ -56,6 +57,7 @@ export default function HomeClient({ initialSiteContent }: { initialSiteContent:
           {(siteContent?.isServicesSectionVisible ?? true) && <ServicesSection content={siteContent} />}
           {(siteContent?.isTargetAudienceSectionVisible ?? true) && <TargetAudienceSection content={siteContent} />}
           {(siteContent?.isWebsiteShowcaseVisible ?? true) && <WebsiteShowcaseSection content={siteContent} />}
+          <FAQSection />
           <ContactSection content={siteContent} />
           {(siteContent?.isTestimonialsSectionVisible ?? true) && <TestimonialsSection content={siteContent} />}
         </main>
