@@ -115,7 +115,7 @@ const HeroSection = ({ content }: { content: SiteContent | null }) => {
             >
               <span className="h-2.5 w-2.5 rounded-full bg-[#612af5] dark:bg-primary animate-pulse" />
               <span>
-                Websites with <span className="text-primary font-bold">Admin Panels</span> starting at <span className="text-primary font-bold">₹10,000</span>
+                <span className="text-primary font-bold">Dynamic Websites</span> starting from <span className="text-primary font-bold">₹10,000</span>
               </span>
             </motion.div>
             

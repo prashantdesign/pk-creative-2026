@@ -7,7 +7,7 @@ import { motion } from 'framer-motion';
 type Service = { title: string; description: string; icon?: string };
 
 const defaultServices: Service[] = [
-  { title: 'Website Design', description: 'Stunning, high-conversion websites with built-in admin panels. Starting at ₹10,000.', icon: 'monitor' },
+  { title: 'Website Design', description: 'Stunning, high-conversion dynamic websites starting from ₹10,000.', icon: 'monitor' },
   { title: 'UI/UX Design', description: 'Intuitive user experiences that keep customers coming back.', icon: 'layout' },
   { title: 'Branding', description: 'Memorable brand identities that stand out in the market.', icon: 'pen-tool' },
   { title: 'Social Media', description: 'Engaging content that drives organic growth and reach.', icon: 'share-2' },
