@@ -122,7 +122,7 @@ export async function submitContactForm(
             const { getFirestore } = await import('firebase-admin/firestore');
             
             const apps = getApps();
-            const adminApp = apps.length === 0 ? initializeApp() : apps[0];
+            const adminApp = apps.length === 0 ? initializeApp({ projectId }) : apps[0];
             const db = getFirestore(adminApp);
             const settingsSnap = await db.collection('pkcreative_privateSettings').doc('global').get();
             if (settingsSnap.exists) {

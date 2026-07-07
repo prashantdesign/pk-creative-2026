@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState, useMemo } from 'react';
 import { useForm, useFieldArray } from 'react-hook-form';
-import { Plus, Trash2 } from 'lucide-react';
+import { Plus, Trash2, Eye, EyeOff, Copy, Check } from 'lucide-react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
 import { doc, setDoc } from 'firebase/firestore';
@@ -37,6 +37,21 @@ const formSchema = z.object({
 export default function PrivateSettingsForm() {
   const { toast } = useToast();
   const [isLoading, setIsLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const [copied, setCopied] = useState(false);
+
+  const handleCopyDetails = () => {
+    const values = form.getValues();
+    const details = `SMTP Host: ${values.smtpHost || ''}\nSMTP Port: ${values.smtpPort || ''}\nSMTP Username: ${values.smtpUser || ''}\nSender Email: ${values.smtpSender || ''}`;
+    navigator.clipboard.writeText(details).then(() => {
+      setCopied(true);
+      toast({
+        title: "Details Copied",
+        description: "SMTP configuration details copied to clipboard.",
+      });
+      setTimeout(() => setCopied(false), 2000);
+    });
+  };
 
   const firestore = useFirestore();
   const settingsRef = useMemo(() => firestore ? doc(firestore, 'pkcreative_privateSettings', 'global') : null, [firestore]);
@@ -143,6 +158,29 @@ export default function PrivateSettingsForm() {
           <AccordionItem value="smtp">
             <AccordionTrigger className="text-xl font-semibold">SMTP Email Server</AccordionTrigger>
             <AccordionContent className="pt-4 space-y-4">
+              <div className="flex justify-between items-center pb-2 border-b border-border/20">
+                <span className="text-sm text-muted-foreground">Configure your outgoing email settings here.</span>
+                <Button
+                  type="button"
+                  variant="outline"
+                  size="sm"
+                  onClick={handleCopyDetails}
+                  className="flex items-center gap-2 cursor-pointer"
+                >
+                  {copied ? (
+                    <>
+                      <Check className="h-4 w-4 text-green-500" />
+                      <span>Copied</span>
+                    </>
+                  ) : (
+                    <>
+                      <Copy className="h-4 w-4" />
+                      <span>Copy Details</span>
+                    </>
+                  )}
+                </Button>
+              </div>
+              
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <FormField control={form.control} name="smtpHost" render={({ field }) => (
                     <FormItem><FormLabel>SMTP Host</FormLabel><FormControl><Input placeholder="smtp.gmail.com" type="text" {...field} value={field.value ?? ''} /></FormControl><FormMessage /></FormItem>
@@ -156,7 +194,32 @@ export default function PrivateSettingsForm() {
                     <FormItem><FormLabel>SMTP Username</FormLabel><FormControl><Input placeholder="you@example.com" type="text" {...field} value={field.value ?? ''} /></FormControl><FormMessage /></FormItem>
                 )} />
                 <FormField control={form.control} name="smtpPass" render={({ field }) => (
-                    <FormItem><FormLabel>SMTP Password (or App Password)</FormLabel><FormControl><Input placeholder="••••••••" type="password" {...field} value={field.value ?? ''} /></FormControl><FormMessage /></FormItem>
+                    <FormItem>
+                      <FormLabel>SMTP Password (or App Password)</FormLabel>
+                      <FormControl>
+                        <div className="relative">
+                          <Input 
+                            placeholder="••••••••" 
+                            type={showPassword ? "text" : "password"} 
+                            {...field} 
+                            value={field.value ?? ''} 
+                            className="pr-10"
+                          />
+                          <button
+                            type="button"
+                            onClick={() => setShowPassword(!showPassword)}
+                            className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground cursor-pointer flex items-center justify-center p-1"
+                          >
+                            {showPassword ? (
+                              <EyeOff className="h-4 w-4" />
+                            ) : (
+                              <Eye className="h-4 w-4" />
+                            )}
+                          </button>
+                        </div>
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
                 )} />
               </div>
                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
