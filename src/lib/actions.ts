@@ -107,53 +107,101 @@ export async function submitContactForm(
     
     // Attempt to send email notification using SMTP settings from Firestore
     try {
-        // Fetch GCP service account access token from metadata server if available (timeout after 1s to not block local dev)
-        let gcpToken: string | null = null;
+        let smtpHost = '';
+        let smtpPort = '587';
+        let smtpUser = '';
+        let smtpPass = '';
+        let smtpSender = '';
+        let adminEmail = '';
+        
+        let loadedFromAdmin = false;
+
+        // Try fetching via firebase-admin first (bypasses security rules in production GCP/Firebase App Hosting)
         try {
-            const metadataResponse = await fetch('http://metadata.google.internal/computeMetadata/v1/instance/service-accounts/default/token', {
-                headers: { 'Metadata-Flavor': 'Google' },
-                signal: AbortSignal.timeout(1000)
-            });
-            if (metadataResponse.ok) {
-                const tokenData = await metadataResponse.json();
-                gcpToken = tokenData.access_token;
+            const { initializeApp, getApps } = await import('firebase-admin/app');
+            const { getFirestore } = await import('firebase-admin/firestore');
+            
+            const apps = getApps();
+            const adminApp = apps.length === 0 ? initializeApp() : apps[0];
+            const db = getFirestore(adminApp);
+            const settingsSnap = await db.collection('pkcreative_privateSettings').doc('global').get();
+            if (settingsSnap.exists) {
+                const data = settingsSnap.data();
+                if (data) {
+                    smtpHost = data.smtpHost || '';
+                    smtpPort = data.smtpPort || '587';
+                    smtpUser = data.smtpUser || '';
+                    smtpPass = data.smtpPass || '';
+                    smtpSender = data.smtpSender || data.smtpUser || '';
+                    adminEmail = data.adminEmail || data.smtpUser || '';
+                    loadedFromAdmin = true;
+                }
             }
-        } catch (metadataError) {
-            // Silently ignore metadata server failures (e.g. running in local development)
+        } catch (adminError) {
+            console.warn("Firebase Admin SDK failed to load/fetch settings (normal in local dev):", adminError);
         }
 
-        const settingsUrl = `https://firestore.googleapis.com/v1/projects/${projectId}/databases/(default)/documents/pkcreative_privateSettings/global`;
-        const settingsResponse = await fetch(settingsUrl, {
-            headers: {
-                ...(gcpToken ? { 'Authorization': `Bearer ${gcpToken}` } : {})
-            }
-        });
-        
-        if (settingsResponse.ok) {
-            const settingsData = await settingsResponse.json();
-            const fields = settingsData.fields;
-            if (fields && fields.smtpHost?.stringValue && fields.smtpUser?.stringValue && fields.smtpPass?.stringValue) {
-                const transporter = nodemailer.createTransport({
-                    host: fields.smtpHost.stringValue,
-                    port: parseInt(fields.smtpPort?.stringValue || '587'),
-                    secure: fields.smtpPort?.stringValue === '465',
-                    auth: {
-                        user: fields.smtpUser.stringValue,
-                        pass: fields.smtpPass.stringValue,
-                    }
+        // Fallback to Firestore REST API (using OAuth2 metadata token if available)
+        if (!loadedFromAdmin) {
+            let gcpToken: string | null = null;
+            try {
+                const metadataResponse = await fetch('http://metadata.google.internal/computeMetadata/v1/instance/service-accounts/default/token', {
+                    headers: { 'Metadata-Flavor': 'Google' },
+                    signal: AbortSignal.timeout(1000)
                 });
+                if (metadataResponse.ok) {
+                    const tokenData = await metadataResponse.json();
+                    gcpToken = tokenData.access_token;
+                }
+            } catch (metadataError) {
+                // Silently ignore metadata server failures (e.g. running in local development)
+            }
 
-                const adminEmail = fields.adminEmail?.stringValue || fields.smtpUser.stringValue;
-                const senderEmail = fields.smtpSender?.stringValue || fields.smtpUser.stringValue;
+            const settingsUrl = `https://firestore.googleapis.com/v1/projects/${projectId}/databases/(default)/documents/pkcreative_privateSettings/global`;
+            const settingsResponse = await fetch(settingsUrl, {
+                headers: {
+                    ...(gcpToken ? { 'Authorization': `Bearer ${gcpToken}` } : {})
+                }
+            });
 
-                const { logoUrl, siteName } = await fetchBranding(projectId);
+            if (settingsResponse.ok) {
+                const settingsData = await settingsResponse.json();
+                const fields = settingsData.fields;
+                if (fields) {
+                    smtpHost = fields.smtpHost?.stringValue || '';
+                    smtpPort = fields.smtpPort?.stringValue || '587';
+                    smtpUser = fields.smtpUser?.stringValue || '';
+                    smtpPass = fields.smtpPass?.stringValue || '';
+                    smtpSender = fields.smtpSender?.stringValue || fields.smtpUser?.stringValue || '';
+                    adminEmail = fields.adminEmail?.stringValue || fields.smtpUser?.stringValue || '';
+                }
+            } else {
+                console.error("Firestore REST API fallback returned error status:", settingsResponse.status);
+            }
+        }
 
-                const mailOptions = {
-                    from: `"${name} via Website" <${senderEmail}>`,
-                    to: adminEmail,
-                    replyTo: email,
-                    subject: `New Contact Form Submission from ${name}`,
-                    html: `
+        if (smtpHost && smtpUser && smtpPass) {
+            const transporter = nodemailer.createTransport({
+                host: smtpHost,
+                port: parseInt(smtpPort),
+                secure: smtpPort === '465',
+                auth: {
+                    user: smtpUser,
+                    pass: smtpPass,
+                }
+            });
+
+            const targetAdminEmail = adminEmail || smtpUser;
+            const targetSenderEmail = smtpSender || smtpUser;
+
+            const { logoUrl, siteName } = await fetchBranding(projectId);
+
+            const mailOptions = {
+                from: `"${name} via Website" <${targetSenderEmail}>`,
+                to: targetAdminEmail,
+                replyTo: email,
+                subject: `New Contact Form Submission from ${name}`,
+                html: `
 <!DOCTYPE html>
 <html>
 <head>
@@ -259,17 +307,15 @@ export async function submitContactForm(
   </table>
 </body>
 </html>
-                    `
-                };
+`
+            };
 
-                await transporter.sendMail(mailOptions);
-            }
+            await transporter.sendMail(mailOptions);
         } else {
-            console.error("Firestore REST API returned error status:", settingsResponse.status);
+            console.error("SMTP configurations are incomplete or failed to load. Mail not sent.");
         }
     } catch (emailError) {
         console.error("Email notification failed to send:", emailError);
-        // We don't return an error to the user if the notification fails, since the message was saved.
     }
 
     return { message: 'Thank you for your message! I will get back to you soon.' };
