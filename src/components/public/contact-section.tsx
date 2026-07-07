@@ -81,7 +81,7 @@ export default function ContactSection({ content }: { content?: SiteContent | nu
   const hasImage = true;
 
   return (
-    <section id="contact" className="py-12 sm:py-16 md:py-24 bg-secondary overflow-hidden">
+    <section id="contact" className="scroll-mt-20 py-12 sm:py-16 md:py-24 bg-secondary overflow-hidden">
       <div className="container mx-auto px-4 md:px-6">
         
         {/* Title Scroll-Reveal */}

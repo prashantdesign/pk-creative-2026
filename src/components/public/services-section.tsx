@@ -37,7 +37,7 @@ export default function ServicesSection({ content }: { content: SiteContent | nu
   };
 
   return (
-    <section id="services" className="py-24 bg-secondary/20 relative overflow-hidden">
+    <section id="services" className="scroll-mt-20 py-24 bg-secondary/20 relative overflow-hidden">
       {/* Decorative background element */}
       <motion.div 
         className="absolute top-0 right-0 w-[800px] h-[800px] bg-primary/5 rounded-full mix-blend-multiply filter blur-[100px] -translate-y-1/2 translate-x-1/3 pointer-events-none"
