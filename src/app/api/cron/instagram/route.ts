@@ -15,14 +15,19 @@ const firebaseConfig = {
   appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
 };
 
-const app = getApps().length === 0 ? initializeApp(firebaseConfig) : getApps()[0];
-const auth = getAuth(app);
-const firestore = getFirestore(app);
+let app: any;
+let auth: any;
+let firestore: any;
 
 export const dynamic = 'force-dynamic'; // Prevent static caching
 export const maxDuration = 60; // Max execution time
 
 export async function GET(request: Request) {
+  if (!app) {
+    app = getApps().length === 0 ? initializeApp(firebaseConfig) : getApps()[0];
+    auth = getAuth(app);
+    firestore = getFirestore(app);
+  }
   // 1. Authenticate as Admin to bypass Firestore Security Rules
   const adminEmail = process.env.CRON_ADMIN_EMAIL;
   const adminPassword = process.env.CRON_ADMIN_PASSWORD;
