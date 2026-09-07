@@ -1,218 +1,173 @@
 'use client';
 import React from 'react';
-import Image from 'next/image';
 import type { SiteContent } from '@/types';
 import { Button } from '@/components/ui/button';
 import { ArrowRight, Sparkles } from 'lucide-react';
-import { motion } from 'framer-motion';
+import { motion, useReducedMotion } from 'framer-motion';
+import HeroCanvas from '@/components/three/hero-canvas';
+import Magnetic from '@/components/motion/magnetic';
+import Marquee from '@/components/motion/marquee';
+
+const MARQUEE_ITEMS = [
+  'Website Design',
+  'UI / UX',
+  'Branding',
+  'Social Media',
+  'SEO',
+  'Motion',
+  'E-commerce',
+  'Strategy',
+];
 
 const HeroSection = ({ content }: { content: SiteContent | null }) => {
-  const defaultHeroMedia = "/pk_hero_visual.png";
-  const mediaUrl = content?.heroMediaUrl || defaultHeroMedia;
-  const hasMedia = true;
-  const isVideo = mediaUrl.toLowerCase().includes('.mp4');
+  const reduced = useReducedMotion();
+  const title = content?.heroTitle || 'We Are PK Creative';
+  const subtitle =
+    content?.heroSubtitle ||
+    'We craft premium websites, UI/UX, branding and social media for modern brands.';
 
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.15,
-        delayChildren: 0.1,
-      }
-    }
+  const words = title.split(' ');
+
+  const container = {
+    hidden: {},
+    visible: { transition: { staggerChildren: 0.12, delayChildren: 0.15 } },
   };
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: 30 },
-    visible: { 
-      opacity: 1, 
-      y: 0,
-      transition: { type: "spring" as const, stiffness: 100, damping: 20 }
-    }
+  const item = {
+    hidden: { opacity: 0, y: reduced ? 0 : 24 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] as const } },
   };
-
-
 
   return (
-    <section id="home" className={`relative overflow-hidden bg-background ${hasMedia ? 'pt-4 pb-20 md:pt-6 md:pb-24 lg:pt-8 lg:pb-32' : 'py-16'}`}>
-      {/* Background Glowing Blobs with Infinite floating logic */}
-      <motion.div 
-        className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/20 rounded-full mix-blend-multiply filter blur-[128px] pointer-events-none"
-        animate={{
-          x: [0, 30, 0],
-          y: [0, -40, 0],
-        }}
-        transition={{
-          duration: 12,
-          repeat: Infinity,
-          ease: "easeInOut",
-        }}
+    <section
+      id="home"
+      className="relative isolate overflow-hidden bg-background pt-10 pb-16 sm:pt-14 md:pt-20 md:pb-24 lg:min-h-[92vh] lg:flex lg:items-center"
+    >
+      {/* Decorative grid + aurora backdrop */}
+      <div aria-hidden className="pointer-events-none absolute inset-0 -z-20 bg-grid opacity-[0.4]" />
+      <div
+        aria-hidden
+        className="pointer-events-none absolute -top-40 right-[-10%] -z-20 h-[520px] w-[520px] rounded-full bg-primary/25 blur-[140px] animate-aurora"
       />
-      <motion.div 
-        className="absolute top-1/3 right-1/4 w-96 h-96 bg-purple-500/20 rounded-full mix-blend-multiply filter blur-[128px] pointer-events-none"
-        animate={{
-          x: [0, -40, 0],
-          y: [0, 30, 0],
-        }}
-        transition={{
-          duration: 15,
-          repeat: Infinity,
-          ease: "easeInOut",
-        }}
-      />
-      <motion.div 
-        className="absolute -bottom-32 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-primary/10 rounded-full mix-blend-multiply filter blur-[128px] pointer-events-none"
-        animate={{
-          scale: [1, 1.08, 1],
-          opacity: [0.7, 0.9, 0.7],
-        }}
-        transition={{
-          duration: 10,
-          repeat: Infinity,
-          ease: "easeInOut",
-        }}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute bottom-[-20%] left-[-10%] -z-20 h-[460px] w-[460px] rounded-full bg-fuchsia-500/20 blur-[150px] animate-aurora"
+        style={{ animationDelay: '-6s' }}
       />
 
-      <div className="container relative z-10 mx-auto px-4 md:px-6">
-        <div className={`grid gap-12 items-center ${hasMedia ? 'lg:grid-cols-[1.25fr_0.75fr]' : 'grid-cols-1 text-center justify-items-center'}`}>
-          
-          {/* Text Column */}
-          <motion.div 
-            variants={containerVariants}
-            initial="hidden"
-            animate="visible"
-            className={`space-y-8 ${hasMedia ? 'max-w-2xl' : 'max-w-5xl mx-auto'}`}
+      {/* WebGL / gradient hero object — sits behind text on mobile, beside it on desktop */}
+      <div className="pointer-events-none absolute inset-0 -z-10 lg:left-auto lg:right-0 lg:w-[48%]">
+        <HeroCanvas className="relative h-full w-full opacity-60 sm:opacity-80 lg:opacity-100" />
+      </div>
+
+      <div className="container relative z-10 mx-auto px-4 sm:px-6">
+        <motion.div
+          variants={container}
+          initial="hidden"
+          animate="visible"
+          className="max-w-2xl lg:max-w-[46rem]"
+        >
+          <motion.div
+            variants={item}
+            className="mb-6 inline-flex items-center gap-2 rounded-full border border-primary/20 bg-background/60 px-4 py-1.5 text-xs font-medium text-primary shadow-sm backdrop-blur-md sm:text-sm"
           >
-            <motion.div 
-              variants={itemVariants}
-              className={`inline-flex items-center gap-2 rounded-full border border-primary/20 bg-background/50 backdrop-blur-sm px-4 py-1.5 text-sm font-medium text-primary shadow-sm mb-6 ${!hasMedia ? 'mx-auto' : ''}`}
-            >
-              <Sparkles className="h-4 w-4" />
-              <span>Creative Solutions For Modern Brands</span>
-            </motion.div>
-            
-            <motion.h1 
-              variants={itemVariants}
-              className={`text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-headline font-black tracking-tighter text-foreground leading-[1.1] ${!hasMedia ? 'lg:text-9xl' : ''}`}
-            >
-              <span className="block text-transparent bg-clip-text bg-gradient-to-br from-foreground via-foreground to-muted-foreground">
-                {content?.heroTitle || 'We Are PK Creative'}
-              </span>
-            </motion.h1>
-            
-            <motion.p 
-              variants={itemVariants}
-              className={`text-xl md:text-2xl text-muted-foreground font-body leading-relaxed ${!hasMedia ? 'mx-auto max-w-2xl' : ''}`}
-            >
-              {content?.heroSubtitle ||
-                'We deliver premium Website Design, UI/UX, Branding, and Social Media Management.'}
-            </motion.p>
-            
-            <motion.div
-              variants={itemVariants}
-              className={`inline-flex items-center gap-2.5 rounded-2xl bg-primary/5 border border-primary/10 px-4 py-2 text-sm font-semibold text-foreground ${!hasMedia ? 'mx-auto' : ''}`}
-            >
-              <span className="h-2.5 w-2.5 rounded-full bg-[#612af5] dark:bg-primary animate-pulse" />
-              <span>
-                <span className="text-primary font-bold">Dynamic Websites</span> starting from <span className="text-primary font-bold">₹10,000</span>
-              </span>
-            </motion.div>
-            
-            <motion.div 
-              variants={itemVariants}
-              className={`pt-4 flex flex-col sm:flex-row items-center gap-4 ${!hasMedia ? 'justify-center' : ''}`}
-            >
-              <motion.div 
-                whileHover={{ scale: 1.04, y: -2 }}
-                whileTap={{ scale: 0.98 }}
-                className="w-full sm:w-auto"
-              >
-                <Button 
-                  asChild 
-                  size="lg" 
-                  className="group relative overflow-hidden bg-primary hover:bg-primary/90 text-primary-foreground px-8 py-7 rounded-full text-lg font-semibold shadow-[0_0_40px_-10px_rgba(var(--primary),0.5)] transition-all hover:shadow-[0_0_60px_-15px_rgba(var(--primary),0.6)] w-full"
-                >
-                  <a href={content?.ctaLink || "#services"}>
-                    <span className="relative z-10 flex items-center">
-                      {content?.ctaText || 'Our Services'}
-                      <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
-                    </span>
-                    <div className="absolute inset-0 h-full w-full bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:animate-shimmer" />
-                  </a>
-                </Button>
-              </motion.div>
-              
-              <motion.div 
-                whileHover={{ scale: 1.04, y: -2 }}
-                whileTap={{ scale: 0.98 }}
-                className="w-full sm:w-auto"
-              >
-                <Button 
-                  asChild 
-                  variant="outline" 
-                  size="lg" 
-                  className="px-8 py-7 rounded-full text-lg font-medium border-border hover:bg-accent hover:text-accent-foreground transition-all w-full"
-                >
-                  <a href="#contact">
-                    Contact Us
-                  </a>
-                </Button>
-              </motion.div>
-            </motion.div>
+            <Sparkles className="h-3.5 w-3.5 sm:h-4 sm:w-4" />
+            <span>Creative Solutions For Modern Brands</span>
           </motion.div>
 
-          {/* Media Column with premium float and shadow shift */}
-          {hasMedia && (
-            <motion.div 
-              initial={{ opacity: 0, y: 40 }}
-              animate={{ 
-                opacity: 1,
-                y: [0, -10, 0]
-              }}
-              transition={{
-                opacity: { duration: 0.8, ease: "easeOut" },
-                y: {
-                  duration: 6,
-                  repeat: Infinity,
-                  ease: "easeInOut"
-                }
-              }}
-              whileHover={{ 
-                scale: 1.03,
-                boxShadow: "0 25px 60px -15px rgba(97, 42, 245, 0.3)",
-                transition: { duration: 0.4 }
-              }}
-              className="relative w-full max-w-[440px] rounded-3xl overflow-hidden shadow-2xl group border border-border/50 mx-auto lg:mx-0 lg:justify-self-end cursor-pointer"
-            >
-              <div className="absolute inset-0 bg-gradient-to-tr from-primary/20 to-transparent mix-blend-overlay z-10 pointer-events-none group-hover:opacity-0 transition-opacity duration-700" />
-              {isVideo ? (
-                <video 
-                  src={mediaUrl} 
-                  autoPlay 
-                  loop 
-                  muted 
-                  playsInline
-                  className="w-full h-auto object-contain transition-transform duration-700 group-hover:scale-105"
-                />
-              ) : (
-                <Image
-                  src={mediaUrl}
-                  alt="Hero Visual"
-                  width={440}
-                  height={440}
-                  priority
-                  className="w-full h-auto object-contain transition-transform duration-700 group-hover:scale-105"
-                />
-              )}
-            </motion.div>
-          )}
+          <h1 className="font-headline text-[2.75rem] font-black leading-[1.04] tracking-tighter text-foreground sm:text-6xl md:text-7xl lg:text-[5.25rem]">
+            {words.map((w, i) => (
+              <span key={i} className="inline-block overflow-hidden pb-[0.08em] align-bottom">
+                <motion.span
+                  variants={item}
+                  className={
+                    i >= words.length - 2
+                      ? 'inline-block text-gradient-primary'
+                      : 'inline-block'
+                  }
+                >
+                  {w}&nbsp;
+                </motion.span>
+              </span>
+            ))}
+          </h1>
 
-        </div>
+          <motion.p
+            variants={item}
+            className="mt-6 max-w-xl text-base leading-relaxed text-muted-foreground sm:text-lg md:text-xl"
+          >
+            {subtitle}
+          </motion.p>
+
+          <motion.div
+            variants={item}
+            className="mt-6 inline-flex items-center gap-2.5 rounded-2xl border border-primary/10 bg-primary/5 px-4 py-2 text-xs font-semibold text-foreground sm:text-sm"
+          >
+            <span className="h-2.5 w-2.5 animate-pulse rounded-full bg-primary" />
+            <span>
+              <span className="font-bold text-primary">Dynamic Websites</span> from{' '}
+              <span className="font-bold text-primary">₹10,000</span>
+            </span>
+          </motion.div>
+
+          <motion.div
+            variants={item}
+            className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-4"
+          >
+            <Magnetic className="w-full sm:w-auto">
+              <Button
+                asChild
+                size="lg"
+                className="group relative w-full overflow-hidden rounded-full bg-primary px-8 py-6 text-base font-semibold text-primary-foreground shadow-[0_20px_60px_-18px_hsl(var(--primary))] transition-all hover:bg-primary/90 sm:w-auto"
+              >
+                <a href={content?.ctaLink || '#services'}>
+                  <span className="relative z-10 flex items-center justify-center">
+                    {content?.ctaText || 'Our Services'}
+                    <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
+                  </span>
+                  <span className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/25 to-transparent transition-transform duration-700 group-hover:translate-x-full" />
+                </a>
+              </Button>
+            </Magnetic>
+
+            <Magnetic className="w-full sm:w-auto">
+              <Button
+                asChild
+                variant="outline"
+                size="lg"
+                className="w-full rounded-full border-border px-8 py-6 text-base font-medium transition-all hover:bg-accent hover:text-accent-foreground sm:w-auto"
+              >
+                <a href="#contact">Start a Project</a>
+              </Button>
+            </Magnetic>
+          </motion.div>
+        </motion.div>
       </div>
-      
-      {/* Decorative Bottom Fade */}
-      <div className="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-background to-transparent pointer-events-none" />
+
+      {/* Running services marquee */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.8, duration: 0.8 }}
+        className="relative z-10 mt-14 border-y border-border/50 bg-background/40 py-3 backdrop-blur-sm sm:mt-20"
+        style={{ ['--gap' as string]: '2.5rem' }}
+      >
+        <Marquee speed={26}>
+          {MARQUEE_ITEMS.map((label) => (
+            <span
+              key={label}
+              className="flex items-center gap-3 text-sm font-medium uppercase tracking-widest text-muted-foreground sm:text-base"
+            >
+              {label}
+              <span className="h-1.5 w-1.5 rounded-full bg-primary/60" />
+            </span>
+          ))}
+        </Marquee>
+      </motion.div>
+
+      <div
+        aria-hidden
+        className="pointer-events-none absolute bottom-0 left-0 h-24 w-full bg-gradient-to-t from-background to-transparent"
+      />
     </section>
   );
 };

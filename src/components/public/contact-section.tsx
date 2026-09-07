@@ -92,8 +92,14 @@ export default function ContactSection({ content }: { content?: SiteContent | nu
           transition={{ duration: 0.6, ease: "easeOut" }}
           className="max-w-3xl mx-auto text-center mb-8 sm:mb-12 md:mb-16 px-4"
         >
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-headline font-bold mb-3 sm:mb-4">{content?.contactSectionTitle || "Let's Work Together"}</h2>
-          <p className="text-base sm:text-lg md:text-xl text-muted-foreground">
+          <span className="mb-4 inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/5 px-3 py-1 text-xs font-semibold uppercase tracking-widest text-primary">
+            <span className="h-1.5 w-1.5 rounded-full bg-primary" />
+            Get in touch
+          </span>
+          <h2 className="mb-3 font-headline text-3xl font-extrabold tracking-tight sm:mb-4 sm:text-4xl md:text-5xl">
+            {content?.contactSectionTitle || "Let's Work Together"}
+          </h2>
+          <p className="text-base text-muted-foreground sm:text-lg md:text-xl">
             {content?.contactSectionDescription || "Ready to elevate your brand? Fill out the form below and we'll be in touch shortly."}
           </p>
         </motion.div>

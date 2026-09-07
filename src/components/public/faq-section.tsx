@@ -68,7 +68,7 @@ export default function FAQSection() {
   };
 
   return (
-    <section id="faq" className="py-24 bg-background relative overflow-hidden">
+    <section id="faq" className="relative overflow-hidden bg-background py-20 md:py-28">
       {/* Decorative Blob */}
       <div className="absolute top-1/2 left-0 w-80 h-80 bg-primary/5 rounded-full mix-blend-multiply filter blur-[80px] -translate-y-1/2 -translate-x-1/2 pointer-events-none" />
 
@@ -83,8 +83,8 @@ export default function FAQSection() {
             transition={{ duration: 0.6, ease: "easeOut" }}
             className="space-y-6 lg:sticky lg:top-24"
           >
-            <h2 className="text-3xl md:text-5xl font-headline font-bold tracking-tight text-foreground">
-              Frequently Asked Questions
+            <h2 className="font-headline text-3xl font-extrabold tracking-tight text-foreground md:text-5xl">
+              Frequently Asked <span className="text-gradient-primary">Questions</span>
             </h2>
             <p className="text-lg text-muted-foreground leading-relaxed">
               Have questions about our pricing, deliverables, or timeline? Here are quick answers to our most common inquiries.

@@ -2,7 +2,8 @@
 import React from 'react';
 import type { SiteContent } from '@/types';
 import { Icons } from '@/components/icons';
-import { motion } from 'framer-motion';
+import { Reveal } from '@/components/motion/reveal';
+import Marquee from '@/components/motion/marquee';
 
 const defaultAudience = [
   'Tech Startups',
@@ -11,7 +12,7 @@ const defaultAudience = [
   'Healthcare Providers',
   'Creative Professionals',
   'SaaS Platforms',
-  'Local Businesses'
+  'Local Businesses',
 ];
 
 const getIconForText = (text: string) => {
@@ -28,54 +29,50 @@ const getIconForText = (text: string) => {
 
 export default function TargetAudienceSection({ content }: { content: SiteContent | null }) {
   const audience = content?.targetAudience?.length ? content.targetAudience : defaultAudience;
-  const marqueeItems = [...audience, ...audience, ...audience];
 
   return (
-    <section id="audience" className="py-24 bg-foreground text-background overflow-hidden relative">
-      <div className="absolute inset-0 bg-gradient-to-b from-foreground via-foreground/95 to-foreground z-0" />
-      
-      {/* Scroll Triggered Entrance */}
-      <motion.div 
-        initial={{ opacity: 0, y: 25 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: "-100px" }}
-        transition={{ duration: 0.6, ease: "easeOut" }}
-        className="container relative z-10 mx-auto px-4 md:px-6 mb-16 text-center max-w-3xl"
-      >
-        <h2 className="text-3xl md:text-5xl font-headline font-bold mb-6 text-background">
-          {content?.targetAudienceSectionTitle || 'Who We Help'}
+    <section
+      id="audience"
+      className="relative overflow-hidden bg-foreground py-20 text-background md:py-28"
+    >
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,hsl(var(--primary)/0.25),transparent_55%)]"
+      />
+
+      <Reveal className="container relative z-10 mx-auto mb-14 max-w-3xl px-4 text-center sm:px-6 md:mb-20">
+        <span className="mb-4 inline-flex items-center gap-2 rounded-full border border-background/20 bg-background/5 px-3 py-1 text-xs font-semibold uppercase tracking-widest text-background/70">
+          <span className="h-1.5 w-1.5 rounded-full bg-primary" />
+          Who we help
+        </span>
+        <h2 className="font-headline text-3xl font-extrabold tracking-tight text-background sm:text-4xl md:text-5xl">
+          {content?.targetAudienceSectionTitle || 'Built for ambitious brands'}
         </h2>
-        <p className="text-xl text-background/70">
-          {content?.targetAudienceSectionDescription || 'We partner with ambitious brands across various industries to deliver outstanding digital experiences.'}
+        <p className="mt-4 text-base text-background/70 sm:text-lg">
+          {content?.targetAudienceSectionDescription ||
+            'We partner with teams across industries to ship digital experiences that convert.'}
         </p>
-      </motion.div>
+      </Reveal>
 
-      <div className="relative z-10 flex overflow-hidden group">
-        {/* Left Gradient Mask */}
-        <div className="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-foreground to-transparent z-20 pointer-events-none" />
-        
-        {/* Right Gradient Mask */}
-        <div className="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-foreground to-transparent z-20 pointer-events-none" />
-
-        <div className="flex animate-marquee group-hover:[animation-play-state:paused] gap-6 px-3">
-          {marqueeItems.map((client, index) => (
-            <motion.div 
-              key={index} 
-              whileHover={{ 
-                scale: 1.05, 
-                backgroundColor: "rgba(255, 255, 255, 0.12)",
-                borderColor: "rgba(255, 255, 255, 0.25)"
-              }}
-              whileTap={{ scale: 0.98 }}
-              className="flex items-center gap-4 bg-background/5 p-6 rounded-2xl border border-background/10 whitespace-nowrap transition-all duration-300 cursor-pointer"
+      <div
+        className="relative z-10 [--gap:1.5rem]"
+        style={{ maskImage: 'linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent)' }}
+      >
+        <Marquee speed={38}>
+          {audience.map((client, index) => (
+            <div
+              key={index}
+              className="flex items-center gap-3 whitespace-nowrap rounded-2xl border border-background/10 bg-background/5 px-5 py-4 transition-colors hover:border-background/25 hover:bg-background/10"
             >
-              <div className="h-12 w-12 rounded-full bg-primary/20 flex items-center justify-center flex-shrink-0">
-                <Icons name={getIconForText(client)} className="h-6 w-6 text-primary" />
-              </div>
-              <span className="text-xl font-medium tracking-wide text-background">{client}</span>
-            </motion.div>
+              <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-primary/20">
+                <Icons name={getIconForText(client)} className="h-5 w-5 text-primary" />
+              </span>
+              <span className="text-base font-medium tracking-wide text-background sm:text-lg">
+                {client}
+              </span>
+            </div>
           ))}
-        </div>
+        </Marquee>
       </div>
     </section>
   );

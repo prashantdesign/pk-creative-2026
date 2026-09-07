@@ -2,57 +2,73 @@
 
 import React from 'react';
 import type { SiteContent } from '@/types';
-import { motion } from 'framer-motion';
 import Image from 'next/image';
+import { Reveal, TextReveal } from '@/components/motion/reveal';
+import TiltCard from '@/components/motion/tilt-card';
+
+const FALLBACK_STATS = [
+  { value: '120+', label: 'Projects shipped' },
+  { value: '7+', label: 'Years in craft' },
+  { value: '98%', label: 'Client retention' },
+];
 
 const AboutSection = ({ content }: { content: SiteContent | null }) => {
-  return (
-    <section id="about" className="py-24 bg-secondary overflow-hidden">
-      <div className="container mx-auto px-4 md:px-6">
-        <div className="grid md:grid-cols-2 gap-12 items-center">
-          
-          {/* Text Column - Slide in from Left */}
-          <motion.div 
-            initial={{ opacity: 0, x: -60 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ type: "spring" as const, stiffness: 80, damping: 15 }}
-            className="space-y-6"
-          >
-            <h2 className="text-3xl md:text-4xl font-headline font-bold tracking-tight text-foreground">About Us</h2>
-            <p className="text-muted-foreground text-lg leading-relaxed whitespace-pre-wrap">
-              {content?.aboutText ||
-                "We are a passionate team of designers with a love for creating beautiful and intuitive digital experiences."}
-            </p>
-          </motion.div>
+  const stats =
+    (content as any)?.stats?.length
+      ? ((content as any).stats as { value: string; label: string }[])
+      : FALLBACK_STATS;
 
-          {/* Image Column - Slide in from Right & Hover Scale */}
-          <motion.div 
-            initial={{ opacity: 0, x: 60 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ type: "spring" as const, stiffness: 80, damping: 15 }}
-            className="max-w-sm mx-auto w-full"
-          >
-            <motion.div
-              whileHover={{ 
-                scale: 1.03, 
-                rotate: 0.5,
-                boxShadow: "0 25px 50px -12px rgba(97, 42, 245, 0.2)",
-                transition: { duration: 0.3 }
-              }}
-              className="rounded-2xl overflow-hidden shadow-lg border border-border/40 bg-background cursor-pointer"
+  return (
+    <section id="about" className="relative overflow-hidden bg-secondary py-20 md:py-28">
+      <div aria-hidden className="bg-dots pointer-events-none absolute inset-0 opacity-40" />
+
+      <div className="container relative z-10 mx-auto px-4 sm:px-6">
+        <div className="grid items-center gap-12 md:grid-cols-2 lg:gap-20">
+          <div className="space-y-6">
+            <Reveal className="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/5 px-3 py-1 text-xs font-semibold uppercase tracking-widest text-primary">
+              <span className="h-1.5 w-1.5 rounded-full bg-primary" />
+              Who we are
+            </Reveal>
+            <TextReveal
+              as="h2"
+              text="About Us"
+              className="font-headline text-3xl font-extrabold tracking-tight text-foreground sm:text-4xl md:text-5xl"
+            />
+            <Reveal
+              as="p"
+              delay={0.1}
+              className="whitespace-pre-wrap text-base leading-relaxed text-muted-foreground sm:text-lg"
+            >
+              {content?.aboutText ||
+                'We are a passionate team of designers and engineers with a love for building beautiful, intuitive digital experiences that move brands forward.'}
+            </Reveal>
+
+            <Reveal delay={0.15} className="grid grid-cols-3 gap-4 pt-4">
+              {stats.slice(0, 3).map((s) => (
+                <div key={s.label} className="rounded-2xl border border-border/60 bg-background/60 p-4">
+                  <div className="font-headline text-2xl font-extrabold text-primary sm:text-3xl">
+                    {s.value}
+                  </div>
+                  <div className="mt-1 text-xs text-muted-foreground sm:text-sm">{s.label}</div>
+                </div>
+              ))}
+            </Reveal>
+          </div>
+
+          <Reveal direction="left" className="mx-auto w-full max-w-sm md:max-w-none">
+            <TiltCard
+              max={9}
+              className="overflow-hidden rounded-3xl border border-border/50 bg-background shadow-xl"
             >
               <Image
-                src={content?.aboutImageUrl || "/pk_about_visual.png"}
-                alt="About us"
-                width={384}
-                height={384}
-                className="w-full h-auto object-contain transition-transform duration-700 hover:scale-[1.02]"
+                src={content?.aboutImageUrl || '/pk_about_visual.png'}
+                alt="About PK Creative"
+                width={520}
+                height={520}
+                className="h-auto w-full object-contain"
               />
-            </motion.div>
-          </motion.div>
-
+            </TiltCard>
+          </Reveal>
         </div>
       </div>
     </section>

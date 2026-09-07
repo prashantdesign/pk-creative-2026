@@ -16,6 +16,7 @@ import {
   CarouselPrevious,
   type CarouselApi
 } from "@/components/ui/carousel";
+import SectionHeader from '@/components/public/section-header';
 
 const getFaviconUrl = (url: string) => {
   try {
@@ -130,16 +131,16 @@ export default function WebsiteShowcaseSection({ content }: { content: SiteConte
   }
 
   return (
-    <section id="website-showcase" className="py-24 bg-background overflow-hidden">
+    <section id="website-showcase" className="overflow-hidden bg-background py-20 md:py-28">
       <div className="container mx-auto px-4 md:px-6">
-        <div className="text-center max-w-3xl mx-auto mb-16 animate-fade-in-up">
-          <h2 className="text-3xl md:text-5xl font-bold tracking-tight mb-6 text-foreground">
-            {content?.websiteShowcaseTitle || "Websites We've Built"}
-          </h2>
-          <p className="text-lg text-muted-foreground leading-relaxed">
-            {content?.websiteShowcaseDescription || "Explore some of our latest web design and development projects."}
-          </p>
-        </div>
+        <SectionHeader
+          eyebrow="Selected work"
+          title={content?.websiteShowcaseTitle || "Websites We've Built"}
+          description={
+            content?.websiteShowcaseDescription ||
+            'Explore some of our latest web design and development projects.'
+          }
+        />
 
         {showSkeletons ? (
           <div className="flex gap-6 justify-center flex-wrap max-w-7xl mx-auto py-12">

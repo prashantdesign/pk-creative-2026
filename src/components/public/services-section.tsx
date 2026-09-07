@@ -3,6 +3,9 @@ import React from 'react';
 import type { SiteContent } from '@/types';
 import { Icons } from '@/components/icons';
 import { motion } from 'framer-motion';
+import { Reveal, staggerContainer, staggerItem } from '@/components/motion/reveal';
+import TiltCard from '@/components/motion/tilt-card';
+import SectionHeader from '@/components/public/section-header';
 
 type Service = { title: string; description: string; icon?: string };
 
@@ -17,104 +20,70 @@ const defaultServices: Service[] = [
 export default function ServicesSection({ content }: { content: SiteContent | null }) {
   const services = content?.services?.length ? content.services : defaultServices;
 
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.12,
-      }
-    }
-  };
-
-  const cardVariants = {
-    hidden: { opacity: 0, y: 40 },
-    visible: { 
-      opacity: 1, 
-      y: 0,
-      transition: { type: "spring" as const, stiffness: 90, damping: 16 }
-    }
-  };
-
   return (
-    <section id="services" className="scroll-mt-20 py-24 bg-secondary/20 relative overflow-hidden">
-      {/* Decorative background element */}
-      <motion.div 
-        className="absolute top-0 right-0 w-[800px] h-[800px] bg-primary/5 rounded-full mix-blend-multiply filter blur-[100px] -translate-y-1/2 translate-x-1/3 pointer-events-none"
-        animate={{
-          scale: [1, 1.1, 1],
-          opacity: [0.6, 0.8, 0.6],
-        }}
-        transition={{
-          duration: 15,
-          repeat: Infinity,
-          ease: "easeInOut"
-        }}
+    <section id="services" className="relative overflow-hidden bg-secondary/20 py-20 md:py-28">
+      <motion.div
+        aria-hidden
+        className="pointer-events-none absolute right-0 top-0 h-[600px] w-[600px] -translate-y-1/3 translate-x-1/3 rounded-full bg-primary/5 blur-[120px]"
+        animate={{ scale: [1, 1.12, 1], opacity: [0.5, 0.8, 0.5] }}
+        transition={{ duration: 15, repeat: Infinity, ease: 'easeInOut' }}
       />
 
-      <div className="container relative z-10 mx-auto px-4 md:px-6">
-        <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-8">
-          <motion.div
-            initial={{ opacity: 0, y: 25 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.6, ease: "easeOut" }}
-            className="max-w-2xl"
-          >
-            <h2 className="text-4xl md:text-5xl font-headline font-bold tracking-tight mb-4 text-foreground">
-              {content?.servicesSectionTitle || 'Our Services'}
-            </h2>
-            <p className="text-xl text-muted-foreground">
-              {content?.servicesSectionDescription || 'Everything you need to grow your modern brand.'}
-            </p>
-          </motion.div>
-        </div>
+      <div className="container relative z-10 mx-auto px-4 sm:px-6">
+        <SectionHeader
+          align="left"
+          eyebrow="What we do"
+          title={content?.servicesSectionTitle || 'Our Services'}
+          description={content?.servicesSectionDescription || 'Everything you need to grow your modern brand.'}
+        />
 
-        {/* Bento Grid Layout with staggered trigger */}
-        <motion.div 
-          variants={containerVariants}
+        <motion.div
+          variants={staggerContainer}
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true, margin: "-80px" }}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+          viewport={{ once: true, amount: 0.15 }}
+          className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3"
         >
-          {services.map((service, index) => {
-            return (
-              <motion.div
-                key={index}
-                variants={cardVariants}
-                whileHover={{ 
-                  y: -8, 
-                  scale: 1.015,
-                  borderColor: "rgba(97, 42, 245, 0.35)",
-                  boxShadow: "0 25px 50px -12px rgba(97, 42, 245, 0.18)",
-                  transition: { duration: 0.3, ease: "easeOut" }
-                }}
-                whileTap={{ scale: 0.99 }}
-                className="group relative overflow-hidden rounded-3xl bg-background border border-border p-8 min-h-[300px] cursor-pointer flex flex-col"
+          {services.map((service, index) => (
+            <motion.div key={index} variants={staggerItem}>
+              <TiltCard
+                max={6}
+                className="group flex h-full min-h-[220px] flex-col justify-between overflow-hidden rounded-3xl border border-border bg-background p-6 transition-colors duration-300 hover:border-primary/40 sm:min-h-[280px] sm:p-8"
               >
-                <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                
-                <div className="relative z-10 flex flex-col h-full justify-between">
-                  <div className="flex justify-between items-start">
-                    <motion.div 
-                      className="h-14 w-14 rounded-2xl bg-primary/10 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-primary-foreground transition-colors duration-500"
-                      whileHover={{ rotate: 10, scale: 1.05 }}
-                    >
-                      <Icons name={service.icon || 'star'} className="h-7 w-7" />
-                    </motion.div>
+                <div className="flex items-start justify-between">
+                  <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-primary/10 text-primary transition-colors duration-500 group-hover:bg-primary group-hover:text-primary-foreground sm:h-14 sm:w-14">
+                    <Icons name={service.icon || 'star'} className="h-6 w-6 sm:h-7 sm:w-7" />
                   </div>
-                  
-                  <div className="mt-auto">
-                    <h3 className="text-2xl font-bold mb-3 transition-colors duration-300 group-hover:text-primary">{service.title}</h3>
-                    <p className="text-muted-foreground text-lg leading-relaxed line-clamp-3">
-                      {service.description}
-                    </p>
-                  </div>
+                  <span className="font-headline text-sm font-bold text-muted-foreground/40">
+                    {String(index + 1).padStart(2, '0')}
+                  </span>
                 </div>
-              </motion.div>
-            );
-          })}
+                <div className="mt-8">
+                  <h3 className="mb-2 text-xl font-bold transition-colors duration-300 group-hover:text-primary sm:text-2xl">
+                    {service.title}
+                  </h3>
+                  <p className="text-sm leading-relaxed text-muted-foreground sm:text-base">
+                    {service.description}
+                  </p>
+                </div>
+              </TiltCard>
+            </motion.div>
+          ))}
+
+          <motion.div variants={staggerItem}>
+            <a
+              href="#contact"
+              className="glow-ring flex h-full min-h-[220px] flex-col justify-between rounded-3xl border border-primary/30 bg-primary/5 p-6 transition-all duration-300 hover:bg-primary/10 sm:min-h-[280px] sm:p-8"
+            >
+              <span className="text-sm font-semibold uppercase tracking-widest text-primary">
+                Have a project?
+              </span>
+              <span className="mt-8 flex items-center gap-2 text-xl font-bold sm:text-2xl">
+                Let&apos;s build it together
+                <Icons name="arrow-right" className="h-5 w-5" />
+              </span>
+            </a>
+          </motion.div>
         </motion.div>
       </div>
     </section>
