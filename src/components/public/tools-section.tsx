@@ -1,39 +1,52 @@
+'use client';
+
 import React from 'react';
 import type { SiteContent } from '@/types';
 import Image from 'next/image';
+import { motion } from 'framer-motion';
+import SectionHeader from './section-header';
+import { staggerContainer, staggerItem } from '@/components/motion/reveal';
 
-export default function ToolsSection({ content }: { content: SiteContent | null }) {
-  if (!content?.tools || content.tools.length === 0) {
-    return null;
-  }
+export default function ToolsSection({ content }: { content?: SiteContent | null }) {
+  if (!content?.tools || content.tools.length === 0) return null;
 
   return (
-    <section id="tools" className="py-16 md:py-24 bg-secondary">
+    <section id="tools" className="bg-secondary py-16 md:py-24">
       <div className="container mx-auto px-4">
-        <div className="text-center max-w-3xl mx-auto">
-            {content.toolsSectionTitle && (
-                <h2 className="text-3xl md:text-4xl font-bold mb-4 animate-fade-in-up">
-                    {content.toolsSectionTitle}
-                </h2>
-            )}
-            {content.toolsSectionDescription && (
-                <p className="text-lg text-muted-foreground mb-12 animate-fade-in-up animation-delay-300">
-                    {content.toolsSectionDescription}
-                </p>
-            )}
-        </div>
-        <div className="text-center animate-fade-in-up animation-delay-600">
-          <div className="inline-grid grid-cols-3 md:grid-cols-6 gap-x-8 gap-y-12">
-            {content.tools.map((tool, index) => (
-              <div key={index} className="text-center w-24 flex flex-col items-center">
-                  <div className="h-20 w-20 rounded-lg bg-white p-3 flex items-center justify-center mb-2 shadow-md hover:shadow-xl transition-shadow">
-                      <Image src={tool.iconUrl} alt={tool.name} width={56} height={56} className="object-contain" />
-                  </div>
-                  <p className="text-sm font-medium">{tool.name}</p>
+        <SectionHeader
+          eyebrow="Our stack"
+          title={content.toolsSectionTitle}
+          description={content.toolsSectionDescription}
+        />
+
+        <motion.div
+          variants={staggerContainer}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.15 }}
+          className="mx-auto grid max-w-4xl grid-cols-3 gap-4 sm:grid-cols-4 sm:gap-6 md:grid-cols-6"
+        >
+          {content.tools.map((tool, index) => (
+            <motion.div
+              key={index}
+              variants={staggerItem}
+              className="group flex flex-col items-center gap-2"
+            >
+              <div className="flex h-16 w-16 items-center justify-center rounded-2xl border border-border/60 bg-background p-3 transition-all duration-300 group-hover:-translate-y-1 group-hover:border-primary/40 sm:h-20 sm:w-20">
+                <Image
+                  src={tool.iconUrl}
+                  alt={tool.name}
+                  width={56}
+                  height={56}
+                  className="h-full w-full object-contain"
+                />
               </div>
-            ))}
-          </div>
-        </div>
+              <p className="text-center text-xs font-medium text-muted-foreground sm:text-sm">
+                {tool.name}
+              </p>
+            </motion.div>
+          ))}
+        </motion.div>
       </div>
     </section>
   );

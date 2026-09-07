@@ -12,6 +12,7 @@ import PKLoader from '@/components/pk-loader';
 
 interface GallerySectionProps {
   content: SiteContent | null;
+  hideHeader?: boolean;
 }
 
 function useWindowColumns() {

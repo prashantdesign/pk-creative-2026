@@ -8,6 +8,7 @@ import type { SiteContent } from '@/types';
 import Header from '@/components/public/header';
 import Footer from '@/components/public/footer';
 import GallerySection from '@/components/public/gallery-section';
+import PageHero from '@/components/public/page-hero';
 
 export default function GalleryClient({ initialSiteContent }: { initialSiteContent: SiteContent | null }) {
   const firestore = useFirestore();
@@ -20,9 +21,15 @@ export default function GalleryClient({ initialSiteContent }: { initialSiteConte
     <div className={`flex flex-col min-h-screen bg-background ${siteContent?.areAnimationsEnabled ? '' : 'no-animations'}`}>
       <Header content={siteContent || undefined} />
       <main className="flex-grow">
-        <div className="container mx-auto px-4 md:px-6">
-          <GallerySection content={siteContent || null} />
-        </div>
+        <PageHero
+          eyebrow="Showcase"
+          title={siteContent?.gallerySectionTitle || 'Creative Gallery'}
+          description={
+            siteContent?.gallerySectionDescription ||
+            'A visual portfolio of graphics, campaigns, and brand work.'
+          }
+        />
+        <GallerySection content={siteContent || null} hideHeader />
       </main>
       <Footer content={siteContent || null} />
     </div>

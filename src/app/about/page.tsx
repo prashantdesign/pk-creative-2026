@@ -43,9 +43,9 @@ export default async function AboutPage() {
         />
 
         <AboutSection content={siteContent} />
-        <StatsSection />
-        <SkillsSection />
-        <ToolsSection />
+        <StatsSection content={siteContent} />
+        <SkillsSection content={siteContent} />
+        <ToolsSection content={siteContent} />
       </main>
 
       <Footer content={siteContent} />
