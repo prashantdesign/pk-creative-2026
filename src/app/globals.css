@@ -91,13 +91,24 @@
   body {
     @apply bg-background text-foreground;
     min-height: 100vh;
+    overflow-x: hidden;
+    -webkit-tap-highlight-color: transparent;
   }
   html {
     scroll-behavior: smooth;
   }
-  #about, #services, #contact, #testimonials {
+  /* Any section with an id gets clear of the sticky header when jumped to */
+  :where(section[id], div[id]) {
     scroll-margin-top: 5rem;
   }
+  @media (min-width: 768px) {
+    :where(section[id], div[id]) {
+      scroll-margin-top: 6rem;
+    }
+  }
+  /* Fluid headings – tighten on phones, breathe on desktop */
+  h1 { text-wrap: balance; }
+  h2, h3 { text-wrap: balance; }
 
   .animation-delay-300 {
     animation-delay: 300ms;
@@ -136,5 +147,89 @@
   }
   .animate-shake {
     animation: shake 0.2s ease-in-out 0s 2;
+  }
+
+  /* ---- Marquee ---- */
+  @keyframes marquee-x {
+    from { transform: translateX(0); }
+    to { transform: translateX(calc(-100% - var(--gap, 3rem))); }
+  }
+
+  /* ---- Gradient / brand text ---- */
+  .text-gradient {
+    @apply bg-clip-text text-transparent;
+    background-image: linear-gradient(120deg, hsl(var(--foreground)) 0%, hsl(var(--foreground)) 35%, hsl(var(--primary)) 100%);
+  }
+  .text-gradient-primary {
+    @apply bg-clip-text text-transparent;
+    background-image: linear-gradient(120deg, hsl(258 100% 68%), hsl(280 90% 66%), hsl(230 90% 66%));
+  }
+
+  /* ---- Decorative backgrounds ---- */
+  .bg-grid {
+    background-image:
+      linear-gradient(to right, hsl(var(--border) / 0.6) 1px, transparent 1px),
+      linear-gradient(to bottom, hsl(var(--border) / 0.6) 1px, transparent 1px);
+    background-size: 56px 56px;
+    -webkit-mask-image: radial-gradient(ellipse 70% 60% at 50% 0%, #000 40%, transparent 100%);
+    mask-image: radial-gradient(ellipse 70% 60% at 50% 0%, #000 40%, transparent 100%);
+  }
+  .bg-dots {
+    background-image: radial-gradient(hsl(var(--muted-foreground) / 0.25) 1px, transparent 1px);
+    background-size: 22px 22px;
+  }
+  .bg-noise {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.35'/%3E%3C/svg%3E");
+  }
+
+  /* ---- Glow helpers ---- */
+  .glow-primary {
+    box-shadow: 0 0 0 1px hsl(var(--primary) / 0.14), 0 20px 60px -18px hsl(var(--primary) / 0.4);
+  }
+  .glow-ring:hover {
+    box-shadow: 0 0 0 1px hsl(var(--primary) / 0.35), 0 24px 70px -20px hsl(var(--primary) / 0.55);
+  }
+
+  /* ---- Custom cursor ---- */
+  .cursor-dot,
+  .cursor-ring {
+    position: fixed;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    z-index: 9999;
+    border-radius: 9999px;
+    will-change: transform, opacity;
+    transition: opacity 0.25s ease, width 0.2s ease, height 0.2s ease, background-color 0.2s ease;
+  }
+  .cursor-dot {
+    width: 6px;
+    height: 6px;
+    background: hsl(var(--primary));
+  }
+  .cursor-ring {
+    width: 34px;
+    height: 34px;
+    border: 1.5px solid hsl(var(--primary) / 0.5);
+  }
+  .cursor-ring.cursor-ring--grow {
+    width: 60px;
+    height: 60px;
+    background: hsl(var(--primary) / 0.08);
+    border-color: hsl(var(--primary) / 0.3);
+  }
+
+  /* ---- Misc ---- */
+  .perspective-1000 { perspective: 1000px; }
+  .preserve-3d { transform-style: preserve-3d; }
+  .backface-hidden { backface-visibility: hidden; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .cursor-dot, .cursor-ring { display: none !important; }
+    *, *::before, *::after {
+      animation-duration: 0.001ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.001ms !important;
+    }
   }
 }

@@ -3,6 +3,8 @@ import { Inter, Poppins } from 'next/font/google';
 import './globals.css';
 import { Toaster } from "@/components/ui/toaster";
 import { ThemeProvider } from '@/components/theme-provider';
+import SmoothScroll from '@/components/motion/smooth-scroll';
+import CustomCursor from '@/components/motion/custom-cursor';
 import { FirebaseClientProvider } from '@/firebase';
 import { FirebaseErrorListener } from '@/components/firebase-error-listener';
 import { firebaseConfig } from '@/firebase/config';
@@ -10,8 +12,8 @@ import { initializeApp, getApps } from 'firebase/app';
 import { getFirestore, doc, getDoc } from 'firebase/firestore';
 import Script from 'next/script';
 
-const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
-const poppins = Poppins({ weight: ['400', '600', '700'], subsets: ['latin'], variable: '--font-poppins' });
+const inter = Inter({ subsets: ['latin'], variable: '--font-inter', display: 'swap' });
+const poppins = Poppins({ weight: ['400', '500', '600', '700', '800', '900'], subsets: ['latin'], variable: '--font-poppins', display: 'swap' });
 
 export async function generateMetadata(): Promise<Metadata> {
   let seoSettings: any = {};
@@ -125,7 +127,8 @@ export default async function RootLayout({
         )}
         <FirebaseClientProvider>
           <ThemeProvider>
-            {children}
+            <CustomCursor />
+            <SmoothScroll>{children}</SmoothScroll>
             <Toaster />
             <FirebaseErrorListener />
           </ThemeProvider>
