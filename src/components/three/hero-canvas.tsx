@@ -66,18 +66,26 @@ export default function HeroCanvas({ className }: { className?: string }) {
 
   return (
     <div ref={wrap} className={className}>
-      {/* Animated CSS orb — a finished visual on its own; dims once WebGL paints */}
+      {/* CSS logo card — a finished visual on its own; hidden once WebGL paints */}
       <motion.div
         aria-hidden
         className="absolute inset-0 -z-10 transition-opacity duration-1000"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
-        style={{ opacity: Scene ? 0.4 : 1 }}
+        style={{ opacity: Scene ? 0 : 1 }}
       >
-        <div className="absolute left-1/2 top-1/2 aspect-square w-[58%] max-w-[480px] -translate-x-1/2 -translate-y-1/2 animate-float">
-          <div className="absolute -inset-8 rounded-full bg-primary/25 blur-3xl" />
-          <div className="absolute inset-0 rounded-full bg-[radial-gradient(circle_at_34%_30%,#c4b5fd,#5b21b6_58%,#2e1065)] shadow-[inset_-24px_-24px_70px_rgba(0,0,0,0.45)]" />
+        <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 [perspective:900px]">
+          <div className="absolute -inset-16 rounded-full bg-primary/25 blur-3xl" />
+          <div
+            className="relative aspect-square w-[42vw] max-w-[300px] animate-float rounded-[18%] bg-[#f5f3ff] shadow-[0_40px_120px_-20px_rgba(124,58,237,0.55),inset_0_0_0_6px_rgba(124,58,237,0.9)]"
+            style={{ transform: 'rotateX(12deg) rotateY(-16deg)' }}
+          >
+            <div
+              className="absolute inset-[14%] bg-contain bg-center bg-no-repeat"
+              style={{ backgroundImage: 'url(/icon-512x512.png)' }}
+            />
+          </div>
         </div>
       </motion.div>
 
