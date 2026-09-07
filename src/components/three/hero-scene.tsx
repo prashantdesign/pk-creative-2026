@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useRef } from 'react';
-import { Canvas, useFrame, type ThreeElements } from '@react-three/fiber';
+import { Canvas, useFrame } from '@react-three/fiber';
 import { MeshDistortMaterial, Float } from '@react-three/drei';
 import * as THREE from 'three';
 
@@ -33,20 +33,9 @@ function Blob() {
   );
 }
 
-function Orb(props: ThreeElements['mesh'] & { color: string }) {
-  const { color, ...rest } = props;
-  return (
-    <mesh {...rest}>
-      <sphereGeometry args={[0.18, 32, 32]} />
-      <meshStandardMaterial color={color} roughness={0.15} metalness={0.4} />
-    </mesh>
-  );
-}
-
 /**
- * The WebGL hero object: one glossy distorted blob + two small floaters.
+ * The WebGL hero object — a single glossy distorted blob. Nothing else.
  * Pure lights (no HDR/asset fetches) — lightweight & CSP-safe.
- * Lighting keeps real shading so the form reads as 3D, not a flat disc.
  */
 export default function HeroScene({ active = true }: { active?: boolean }) {
   return (
@@ -64,13 +53,6 @@ export default function HeroScene({ active = true }: { active?: boolean }) {
 
       <Float speed={1.4} rotationIntensity={0.35} floatIntensity={0.7}>
         <Blob />
-      </Float>
-
-      <Float speed={2.4} rotationIntensity={1} floatIntensity={2.2}>
-        <Orb position={[2.1, 1.2, -0.5]} color="#c4b5fd" />
-      </Float>
-      <Float speed={1.9} rotationIntensity={1} floatIntensity={2.6}>
-        <Orb position={[-2.2, -1.1, -0.5]} color="#a78bfa" />
       </Float>
     </Canvas>
   );

@@ -75,10 +75,9 @@ export default function HeroCanvas({ className }: { className?: string }) {
         transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
         style={{ opacity: Scene ? 0.4 : 1 }}
       >
-        <div className="absolute left-1/2 top-1/2 aspect-square w-[62%] max-w-[520px] -translate-x-1/2 -translate-y-1/2">
-          <div className="absolute inset-0 animate-spin-slow rounded-full bg-[conic-gradient(from_0deg,#8b5cf6,#6d28d9,#c4b5fd,#7c3aed,#8b5cf6)] opacity-70 blur-2xl" />
-          <div className="absolute inset-[12%] rounded-full bg-[radial-gradient(circle_at_35%_30%,#c4b5fd,#5b21b6_60%,#2e1065)] shadow-[inset_-20px_-20px_60px_rgba(0,0,0,0.45)] animate-float" />
-          <div className="absolute inset-0 rounded-full bg-[radial-gradient(circle_at_65%_70%,transparent_55%,rgba(124,58,237,0.35))]" />
+        <div className="absolute left-1/2 top-1/2 aspect-square w-[58%] max-w-[480px] -translate-x-1/2 -translate-y-1/2 animate-float">
+          <div className="absolute -inset-8 rounded-full bg-primary/25 blur-3xl" />
+          <div className="absolute inset-0 rounded-full bg-[radial-gradient(circle_at_34%_30%,#c4b5fd,#5b21b6_58%,#2e1065)] shadow-[inset_-24px_-24px_70px_rgba(0,0,0,0.45)]" />
         </div>
       </motion.div>
 
