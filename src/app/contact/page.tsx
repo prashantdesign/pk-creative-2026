@@ -4,6 +4,7 @@ import { getInitialSiteContent } from '@/lib/server-utils';
 import Header from '@/components/public/header';
 import Footer from '@/components/public/footer';
 import ContactSection from '@/components/public/contact-section';
+import PageHero from '@/components/public/page-hero';
 
 export const dynamic = 'force-dynamic';
 
@@ -31,17 +32,12 @@ export default async function ContactPage() {
     <div className="flex flex-col min-h-screen bg-background">
       <Header content={siteContent} />
       
-      <main className="flex-grow pt-20">
-        <div className="py-12 bg-secondary/10 border-b border-border/40 text-center">
-          <div className="container mx-auto px-4">
-            <h1 className="text-4xl md:text-5xl font-extrabold font-headline tracking-tight text-foreground mb-4">
-              Get In Touch
-            </h1>
-            <p className="text-muted-foreground max-w-xl mx-auto text-base md:text-lg">
-              Have a project in mind? We would love to collaborate. Fill out the contact form below or reach us directly at info@pkcreative.in.
-            </p>
-          </div>
-        </div>
+      <main className="flex-grow">
+        <PageHero
+          eyebrow="Get in touch"
+          title="Let's Build Together"
+          description="Have a project in mind? We'd love to collaborate. Fill out the form below or reach us directly at info@pkcreative.in."
+        />
 
         <ContactSection content={siteContent} />
       </main>

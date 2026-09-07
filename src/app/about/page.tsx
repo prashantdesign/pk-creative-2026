@@ -7,6 +7,7 @@ import AboutSection from '@/components/public/about-section';
 import SkillsSection from '@/components/public/skills-section';
 import ToolsSection from '@/components/public/tools-section';
 import StatsSection from '@/components/public/stats-section';
+import PageHero from '@/components/public/page-hero';
 
 export const dynamic = 'force-dynamic';
 
@@ -34,17 +35,12 @@ export default async function AboutPage() {
     <div className="flex flex-col min-h-screen bg-background">
       <Header content={siteContent} />
       
-      <main className="flex-grow pt-20">
-        <div className="py-12 bg-secondary/10 border-b border-border/40 text-center">
-          <div className="container mx-auto px-4">
-            <h1 className="text-4xl md:text-5xl font-extrabold font-headline tracking-tight text-foreground mb-4">
-              About PK Creative
-            </h1>
-            <p className="text-muted-foreground max-w-xl mx-auto text-base md:text-lg">
-              Creative Solutions For Modern Brands. Discover our story, expert capabilities, and client-centric vision.
-            </p>
-          </div>
-        </div>
+      <main className="flex-grow">
+        <PageHero
+          eyebrow="The Agency"
+          title="About PK Creative"
+          description="Creative Solutions For Modern Brands. Discover our story, expert capabilities, and client-centric vision."
+        />
 
         <AboutSection content={siteContent} />
         <StatsSection />
