@@ -5,30 +5,29 @@ import { Canvas, useFrame, type ThreeElements } from '@react-three/fiber';
 import { MeshDistortMaterial, Float } from '@react-three/drei';
 import * as THREE from 'three';
 
-function Knot() {
+function Blob() {
   const mesh = useRef<THREE.Mesh>(null);
 
   useFrame((state, delta) => {
     if (!mesh.current) return;
-    mesh.current.rotation.x += delta * 0.12;
-    mesh.current.rotation.y += delta * 0.16;
-    // gentle parallax toward the pointer
+    mesh.current.rotation.x += delta * 0.1;
+    mesh.current.rotation.y += delta * 0.13;
     const { x, y } = state.pointer;
-    mesh.current.position.x = THREE.MathUtils.lerp(mesh.current.position.x, x * 0.35, 0.05);
-    mesh.current.position.y = THREE.MathUtils.lerp(mesh.current.position.y, y * 0.35, 0.05);
+    mesh.current.position.x = THREE.MathUtils.lerp(mesh.current.position.x, x * 0.5, 0.04);
+    mesh.current.position.y = THREE.MathUtils.lerp(mesh.current.position.y, y * 0.5, 0.04);
   });
 
   return (
-    <mesh ref={mesh} scale={1.65}>
-      <icosahedronGeometry args={[1, 12]} />
+    <mesh ref={mesh} scale={1.55}>
+      <icosahedronGeometry args={[1, 24]} />
       <MeshDistortMaterial
         color="#7c3aed"
-        emissive="#3b0f9e"
-        emissiveIntensity={0.35}
-        roughness={0.25}
-        metalness={0.6}
-        distort={0.32}
-        speed={1.4}
+        emissive="#5b21b6"
+        emissiveIntensity={0.25}
+        roughness={0.22}
+        metalness={0.7}
+        distort={0.42}
+        speed={1.8}
       />
     </mesh>
   );
@@ -38,39 +37,40 @@ function Orb(props: ThreeElements['mesh'] & { color: string }) {
   const { color, ...rest } = props;
   return (
     <mesh {...rest}>
-      <sphereGeometry args={[0.22, 24, 24]} />
+      <sphereGeometry args={[0.18, 32, 32]} />
       <meshStandardMaterial color={color} roughness={0.15} metalness={0.4} />
     </mesh>
   );
 }
 
 /**
- * The WebGL hero object. Kept deliberately small:
- * one distorted primitive + a couple of floaters + 2 lights.
- * Consumers gate mounting (desktop / motion / in-view).
+ * The WebGL hero object: one glossy distorted blob + two small floaters.
+ * Pure lights (no HDR/asset fetches) — lightweight & CSP-safe.
+ * Lighting keeps real shading so the form reads as 3D, not a flat disc.
  */
 export default function HeroScene({ active = true }: { active?: boolean }) {
   return (
     <Canvas
       frameloop={active ? 'always' : 'never'}
       dpr={[1, 1.75]}
-      camera={{ position: [0, 0, 5], fov: 45 }}
+      camera={{ position: [0, 0, 4.6], fov: 45 }}
       gl={{ antialias: true, alpha: true, powerPreference: 'high-performance' }}
       style={{ width: '100%', height: '100%' }}
     >
-      <ambientLight intensity={0.6} />
-      <directionalLight position={[3, 4, 5]} intensity={2.2} color="#c4b5fd" />
-      <pointLight position={[-4, -2, -3]} intensity={30} color="#6d28d9" />
+      <ambientLight intensity={0.45} />
+      <directionalLight position={[4, 5, 4]} intensity={2.6} color="#f5f3ff" />
+      <directionalLight position={[-5, -3, -2]} intensity={1} color="#7c3aed" />
+      <pointLight position={[-2.5, 2.5, 3]} intensity={18} color="#c4b5fd" distance={14} />
 
-      <Float speed={1.6} rotationIntensity={0.5} floatIntensity={1.1}>
-        <Knot />
+      <Float speed={1.4} rotationIntensity={0.35} floatIntensity={0.7}>
+        <Blob />
       </Float>
 
-      <Float speed={2.2} rotationIntensity={1} floatIntensity={2}>
-        <Orb position={[2.4, 1.3, -1]} color="#a78bfa" />
+      <Float speed={2.4} rotationIntensity={1} floatIntensity={2.2}>
+        <Orb position={[2.1, 1.2, -0.5]} color="#c4b5fd" />
       </Float>
-      <Float speed={1.8} rotationIntensity={1} floatIntensity={2.4}>
-        <Orb position={[-2.6, -1.1, -0.5]} color="#8b5cf6" />
+      <Float speed={1.9} rotationIntensity={1} floatIntensity={2.6}>
+        <Orb position={[-2.2, -1.1, -0.5]} color="#a78bfa" />
       </Float>
     </Canvas>
   );

@@ -82,17 +82,15 @@ export function TextReveal({
   const words = text.split(' ');
   const Tag = as as any;
 
-  if (reduced) {
-    return <Tag className={className}>{text}</Tag>;
-  }
-
+  // NOTE: keep the DOM structure identical whether or not motion is reduced —
+  // branching here would desync useId() between SSR and hydration.
   const container: Variants = {
     hidden: {},
-    visible: { transition: { staggerChildren: stagger, delayChildren: delay } },
+    visible: { transition: { staggerChildren: reduced ? 0 : stagger, delayChildren: reduced ? 0 : delay } },
   };
   const child: Variants = {
-    hidden: { y: '110%' },
-    visible: { y: 0, transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] } },
+    hidden: { y: reduced ? '0%' : '110%' },
+    visible: { y: 0, transition: { duration: reduced ? 0 : 0.7, ease: [0.22, 1, 0.36, 1] } },
   };
 
   return (
