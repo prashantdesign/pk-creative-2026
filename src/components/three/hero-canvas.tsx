@@ -75,16 +75,20 @@ export default function HeroCanvas({ className }: { className?: string }) {
         transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
         style={{ opacity: Scene ? 0 : 1 }}
       >
-        <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 [perspective:900px]">
-          <div className="absolute -inset-16 rounded-full bg-primary/25 blur-3xl" />
+        <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 [perspective:1000px]">
+          <div className="absolute -inset-16 rounded-full bg-primary/30 blur-3xl" />
+          {/* purple frame */}
           <div
-            className="relative aspect-square w-[42vw] max-w-[300px] animate-float rounded-[18%] bg-[#f5f3ff] shadow-[0_40px_120px_-20px_rgba(124,58,237,0.55),inset_0_0_0_6px_rgba(124,58,237,0.9)]"
-            style={{ transform: 'rotateX(12deg) rotateY(-16deg)' }}
+            className="relative grid aspect-square w-[38vw] max-w-[280px] animate-float place-items-center rounded-[20%] bg-primary p-[7%] shadow-[0_40px_120px_-20px_rgba(124,58,237,0.6)]"
+            style={{ transform: 'rotateX(10deg) rotateY(-15deg)' }}
           >
-            <div
-              className="absolute inset-[14%] bg-contain bg-center bg-no-repeat"
-              style={{ backgroundImage: 'url(/icon-512x512.png)' }}
-            />
+            {/* white face card */}
+            <div className="grid h-full w-full place-items-center rounded-[14%] bg-[#fbfaff] shadow-inner">
+              <div
+                className="h-[62%] w-[62%] bg-contain bg-center bg-no-repeat"
+                style={{ backgroundImage: 'url(/icon-512x512.png)' }}
+              />
+            </div>
           </div>
         </div>
       </motion.div>
