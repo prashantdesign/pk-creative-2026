@@ -1,6 +1,7 @@
 'use client';
 
-import { optimizeImageUrl } from '@/lib/image-url';
+import { PKSectionLoader } from '@/components/pk-loader';
+import { imgSrc } from '@/lib/image-url';
 import React, { useState, useMemo, useEffect, useRef, useCallback } from 'react';
 import type { SiteContent, GalleryImage, GalleryCategory } from '@/types';
 import { useFirestore, useCollection, useMemoFirebase } from '@/firebase';
@@ -55,7 +56,7 @@ const GalleryImageItem = ({ image, index, onClick }: { image: GalleryImage, inde
         <CardContent className="p-0 relative w-full overflow-hidden">
           {!isLoaded && <Skeleton className={`w-full ${skeletonHeight} rounded-lg`} />}
           <img
-             src={optimizeImageUrl(image.imageUrl, 800)}
+             src={imgSrc(image.imageUrl, 800)}
              decoding="async"
              alt={image.title || 'Gallery image'}
              loading="lazy"
@@ -178,14 +179,7 @@ export default function GallerySection({ content, hideHeader = false }: GalleryS
         )}
 
         {isLoading ? (
-            <div className="flex gap-4">
-              {Array.from({ length: columnsCount }).map((_, colIdx) => (
-                <div key={colIdx} className="flex-1 flex flex-col gap-4">
-                  <Skeleton className="w-full h-64 rounded-lg" />
-                  <Skeleton className="w-full h-48 rounded-lg" />
-                </div>
-              ))}
-            </div>
+            <PKSectionLoader label="Loading gallery" minHeight={420} />
         ) : (
             <>
                 <div className="flex justify-center flex-wrap gap-2 mb-12 animate-fade-in-up animation-delay-600">
@@ -263,7 +257,7 @@ export default function GallerySection({ content, hideHeader = false }: GalleryS
 
           <div className="relative w-full h-full max-w-7xl max-h-screen p-4 md:p-12 flex flex-col justify-center items-center" onClick={() => setLightboxIndex(null)}>
             <img 
-              src={optimizeImageUrl(sortedImages[lightboxIndex].imageUrl, 1800)} 
+              src={imgSrc(sortedImages[lightboxIndex].imageUrl, 1800)} 
               alt={sortedImages[lightboxIndex].title || 'Lightbox image'}
               loading="lazy"
               className="max-w-full max-h-[85vh] object-contain shadow-2xl rounded-sm"

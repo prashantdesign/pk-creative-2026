@@ -25,3 +25,18 @@ export function normalizeImageUrl(url: string | undefined | null, width = 1600):
   const id = u.match(/\/d\/([\w-]{10,})/)?.[1] || u.match(/[?&]id=([\w-]{10,})/)?.[1];
   return id ? `https://lh3.googleusercontent.com/d/${id}=w${width}` : u;
 }
+
+const OPTIMIZER_WIDTHS = [16, 32, 48, 64, 96, 128, 256, 360, 384, 512, 640, 768, 800, 1024, 1280, 1536, 1920]; // must match next.config.ts images sizes
+
+/**
+ * For plain <img> tags. Google Drive images are fetched through the site's own image optimizer
+ * (/_next/image) so they are resized, converted to AVIF/WebP and cached on the CDN instead of being
+ * pulled at full size from Google on every visit. Other URLs behave like optimizeImageUrl.
+ * (Do not use with next/image: it already optimizes remote images itself.)
+ */
+export function imgSrc(url: string | undefined | null, width = 900): string {
+  const normalized = normalizeImageUrl(url, 1600);
+  if (!normalized.startsWith('https://lh3.googleusercontent.com/')) return optimizeImageUrl(url, width);
+  const w = OPTIMIZER_WIDTHS.find((x) => x >= width) ?? 1920;
+  return `/_next/image?url=${encodeURIComponent(normalized)}&w=${w}&q=75`;
+}

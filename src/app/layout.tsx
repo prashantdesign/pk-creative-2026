@@ -119,6 +119,7 @@ export default async function RootLayout({
     <html lang="en-IN" suppressHydrationWarning className={`scroll-smooth ${theme}`}>
       <head>
         <link rel="preconnect" href="https://res.cloudinary.com" crossOrigin="" />
+        <link rel="preconnect" href="https://lh3.googleusercontent.com" crossOrigin="" />
         <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
         <JsonLd data={[organizationJsonLd(content), websiteJsonLd(content)]} />
       </head>

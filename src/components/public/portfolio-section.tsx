@@ -1,6 +1,7 @@
 'use client';
 
-import { optimizeImageUrl } from '@/lib/image-url';
+import { PKSectionLoader } from '@/components/pk-loader';
+import { imgSrc } from '@/lib/image-url';
 import React, { useMemo, useState } from 'react';
 import type { SiteContent, Project, ProjectCategory } from '@/types';
 import { useFirestore, useCollection, useMemoFirebase } from '@/firebase';
@@ -58,12 +59,7 @@ export default function PortfolioSection({ content, onProjectClick, hideHeader =
         )}
 
         {isLoading ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <Skeleton className="h-[500px] w-full rounded-2xl" />
-            <Skeleton className="h-[500px] w-full rounded-2xl" />
-            <Skeleton className="h-[500px] w-full rounded-2xl" />
-            <Skeleton className="h-[500px] w-full rounded-2xl" />
-          </div>
+          <PKSectionLoader label="Loading projects" minHeight={420} />
         ) : (
           <>
             <div className="flex flex-wrap gap-3 mb-12 animate-fade-in-up animation-delay-600">
@@ -99,7 +95,7 @@ export default function PortfolioSection({ content, onProjectClick, hideHeader =
                   >
                     <CardContent className="p-0 relative w-full h-auto overflow-hidden rounded-3xl bg-secondary/10">
                       <img
-                        src={optimizeImageUrl(project.imageUrl, 1000)}
+                        src={imgSrc(project.imageUrl, 1000)}
                         alt={`${project.title} - PK Creative project`}
                         decoding="async"
                         className="w-full h-auto object-contain group-hover:scale-[1.02] transition-transform duration-700 ease-in-out"

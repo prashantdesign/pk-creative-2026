@@ -6,20 +6,21 @@ import { useFirestore, useDoc, useMemoFirebase } from '@/firebase';
 import { doc } from 'firebase/firestore';
 import { MotionConfig } from 'framer-motion';
 import dynamic from 'next/dynamic';
+import { PKSectionLoader } from '@/components/pk-loader';
 
 import Header from '@/components/public/header';
 import HeroSection from '@/components/public/hero-section';
 import AboutSection from '@/components/public/about-section';
-const ServicesSection = dynamic(() => import('@/components/public/services-section'));
-const TargetAudienceSection = dynamic(() => import('@/components/public/target-audience-section'));
-const WebsiteShowcaseSection = dynamic(() => import('@/components/public/website-showcase-section'));
-const TestimonialsSection = dynamic(() => import('@/components/public/testimonials-section'));
-const ContactSection = dynamic(() => import('@/components/public/contact-section'));
-const ProcessSection = dynamic(() => import('@/components/public/process-section'));
-const WhyUsSection = dynamic(() => import('@/components/public/why-us-section'));
-const CtaBanner = dynamic(() => import('@/components/public/cta-banner'));
+const ServicesSection = dynamic(() => import('@/components/public/services-section'), { loading: () => <PKSectionLoader minHeight={360} /> });
+const TargetAudienceSection = dynamic(() => import('@/components/public/target-audience-section'), { loading: () => <PKSectionLoader minHeight={360} /> });
+const WebsiteShowcaseSection = dynamic(() => import('@/components/public/website-showcase-section'), { loading: () => <PKSectionLoader minHeight={360} /> });
+const TestimonialsSection = dynamic(() => import('@/components/public/testimonials-section'), { loading: () => <PKSectionLoader minHeight={360} /> });
+const ContactSection = dynamic(() => import('@/components/public/contact-section'), { loading: () => <PKSectionLoader minHeight={360} /> });
+const ProcessSection = dynamic(() => import('@/components/public/process-section'), { loading: () => <PKSectionLoader minHeight={360} /> });
+const WhyUsSection = dynamic(() => import('@/components/public/why-us-section'), { loading: () => <PKSectionLoader minHeight={360} /> });
+const CtaBanner = dynamic(() => import('@/components/public/cta-banner'), { loading: () => <PKSectionLoader minHeight={360} /> });
 import ServiceStrip from '@/components/public/service-strip';
-const FAQSection = dynamic(() => import('@/components/public/faq-section'));
+const FAQSection = dynamic(() => import('@/components/public/faq-section'), { loading: () => <PKSectionLoader minHeight={360} /> });
 import Footer from '@/components/public/footer';
 
 export default function HomeClient({ initialSiteContent }: { initialSiteContent: SiteContent | null }) {

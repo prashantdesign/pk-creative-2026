@@ -1,6 +1,7 @@
 "use client";
 
-import { optimizeImageUrl } from '@/lib/image-url';
+import { PKSectionLoader } from '@/components/pk-loader';
+import { imgSrc } from '@/lib/image-url';
 import React, { useMemo, useState, useEffect } from 'react';
 import type { SiteContent, WebsiteProject } from '@/types';
 import { useFirestore, useCollection } from '@/firebase';
@@ -60,7 +61,7 @@ const WebsiteCard = ({
         <div className={`w-full max-w-[200px] h-24 mb-6 rounded-2xl bg-background border flex items-center justify-center shadow-sm overflow-hidden p-4 transition-transform duration-700 ${isActive ? 'scale-110' : ''}`}>
           {displayLogo && !imgError ? (
             <img 
-               src={optimizeImageUrl(displayLogo, 400)} 
+               src={imgSrc(displayLogo, 400)} 
                alt={`${website.name} logo`}
                className="object-contain w-full h-full" 
                loading="lazy"
@@ -144,16 +145,7 @@ export default function WebsiteShowcaseSection({ content }: { content: SiteConte
         />
 
         {showSkeletons ? (
-          <div className="flex gap-6 justify-center flex-wrap max-w-7xl mx-auto py-12">
-            {[1, 2, 3].map((i) => (
-              <div key={i} className="flex-1 min-w-[280px] max-w-lg p-8 rounded-2xl border border-border/50 bg-secondary/10 flex flex-col items-center h-[340px]">
-                <Skeleton className="w-[120px] h-24 mb-6 rounded-2xl bg-muted" />
-                <Skeleton className="w-40 h-8 mb-2 bg-muted animate-pulse" />
-                <Skeleton className="w-32 h-4 mb-6 bg-muted animate-pulse" />
-                <Skeleton className="w-full h-10 mt-auto bg-muted rounded-md animate-pulse" />
-              </div>
-            ))}
-          </div>
+          <PKSectionLoader label="Loading websites" minHeight={340} />
         ) : (
           <Carousel
             opts={{

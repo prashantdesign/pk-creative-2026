@@ -1,6 +1,7 @@
 "use client";
 
-import { optimizeImageUrl } from '@/lib/image-url';
+import { PKSectionLoader } from '@/components/pk-loader';
+import { imgSrc } from '@/lib/image-url';
 import React from 'react';
 import { useFirestore, useCollection, useMemoFirebase } from '@/firebase';
 import { collection, query, orderBy } from 'firebase/firestore';
@@ -25,11 +26,7 @@ export default function TeamGrid() {
 
   if (isLoading) {
     return (
-      <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
-        {[...Array(4)].map((_, i) => (
-          <Skeleton key={i} className="aspect-[3/4] w-full rounded-3xl" />
-        ))}
-      </div>
+      <PKSectionLoader label="Meeting the team" minHeight={380} />
     );
   }
 
@@ -61,7 +58,7 @@ export default function TeamGrid() {
             <div className="mb-6 flex w-full items-center justify-center overflow-hidden rounded-2xl border border-border/10 bg-muted/20">
               {leadMember.photoUrl ? (
                 <img
-                  src={optimizeImageUrl(leadMember.photoUrl, 700)}
+                  src={imgSrc(leadMember.photoUrl, 700)}
                   alt={leadMember.name}
                   className="h-auto w-full object-contain transition-transform duration-500 group-hover:scale-[1.03]"
                 />
@@ -98,7 +95,7 @@ export default function TeamGrid() {
                 <div className="mb-4 flex w-full items-center justify-center overflow-hidden rounded-2xl border border-border/10 bg-muted/20">
                   {member.photoUrl ? (
                     <img
-                      src={optimizeImageUrl(member.photoUrl, 600)}
+                      src={imgSrc(member.photoUrl, 600)}
                       alt={member.name}
                       loading="lazy"
                       className="h-auto w-full object-contain transition-transform duration-500 group-hover:scale-[1.03]"

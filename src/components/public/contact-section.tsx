@@ -33,7 +33,11 @@ function SubmitButton() {
         disabled={pending} 
         className="w-full h-12 sm:h-14 text-base sm:text-lg font-semibold rounded-xl sm:rounded-2xl bg-[#612af5] hover:bg-[#521ede] dark:bg-primary dark:hover:bg-primary/95 text-white transition-all duration-300 shadow-md hover:shadow-lg flex items-center justify-center gap-2 cursor-pointer"
       >
-        <Send className="h-5 w-5 shrink-0" />
+        {pending ? (
+          <span className="h-5 w-5 shrink-0 animate-spin rounded-full border-2 border-white/40 border-t-white" aria-hidden />
+        ) : (
+          <Send className="h-5 w-5 shrink-0" />
+        )}
         {pending ? 'Sending...' : 'Send Message'}
       </Button>
     </motion.div>
