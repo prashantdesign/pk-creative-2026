@@ -1,14 +1,14 @@
 import { MetadataRoute } from 'next';
+import { SITE_URL } from '@/lib/seo';
 
 export default function robots(): MetadataRoute.Robots {
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://pkcreative.in';
-  
   return {
-    rules: {
-      userAgent: '*',
-      allow: '/',
-      disallow: ['/pk-admin/', '/api/'],
-    },
-    sitemap: `${baseUrl}/sitemap.xml`,
+    rules: [
+      { userAgent: '*', allow: '/', disallow: ['/pk-admin/', '/pk-admin', '/api/'] },
+      // Let AI search crawlers cite the site; they follow the same private-area rules
+      { userAgent: ['GPTBot', 'OAI-SearchBot', 'PerplexityBot', 'ClaudeBot', 'Google-Extended'], allow: '/', disallow: ['/pk-admin/', '/api/'] },
+    ],
+    sitemap: `${SITE_URL}/sitemap.xml`,
+    host: SITE_URL,
   };
 }

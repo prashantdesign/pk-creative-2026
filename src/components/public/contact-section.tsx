@@ -76,7 +76,7 @@ export default function ContactSection({ content }: { content?: SiteContent | nu
     }
   }, [state, toast]);
 
-  const defaultContactImage = "/pk_contact_visual.png";
+  const defaultContactImage = "/pk_contact_visual.webp";
   const contactImage = content?.contactImageUrl || defaultContactImage;
   const hasImage = true;
 

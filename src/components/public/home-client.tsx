@@ -14,6 +14,10 @@ import TargetAudienceSection from '@/components/public/target-audience-section';
 import WebsiteShowcaseSection from '@/components/public/website-showcase-section';
 import TestimonialsSection from '@/components/public/testimonials-section';
 import ContactSection from '@/components/public/contact-section';
+import ProcessSection from '@/components/public/process-section';
+import WhyUsSection from '@/components/public/why-us-section';
+import CtaBanner from '@/components/public/cta-banner';
+import ServiceStrip from '@/components/public/service-strip';
 import FAQSection from '@/components/public/faq-section';
 import Footer from '@/components/public/footer';
 
@@ -51,12 +55,16 @@ export default function HomeClient({ initialSiteContent }: { initialSiteContent:
     <MotionConfig reducedMotion={siteContent?.areAnimationsEnabled === false ? "always" : "user"}>
       <div className={`flex flex-col min-h-screen bg-background ${siteContent?.areAnimationsEnabled ? '' : 'no-animations'}`}>
         <Header content={siteContent} />
-        <main className="flex-grow">
+        <main id="main-content" className="flex-grow">
           <HeroSection content={siteContent} />
           <AboutSection content={siteContent} />
+          <ServiceStrip />
           {(siteContent?.isServicesSectionVisible ?? true) && <ServicesSection content={siteContent} />}
+          <WhyUsSection />
           {(siteContent?.isTargetAudienceSectionVisible ?? true) && <TargetAudienceSection content={siteContent} />}
+          <ProcessSection />
           {(siteContent?.isWebsiteShowcaseVisible ?? true) && <WebsiteShowcaseSection content={siteContent} />}
+          <CtaBanner />
           <FAQSection />
           <ContactSection content={siteContent} />
           {(siteContent?.isTestimonialsSectionVisible ?? true) && <TestimonialsSection content={siteContent} />}

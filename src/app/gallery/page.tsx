@@ -1,32 +1,31 @@
 import React from 'react';
-import { firebaseConfig } from '@/firebase/config';
-import { initializeApp, getApps } from 'firebase/app';
-import { getFirestore, doc, getDoc } from 'firebase/firestore';
-import type { SiteContent } from '@/types';
+import type { Metadata } from 'next';
+import { getInitialSiteContent } from '@/lib/server-utils';
+import { buildMetadata, breadcrumbJsonLd, webPageJsonLd } from '@/lib/seo';
+import JsonLd from '@/components/json-ld';
 import GalleryClient from './gallery-client';
-import { Metadata } from 'next';
 
-export const dynamic = 'force-dynamic';
+export const revalidate = 300;
 
-export const metadata: Metadata = {
-  title: 'Gallery | PK Creative',
-  description: 'Explore our visual portfolio, graphics showcase, and creative gallery projects.',
-};
+export const metadata: Metadata = buildMetadata({
+  title: 'Creative Gallery | Graphic Design & Branding Showcase | PK Creative',
+  description: 'Explore the PK Creative gallery: graphic design, social media creatives, branding and campaign visuals crafted for modern brands.',
+  path: '/gallery',
+  keywords: ['graphic design gallery', 'branding showcase', 'social media creatives'],
+});
 
 export default async function GalleryPage() {
-  let initialSiteContent: SiteContent | null = null;
-  
-  try {
-    const app = getApps().length === 0 ? initializeApp(firebaseConfig) : getApps()[0];
-    const db = getFirestore(app);
-    const snap = await getDoc(doc(db, 'pkcreative_siteContent', 'global'));
-    
-    if (snap.exists()) {
-      initialSiteContent = snap.data() as SiteContent;
-    }
-  } catch (error) {
-    console.error("Error fetching initial site content for Gallery SSR:", error);
-  }
+  const initialSiteContent = await getInitialSiteContent();
 
-  return <GalleryClient initialSiteContent={initialSiteContent} />;
+  return (
+    <>
+      <JsonLd
+        data={[
+          webPageJsonLd({ name: 'Creative Gallery', description: 'PK Creative gallery', path: '/gallery', type: 'CollectionPage' }),
+          breadcrumbJsonLd([{ name: 'Home', path: '/' }, { name: 'Gallery', path: '/gallery' }]),
+        ]}
+      />
+      <GalleryClient initialSiteContent={initialSiteContent} />
+    </>
+  );
 }

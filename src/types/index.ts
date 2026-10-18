@@ -109,6 +109,20 @@ export interface SiteContent {
     keywords?: string;
     ogImageUrl?: string;
     gaTrackingId?: string;
+    googleSiteVerification?: string;
+    bingSiteVerification?: string;
+    twitterHandle?: string;
+    // Local business details (feed the LocalBusiness JSON-LD)
+    phone?: string;
+    businessEmail?: string;
+    streetAddress?: string;
+    city?: string;
+    region?: string;
+    postalCode?: string;
+    latitude?: string;
+    longitude?: string;
+    priceRange?: string;
+    sameAs?: string[];
   };
   isTeamSectionVisible?: boolean;
   teamSectionTitle?: string;

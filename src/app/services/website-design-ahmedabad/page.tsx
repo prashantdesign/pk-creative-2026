@@ -1,18 +1,18 @@
 import React from 'react';
 import type { Metadata } from 'next';
 import { getInitialSiteContent } from '@/lib/server-utils';
+import { buildMetadata } from '@/lib/seo';
 import SeoServicePage from '@/components/public/seo-service-page';
 import { Layout, Shield, Search, Cpu, Globe, Rocket } from 'lucide-react';
 
-export const dynamic = 'force-dynamic';
+export const revalidate = 300;
 
-export const metadata: Metadata = {
+export const metadata: Metadata = buildMetadata({
   title: 'Website Design Ahmedabad | Custom Web Development Agency',
   description: 'PK Creative offers premium website design in Ahmedabad starting at ₹10,000. Custom landing pages, listing portals, and booking systems with simple admin panels.',
-  alternates: {
-    canonical: '/services/website-design-ahmedabad',
-  },
-};
+  path: '/services/website-design-ahmedabad',
+  keywords: ['website design Ahmedabad', 'web development company Ahmedabad', 'website developer Ahmedabad', 'website design cost Ahmedabad', 'custom website Ahmedabad'],
+});
 
 export default async function WebsiteDesignAhmedabadPage() {
   const siteContent = await getInitialSiteContent();
@@ -95,6 +95,9 @@ export default async function WebsiteDesignAhmedabadPage() {
   return (
     <SeoServicePage
       siteContent={siteContent}
+      path="/services/website-design-ahmedabad"
+      description="PK Creative offers premium website design in Ahmedabad starting at ₹10,000. Custom landing pages, listing portals, and booking systems with simple admin panels."
+      area="Ahmedabad"
       keywordTitle="Website Design Ahmedabad"
       keywordSubtitle="Capture local leads and bypass high portal commissions with custom, fast-loading business websites starting at ₹10,000."
       introductionText={`PK Creative is your trusted website development partner in Ahmedabad. We build custom-coded, high-performance landing pages and web apps designed to convert visitors into paying clients.

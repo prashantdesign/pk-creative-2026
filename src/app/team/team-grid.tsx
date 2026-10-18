@@ -1,5 +1,6 @@
 "use client";
 
+import { optimizeImageUrl } from '@/lib/cloudinary';
 import React from 'react';
 import { useFirestore, useCollection, useMemoFirebase } from '@/firebase';
 import { collection, query, orderBy } from 'firebase/firestore';
@@ -60,7 +61,7 @@ export default function TeamGrid() {
             <div className="mb-6 flex w-full items-center justify-center overflow-hidden rounded-2xl border border-border/10 bg-muted/20">
               {leadMember.photoUrl ? (
                 <img
-                  src={leadMember.photoUrl}
+                  src={optimizeImageUrl(leadMember.photoUrl, 700)}
                   alt={leadMember.name}
                   className="h-auto w-full object-contain transition-transform duration-500 group-hover:scale-[1.03]"
                 />
@@ -97,7 +98,7 @@ export default function TeamGrid() {
                 <div className="mb-4 flex w-full items-center justify-center overflow-hidden rounded-2xl border border-border/10 bg-muted/20">
                   {member.photoUrl ? (
                     <img
-                      src={member.photoUrl}
+                      src={optimizeImageUrl(member.photoUrl, 600)}
                       alt={member.name}
                       loading="lazy"
                       className="h-auto w-full object-contain transition-transform duration-500 group-hover:scale-[1.03]"

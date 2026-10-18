@@ -1,18 +1,18 @@
 import React from 'react';
 import type { Metadata } from 'next';
 import { getInitialSiteContent } from '@/lib/server-utils';
+import { buildMetadata } from '@/lib/seo';
 import SeoServicePage from '@/components/public/seo-service-page';
 import { Fingerprint, BookOpen, Compass, Award, Tag, ShoppingBag } from 'lucide-react';
 
-export const dynamic = 'force-dynamic';
+export const revalidate = 300;
 
-export const metadata: Metadata = {
+export const metadata: Metadata = buildMetadata({
   title: 'Branding Services | Corporate Brand Identity Design',
   description: 'PK Creative offers complete branding services starting at ₹10,000. Brand style guides, logo packages, typography assets, and custom packaging designs.',
-  alternates: {
-    canonical: '/services/branding',
-  },
-};
+  path: '/services/branding',
+  keywords: ['branding agency India', 'logo design', 'brand identity design', 'brand style guide'],
+});
 
 export default async function BrandingServicesPage() {
   const siteContent = await getInitialSiteContent();
@@ -95,6 +95,8 @@ export default async function BrandingServicesPage() {
   return (
     <SeoServicePage
       siteContent={siteContent}
+      path="/services/branding"
+      description="PK Creative offers complete branding services starting at ₹10,000. Brand style guides, logo packages, typography assets, and custom packaging designs."
       keywordTitle="Branding Services"
       keywordSubtitle="Build a lasting connection with your target clients through unified brand identity design systems starting at ₹10,000."
       introductionText={`A successful brand is more than just a logo—it is a unified customer experience. At PK Creative, we build complete corporate branding systems that reflect your values and create a professional first impression.

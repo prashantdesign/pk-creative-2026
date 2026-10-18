@@ -23,6 +23,12 @@ export const dynamic = 'force-dynamic'; // Prevent static caching
 export const maxDuration = 60; // Max execution time
 
 export async function GET(request: Request) {
+  // Vercel Cron sends `Authorization: Bearer $CRON_SECRET`. Without this check anyone could trigger the job.
+  const cronSecret = process.env.CRON_SECRET;
+  if (cronSecret && request.headers.get('authorization') !== `Bearer ${cronSecret}`) {
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+  }
+
   if (!app) {
     app = getApps().length === 0 ? initializeApp(firebaseConfig) : getApps()[0];
     auth = getAuth(app);

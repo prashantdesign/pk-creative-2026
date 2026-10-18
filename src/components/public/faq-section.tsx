@@ -3,33 +3,18 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronDown, HelpCircle } from 'lucide-react';
+import { HOME_FAQS } from '@/lib/seo';
 
 type FAQItem = { question: string; answer: string };
 
-const faqItems: FAQItem[] = [
-  {
-    question: "What is your starting price for a website?",
-    answer: "Our custom website designs start at ₹10,000. Unlike traditional templates, this baseline package includes a fully integrated, custom admin panel (CMS) so you can easily manage and update your content without touching code."
-  },
-  {
-    question: "What features are included in the ₹10k package?",
-    answer: "The starter package covers a custom layout design, responsive mobile optimization, a secure contact form, fundamental SEO indexing, and an intuitive administrative dashboard to update website texts, images, and links."
-  },
-  {
-    question: "Do you offer e-commerce and complex web applications?",
-    answer: "Absolutely! We design and develop e-commerce systems, database integrations, client portals, and custom web platforms. These are custom-quoted depending on your design pages, transactional needs, and module complexity."
-  },
-  {
-    question: "How long does a website project take to deliver?",
-    answer: "A standard landing page or business website typically takes 7 to 10 business days to design and launch. Large-scale web applications or specialized e-commerce setups usually take 3 to 6 weeks depending on details."
-  }
-];
+const faqItems: FAQItem[] = HOME_FAQS;
 
 function FAQCard({ item, isOpen, onClick }: { item: FAQItem; isOpen: boolean; onClick: () => void }) {
   return (
     <div className="border-b border-border/60 py-4">
       <button
         onClick={onClick}
+        aria-expanded={isOpen}
         className="flex w-full items-center justify-between py-4 text-left font-medium text-lg text-foreground hover:text-primary transition-colors cursor-pointer"
       >
         <span className="flex items-center gap-3 pr-4">

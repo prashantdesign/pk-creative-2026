@@ -1,52 +1,57 @@
-import { firebaseConfig } from '@/firebase/config';
+import { cache } from 'react';
 import type { SiteContent } from '@/types';
 
-export async function getInitialSiteContent(): Promise<SiteContent | null> {
+const DOC_PATH = 'pkcreative_siteContent/global';
+
+type FirestoreValue = {
+  stringValue?: string;
+  integerValue?: string;
+  doubleValue?: number;
+  booleanValue?: boolean;
+  nullValue?: null;
+  timestampValue?: string;
+  arrayValue?: { values?: FirestoreValue[] };
+  mapValue?: { fields?: Record<string, FirestoreValue> };
+};
+
+/** Converts a Firestore REST "typed value" tree into plain JS. */
+function decodeValue(v: FirestoreValue): unknown {
+  if (v === undefined || v === null) return undefined;
+  if ('stringValue' in v) return v.stringValue;
+  if ('booleanValue' in v) return v.booleanValue;
+  if ('integerValue' in v) return Number(v.integerValue);
+  if ('doubleValue' in v) return v.doubleValue;
+  if ('timestampValue' in v) return v.timestampValue;
+  if ('nullValue' in v) return null;
+  if ('arrayValue' in v) return (v.arrayValue?.values || []).map(decodeValue);
+  if ('mapValue' in v) return decodeFields(v.mapValue?.fields || {});
+  return undefined;
+}
+
+function decodeFields(fields: Record<string, FirestoreValue>): Record<string, unknown> {
+  return Object.fromEntries(Object.entries(fields).map(([k, v]) => [k, decodeValue(v)]));
+}
+
+/**
+ * Loads the public site-content document on the server.
+ *
+ * Uses the Firestore REST API (public-read per firestore.rules) so it works on any host
+ * (Vercel included) without service-account credentials, and is cached by the Next.js
+ * data cache so pages can be statically regenerated instead of rendered per request.
+ */
+export const getInitialSiteContent = cache(async (): Promise<SiteContent | null> => {
   const projectId = process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID;
   if (!projectId) return null;
 
-  // 1. Try loading via firebase-admin first (bypasses rules in production)
   try {
-    const { initializeApp, getApps } = await import('firebase-admin/app');
-    const { getFirestore } = await import('firebase-admin/firestore');
-    
-    const apps = getApps();
-    const adminApp = apps.length === 0 ? initializeApp({ projectId }) : apps[0];
-    const db = getFirestore(adminApp);
-    const snap = await db.collection('pkcreative_siteContent').doc('global').get();
-    if (snap.exists) {
-      return snap.data() as SiteContent;
-    }
+    const url = `https://firestore.googleapis.com/v1/projects/${projectId}/databases/(default)/documents/${DOC_PATH}`;
+    const response = await fetch(url, { next: { revalidate: 300, tags: ['site-content'] } });
+    if (!response.ok) return null;
+    const data = await response.json();
+    if (!data?.fields) return null;
+    return decodeFields(data.fields) as unknown as SiteContent;
   } catch (error) {
-    console.warn("Server-side Admin SDK content fetch failed (normal in dev):", error);
+    console.error('Failed to load site content on the server:', error);
+    return null;
   }
-
-  // 2. Fallback to client REST fetch (with ISR cache revalidation)
-  try {
-    const url = `https://firestore.googleapis.com/v1/projects/${projectId}/databases/(default)/documents/pkcreative_siteContent/global`;
-    const response = await fetch(url, { next: { revalidate: 600 } }); // Cache for 10 minutes
-    if (response.ok) {
-      const data = await response.json();
-      const fields = data.fields;
-      if (fields) {
-        return {
-          siteName: fields.siteName?.stringValue || 'PK Creative',
-          logoUrl: fields.logoUrl?.stringValue || '',
-          theme: fields.theme?.stringValue || 'dark',
-          areAnimationsEnabled: fields.areAnimationsEnabled?.booleanValue !== false,
-          isMaintenanceModeEnabled: fields.isMaintenanceModeEnabled?.booleanValue === true,
-          isServicesSectionVisible: fields.isServicesSectionVisible?.booleanValue !== false,
-          isTeamSectionVisible: fields.isTeamSectionVisible?.booleanValue !== false,
-          isWebsiteShowcaseVisible: fields.isWebsiteShowcaseVisible?.booleanValue !== false,
-          isTestimonialsSectionVisible: fields.isTestimonialsSectionVisible?.booleanValue !== false,
-          footerDescription: fields.footerDescription?.stringValue || '',
-          footerCopyrightText: fields.footerCopyrightText?.stringValue || '',
-        } as SiteContent;
-      }
-    }
-  } catch (error) {
-    console.error("Server-side REST fallback fetch failed:", error);
-  }
-
-  return null;
-}
+});

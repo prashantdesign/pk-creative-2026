@@ -8,16 +8,17 @@ import SkillsSection from '@/components/public/skills-section';
 import ToolsSection from '@/components/public/tools-section';
 import StatsSection from '@/components/public/stats-section';
 import PageHero from '@/components/public/page-hero';
+import JsonLd from '@/components/json-ld';
+import { buildMetadata, breadcrumbJsonLd, webPageJsonLd } from '@/lib/seo';
 
-export const dynamic = 'force-dynamic';
+export const revalidate = 300;
 
-export const metadata: Metadata = {
-  title: 'About Us | PK Creative Design & Development Agency',
-  description: 'Learn more about PK Creative, our design philosophies, custom engineering, creative vision, and team of design specialists.',
-  alternates: {
-    canonical: '/about',
-  },
-};
+export const metadata: Metadata = buildMetadata({
+  title: 'About PK Creative | Design & Development Agency in India',
+  description: 'Learn about PK Creative: our story, design philosophy, custom Next.js engineering and the team building premium websites, brands and digital experiences.',
+  path: '/about',
+  keywords: ['about PK Creative', 'design agency India', 'web development team'],
+});
 
 export default async function AboutPage() {
   const siteContent = await getInitialSiteContent();
@@ -33,9 +34,15 @@ export default async function AboutPage() {
 
   return (
     <div className="flex flex-col min-h-screen bg-background">
+      <JsonLd
+        data={[
+          webPageJsonLd({ name: 'About PK Creative', description: 'About the PK Creative agency', path: '/about', type: 'AboutPage' }),
+          breadcrumbJsonLd([{ name: 'Home', path: '/' }, { name: 'About', path: '/about' }]),
+        ]}
+      />
       <Header content={siteContent} />
       
-      <main className="flex-grow">
+      <main id="main-content" className="flex-grow">
         <PageHero
           eyebrow="The Agency"
           title="About PK Creative"

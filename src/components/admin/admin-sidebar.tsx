@@ -3,7 +3,9 @@ import React from 'react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { signOut } from 'firebase/auth';
-import { useAuth } from '@/firebase';
+import { collection, query, where } from 'firebase/firestore';
+import { useAuth, useFirestore, useCollection, useMemoFirebase } from '@/firebase';
+import type { ContactMessage } from '@/types';
 import {
   Sidebar,
   SidebarContent,
@@ -12,6 +14,10 @@ import {
   SidebarMenuItem,
   SidebarMenuButton,
   SidebarFooter,
+  SidebarGroup,
+  SidebarGroupLabel,
+  SidebarGroupContent,
+  SidebarMenuBadge,
 } from '@/components/ui/sidebar';
 import {
   LayoutDashboard,
@@ -27,6 +33,7 @@ import {
   Search,
   Users,
   Globe,
+  ExternalLink,
 } from 'lucide-react';
 import Logo from '@/components/logo';
 import { useToast } from '@/hooks/use-toast';
@@ -36,6 +43,7 @@ const AdminSidebar = () => {
   const router = useRouter();
   const { toast } = useToast();
   const auth = useAuth();
+  const firestore = useFirestore();
 
   const handleLogout = async () => {
     if (!auth) return;
@@ -55,45 +63,87 @@ const AdminSidebar = () => {
     }
   };
 
-  const menuItems = [
-    { href: '/pk-admin', label: 'Dashboard', icon: LayoutDashboard },
-    { href: '/pk-admin/site-content', label: 'Site Content', icon: Palette },
-    { href: '/pk-admin/categories', label: 'Categories', icon: FolderKanban },
-    { href: '/pk-admin/gallery', label: 'Gallery', icon: Images },
-    { href: '/pk-admin/projects', label: 'Projects', icon: Briefcase },
-    { href: '/pk-admin/websites', label: 'Websites', icon: Globe },
-    { href: '/pk-admin/team', label: 'Team', icon: Users },
-    { href: '/pk-admin/testimonials', label: 'Testimonials', icon: MessageSquareQuote },
-    { href: '/pk-admin/instagram', label: 'Instagram', icon: Instagram },
-    { href: '/pk-admin/seo', label: 'SEO', icon: Search },
-    { href: '/pk-admin/messages', label: 'Messages', icon: Mails },
-    { href: '/pk-admin/settings', label: 'Settings', icon: Settings },
+  const messagesQuery = useMemoFirebase(
+    () => (firestore ? query(collection(firestore, 'pkcreative_contactMessages'), where('isRead', '==', false)) : null),
+    [firestore]
+  );
+  const { data: unread } = useCollection<ContactMessage>(messagesQuery);
+  const unreadCount = unread?.length ?? 0;
+
+  const groups = [
+    {
+      label: 'Overview',
+      items: [{ href: '/pk-admin', label: 'Dashboard', icon: LayoutDashboard }],
+    },
+    {
+      label: 'Content',
+      items: [
+        { href: '/pk-admin/site-content', label: 'Site Content', icon: Palette },
+        { href: '/pk-admin/projects', label: 'Projects', icon: Briefcase },
+        { href: '/pk-admin/gallery', label: 'Gallery', icon: Images },
+        { href: '/pk-admin/categories', label: 'Categories', icon: FolderKanban },
+        { href: '/pk-admin/websites', label: 'Websites', icon: Globe },
+        { href: '/pk-admin/team', label: 'Team', icon: Users },
+        { href: '/pk-admin/testimonials', label: 'Testimonials', icon: MessageSquareQuote },
+      ],
+    },
+    {
+      label: 'Growth',
+      items: [
+        { href: '/pk-admin/seo', label: 'SEO & Analytics', icon: Search },
+        { href: '/pk-admin/instagram', label: 'Instagram', icon: Instagram },
+      ],
+    },
+    {
+      label: 'Inbox & System',
+      items: [
+        { href: '/pk-admin/messages', label: 'Messages', icon: Mails, badge: unreadCount },
+        { href: '/pk-admin/settings', label: 'Settings', icon: Settings },
+      ],
+    },
   ];
 
   return (
     <Sidebar>
       <SidebarHeader>
         <Logo />
+        <p className="px-1 text-[11px] font-semibold uppercase tracking-widest text-muted-foreground">Admin Console</p>
       </SidebarHeader>
       <SidebarContent>
-        <SidebarMenu>
-          {menuItems.map((item) => (
-            <SidebarMenuItem key={item.href}>
-              <SidebarMenuButton
-                asChild
-                isActive={pathname === item.href || (item.href !== '/pk-admin' && pathname.startsWith(item.href))}
-              >
-                <Link href={item.href}>
-                  <item.icon className="size-4" />
-                  <span>{item.label}</span>
-                </Link>
-              </SidebarMenuButton>
-            </SidebarMenuItem>
-          ))}
-        </SidebarMenu>
+        {groups.map((group) => (
+          <SidebarGroup key={group.label}>
+            <SidebarGroupLabel>{group.label}</SidebarGroupLabel>
+            <SidebarGroupContent>
+              <SidebarMenu>
+                {group.items.map((item) => (
+                  <SidebarMenuItem key={item.href}>
+                    <SidebarMenuButton
+                      asChild
+                      isActive={pathname === item.href || (item.href !== '/pk-admin' && pathname.startsWith(item.href))}
+                    >
+                      <Link href={item.href}>
+                        <item.icon className="size-4" />
+                        <span>{item.label}</span>
+                      </Link>
+                    </SidebarMenuButton>
+                    {'badge' in item && !!item.badge && <SidebarMenuBadge>{item.badge}</SidebarMenuBadge>}
+                  </SidebarMenuItem>
+                ))}
+              </SidebarMenu>
+            </SidebarGroupContent>
+          </SidebarGroup>
+        ))}
       </SidebarContent>
       <SidebarFooter>
         <SidebarMenu>
+          <SidebarMenuItem>
+            <SidebarMenuButton asChild>
+              <a href="/" target="_blank" rel="noopener noreferrer">
+                <ExternalLink className="size-4" />
+                <span>View live site</span>
+              </a>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
           <SidebarMenuItem>
             <SidebarMenuButton onClick={handleLogout}>
               <LogOut className="size-4" />

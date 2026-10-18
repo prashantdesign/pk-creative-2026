@@ -260,11 +260,11 @@ export default function SiteContentForm() {
     const professionalContent = {
       heroTitle: "Elevating Brands Through Stunning Digital Experiences",
       heroSubtitle: "We are a premier creative agency specializing in cutting-edge website design, UI/UX, branding, and comprehensive social media management. We transform your vision into an impactful digital reality.",
-      heroMediaUrl: "/pk_hero_visual.png",
+      heroMediaUrl: "/pk_hero_visual.webp",
       ctaText: "Explore Our Work",
       ctaLink: "#portfolio",
       aboutText: "At PK Creative, we believe that exceptional design is the cornerstone of business success. Our team of visionary designers, strategists, and developers work seamlessly to craft bespoke digital experiences. We don't just build websites; we build digital legacies that resonate with your audience and drive measurable growth.",
-      aboutImageUrl: "/pk_about_visual.png",
+      aboutImageUrl: "/pk_about_visual.webp",
       services: [
         { title: "Premium Website Design", description: "Custom, responsive websites built with modern frameworks that captivate and convert.", icon: "Globe" },
         { title: "UI/UX Architecture", description: "Intuitive user interfaces and seamless user experiences designed around your customers.", icon: "Layout" },
@@ -292,7 +292,7 @@ export default function SiteContentForm() {
       ],
       contactSectionTitle: "Let's Build Something Extraordinary",
       contactSectionDescription: "Ready to elevate your brand? Fill out the form below and our team will get back to you within 24 hours.",
-      contactImageUrl: "/pk_contact_visual.png",
+      contactImageUrl: "/pk_contact_visual.webp",
       footerDescription: "Elevating Brands Through Stunning Digital Experiences. \nWebsite Design • UI/UX • Branding • Social Media",
       footerCopyrightText: "© 2026 PK Creative. All Rights Reserved."
     };

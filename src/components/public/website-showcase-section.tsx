@@ -1,5 +1,6 @@
 "use client";
 
+import { optimizeImageUrl } from '@/lib/cloudinary';
 import React, { useMemo, useState, useEffect } from 'react';
 import type { SiteContent, WebsiteProject } from '@/types';
 import { useFirestore, useCollection } from '@/firebase';
@@ -59,7 +60,7 @@ const WebsiteCard = ({
         <div className={`w-full max-w-[200px] h-24 mb-6 rounded-2xl bg-background border flex items-center justify-center shadow-sm overflow-hidden p-4 transition-transform duration-700 ${isActive ? 'scale-110' : ''}`}>
           {displayLogo && !imgError ? (
             <img 
-               src={displayLogo} 
+               src={optimizeImageUrl(displayLogo, 400)} 
                alt={`${website.name} logo`}
                className="object-contain w-full h-full" 
                loading="lazy"

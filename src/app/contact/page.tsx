@@ -5,16 +5,17 @@ import Header from '@/components/public/header';
 import Footer from '@/components/public/footer';
 import ContactSection from '@/components/public/contact-section';
 import PageHero from '@/components/public/page-hero';
+import JsonLd from '@/components/json-ld';
+import { buildMetadata, breadcrumbJsonLd, webPageJsonLd } from '@/lib/seo';
 
-export const dynamic = 'force-dynamic';
+export const revalidate = 300;
 
-export const metadata: Metadata = {
-  title: 'Contact Us | Hire Web Design & Branding Agency - PK Creative',
-  description: 'Get in touch with PK Creative to discuss website design, branding, graphic design, social media, or SEO services. Reply to info@pkcreative.in.',
-  alternates: {
-    canonical: '/contact',
-  },
-};
+export const metadata: Metadata = buildMetadata({
+  title: 'Contact PK Creative | Get a Free Website & Branding Quote',
+  description: 'Get in touch with PK Creative to discuss website design, branding, graphic design, social media or SEO. Free quote, reply within one business day.',
+  path: '/contact',
+  keywords: ['contact web design agency', 'hire website designer India', 'free website quote'],
+});
 
 export default async function ContactPage() {
   const siteContent = await getInitialSiteContent();
@@ -30,9 +31,15 @@ export default async function ContactPage() {
 
   return (
     <div className="flex flex-col min-h-screen bg-background">
+      <JsonLd
+        data={[
+          webPageJsonLd({ name: 'Contact PK Creative', description: 'Contact the PK Creative team', path: '/contact', type: 'ContactPage' }),
+          breadcrumbJsonLd([{ name: 'Home', path: '/' }, { name: 'Contact', path: '/contact' }]),
+        ]}
+      />
       <Header content={siteContent} />
       
-      <main className="flex-grow">
+      <main id="main-content" className="flex-grow">
         <PageHero
           eyebrow="Get in touch"
           title="Let's Build Together"

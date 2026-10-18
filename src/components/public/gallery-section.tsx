@@ -1,5 +1,6 @@
 'use client';
 
+import { optimizeImageUrl } from '@/lib/cloudinary';
 import React, { useState, useMemo, useEffect, useRef, useCallback } from 'react';
 import type { SiteContent, GalleryImage, GalleryCategory } from '@/types';
 import { useFirestore, useCollection, useMemoFirebase } from '@/firebase';
@@ -54,7 +55,8 @@ const GalleryImageItem = ({ image, index, onClick }: { image: GalleryImage, inde
         <CardContent className="p-0 relative w-full overflow-hidden">
           {!isLoaded && <Skeleton className={`w-full ${skeletonHeight} rounded-lg`} />}
           <img
-             src={image.imageUrl}
+             src={optimizeImageUrl(image.imageUrl, 800)}
+             decoding="async"
              alt={image.title || 'Gallery image'}
              loading="lazy"
              className={`w-full h-auto rounded-lg transition-all duration-700 ${isLoaded ? 'opacity-100 scale-100 group-hover:scale-[1.02]' : 'absolute inset-0 opacity-0 scale-95'}`}
@@ -261,7 +263,7 @@ export default function GallerySection({ content, hideHeader = false }: GalleryS
 
           <div className="relative w-full h-full max-w-7xl max-h-screen p-4 md:p-12 flex flex-col justify-center items-center" onClick={() => setLightboxIndex(null)}>
             <img 
-              src={sortedImages[lightboxIndex].imageUrl} 
+              src={optimizeImageUrl(sortedImages[lightboxIndex].imageUrl, 1800)} 
               alt={sortedImages[lightboxIndex].title || 'Lightbox image'}
               loading="lazy"
               className="max-w-full max-h-[85vh] object-contain shadow-2xl rounded-sm"

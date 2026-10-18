@@ -1,18 +1,18 @@
 import React from 'react';
 import type { Metadata } from 'next';
 import { getInitialSiteContent } from '@/lib/server-utils';
+import { buildMetadata } from '@/lib/seo';
 import SeoServicePage from '@/components/public/seo-service-page';
 import { Bed, Coins, Award, Star, Compass, ClipboardList } from 'lucide-react';
 
-export const dynamic = 'force-dynamic';
+export const revalidate = 300;
 
-export const metadata: Metadata = {
+export const metadata: Metadata = buildMetadata({
   title: 'Website Design Rajasthan | Hotel & Homestay Web Development',
   description: 'Premium website design in Rajasthan starting at ₹10,000. Direct booking pages, room galleries, and boutique portfolios for hotels in Jaipur, Udaipur, and Jodhpur.',
-  alternates: {
-    canonical: '/services/website-design-rajasthan',
-  },
-};
+  path: '/services/website-design-rajasthan',
+  keywords: ['website design Rajasthan', 'web design Jaipur', 'website developer Udaipur', 'website for hotels Rajasthan', 'website design Jodhpur'],
+});
 
 export default async function WebsiteDesignRajasthanPage() {
   const siteContent = await getInitialSiteContent();
@@ -95,6 +95,9 @@ export default async function WebsiteDesignRajasthanPage() {
   return (
     <SeoServicePage
       siteContent={siteContent}
+      path="/services/website-design-rajasthan"
+      description="Premium website design in Rajasthan starting at ₹10,000. Direct booking pages, room galleries, and boutique portfolios for hotels in Jaipur, Udaipur, and Jodhpur."
+      area="Rajasthan"
       keywordTitle="Website Design Rajasthan"
       keywordSubtitle="Build custom direct-booking pages and responsive portfolios for hotels, homestays, and boutiques in Rajasthan starting at ₹10,000."
       introductionText={`PK Creative is the leading design partner for the hospitality and tourism sectors in Rajasthan. We create beautiful, responsive website layouts that capture the unique cultural charm of Udaipur, Jaipur, Jodhpur, and Jaisalmer.

@@ -1,18 +1,18 @@
 import React from 'react';
 import type { Metadata } from 'next';
 import { getInitialSiteContent } from '@/lib/server-utils';
+import { buildMetadata } from '@/lib/seo';
 import SeoServicePage from '@/components/public/seo-service-page';
 import { Calendar, Instagram, Film, FileCode, Users, TrendingUp } from 'lucide-react';
 
-export const dynamic = 'force-dynamic';
+export const revalidate = 300;
 
-export const metadata: Metadata = {
+export const metadata: Metadata = buildMetadata({
   title: 'Social Media Management | Creative Content & Account Growth',
   description: 'PK Creative offers full social media management starting at ₹10,000. Curated Instagram grids, reels video editing, content planning, and target audience engagement.',
-  alternates: {
-    canonical: '/services/social-media-management',
-  },
-};
+  path: '/services/social-media-management',
+  keywords: ['social media management India', 'Instagram marketing agency', 'social media content creation'],
+});
 
 export default async function SocialMediaManagementPage() {
   const siteContent = await getInitialSiteContent();
@@ -95,6 +95,8 @@ export default async function SocialMediaManagementPage() {
   return (
     <SeoServicePage
       siteContent={siteContent}
+      path="/services/social-media-management"
+      description="PK Creative offers full social media management starting at ₹10,000. Curated Instagram grids, reels video editing, content planning, and target audience engagement."
       keywordTitle="Social Media Management"
       keywordSubtitle="Turn social followers into paying clients with custom visual feeds, reels video edits, and strategy planning starting at ₹10,000/month."
       introductionText={`In today's digital landscape, your social media profile acts as a second homepage. At PK Creative, we construct premium social strategies that showcase your products, room details, or services beautifully.

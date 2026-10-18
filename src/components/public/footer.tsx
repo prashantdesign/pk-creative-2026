@@ -5,6 +5,7 @@ import { Linkedin, Twitter, Instagram, Mail, MessageCircle, ArrowUpRight, ArrowU
 import Logo from '../logo';
 import { Reveal } from '@/components/motion/reveal';
 import Magnetic from '@/components/motion/magnetic';
+import { SERVICE_LINKS } from '@/lib/seo';
 
 import { useFirestore, useDoc, useMemoFirebase } from '@/firebase';
 import { doc } from 'firebase/firestore';
@@ -66,7 +67,7 @@ const Footer = ({ content: initialContent }: { content?: SiteContent | null }) =
           </Magnetic>
         </Reveal>
 
-        <div className="grid grid-cols-2 gap-10 sm:grid-cols-2 md:grid-cols-4">
+        <div className="grid grid-cols-2 gap-10 sm:grid-cols-2 md:grid-cols-5">
           <div className="col-span-2 flex flex-col gap-4 md:col-span-2 md:max-w-sm">
             <Logo siteName={content?.siteName} logoUrl={content?.logoUrl} />
             <p className="whitespace-pre-line text-sm text-muted-foreground sm:text-base">
@@ -113,6 +114,21 @@ const Footer = ({ content: initialContent }: { content?: SiteContent | null }) =
               </a>
             ))}
           </div>
+
+          <nav aria-label="Services" className="col-span-2 flex flex-col gap-3 sm:col-span-1">
+            <h4 className="font-headline text-sm font-semibold uppercase tracking-widest text-muted-foreground">
+              Services
+            </h4>
+            {SERVICE_LINKS.map((l) => (
+              <a
+                key={l.href}
+                href={l.href}
+                className="w-fit text-sm text-foreground/80 transition-colors hover:text-primary"
+              >
+                {l.label}
+              </a>
+            ))}
+          </nav>
 
           <div className="flex flex-col gap-3">
             <h4 className="font-headline text-sm font-semibold uppercase tracking-widest text-muted-foreground">

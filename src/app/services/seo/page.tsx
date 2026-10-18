@@ -1,18 +1,18 @@
 import React from 'react';
 import type { Metadata } from 'next';
 import { getInitialSiteContent } from '@/lib/server-utils';
+import { buildMetadata } from '@/lib/seo';
 import SeoServicePage from '@/components/public/seo-service-page';
 import { BarChart, Search, Zap, Code, ShieldCheck, Link2 } from 'lucide-react';
 
-export const dynamic = 'force-dynamic';
+export const revalidate = 300;
 
-export const metadata: Metadata = {
+export const metadata: Metadata = buildMetadata({
   title: 'SEO Services | Rank Higher on Google Search Results',
   description: 'PK Creative offers complete search engine optimization (SEO) services starting at ₹10,000. On-page optimization, site speed tuning, sitemaps, and local search rankings.',
-  alternates: {
-    canonical: '/services/seo',
-  },
-};
+  path: '/services/seo',
+  keywords: ['SEO services India', 'local SEO', 'SEO company Ahmedabad', 'on-page SEO', 'technical SEO'],
+});
 
 export default async function SeoServicesPage() {
   const siteContent = await getInitialSiteContent();
@@ -95,6 +95,8 @@ export default async function SeoServicesPage() {
   return (
     <SeoServicePage
       siteContent={siteContent}
+      path="/services/seo"
+      description="PK Creative offers complete search engine optimization (SEO) services starting at ₹10,000. On-page optimization, site speed tuning, sitemaps, and local search rankings."
       keywordTitle="SEO Services"
       keywordSubtitle="Boost your search discoverability and drive organic customer leads with search-engine-optimized layouts starting at ₹10,000."
       introductionText={`Having a website is useless if no one can find it on the web. At PK Creative, we build technical search engine optimization (SEO) foundations that help your agency or local business rank at the top of Google.

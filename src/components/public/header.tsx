@@ -6,6 +6,7 @@ import type { SiteContent } from '@/types';
 import { motion, AnimatePresence } from 'framer-motion';
 import Magnetic from '@/components/motion/magnetic';
 import { Button } from '@/components/ui/button';
+import Link from 'next/link';
 
 import { useFirestore, useDoc, useMemoFirebase } from '@/firebase';
 import { doc } from 'firebase/firestore';
@@ -37,7 +38,8 @@ const Header = ({ content: initialContent }: { content?: SiteContent | null }) =
   }, [isOpen]);
 
   const navItems = [
-    { label: 'Services', href: '/#services' },
+    { label: 'Services', href: '/services' },
+    { label: 'About', href: '/about' },
     { label: 'Work', href: '/work' },
     ...(content?.isTeamSectionVisible !== false ? [{ label: 'Team', href: '/team' }] : []),
     { label: 'Gallery', href: '/gallery' },
@@ -58,21 +60,21 @@ const Header = ({ content: initialContent }: { content?: SiteContent | null }) =
       >
         <div className="container mx-auto flex h-16 items-center justify-between px-4 sm:h-[72px] md:px-6">
           <Magnetic strength={10}>
-            <a href="/" className="flex items-center" aria-label="Home">
+            <Link href="/" className="flex items-center" aria-label="PK Creative home">
               <Logo siteName={content?.siteName} logoUrl={content?.logoUrl} />
-            </a>
+            </Link>
           </Magnetic>
 
-          <nav className="hidden items-center gap-1 md:flex">
+          <nav aria-label="Main" className="hidden items-center gap-1 md:flex">
             {navItems.map((item) => (
               <Magnetic key={item.label} strength={12}>
-                <a
+                <Link
                   href={item.href}
                   className="group relative rounded-full px-4 py-2 text-sm font-medium text-foreground/80 transition-colors hover:text-foreground"
                 >
                   {item.label}
                   <span className="absolute inset-x-4 bottom-1 h-px origin-left scale-x-0 bg-primary transition-transform duration-300 group-hover:scale-x-100" />
-                </a>
+                </Link>
               </Magnetic>
             ))}
           </nav>

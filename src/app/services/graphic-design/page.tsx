@@ -1,18 +1,18 @@
 import React from 'react';
 import type { Metadata } from 'next';
 import { getInitialSiteContent } from '@/lib/server-utils';
+import { buildMetadata } from '@/lib/seo';
 import SeoServicePage from '@/components/public/seo-service-page';
 import { Palette, PenTool, Image as ImageIcon, Briefcase, FileText, Layers } from 'lucide-react';
 
-export const dynamic = 'force-dynamic';
+export const revalidate = 300;
 
-export const metadata: Metadata = {
+export const metadata: Metadata = buildMetadata({
   title: 'Graphic Design Services | Creative Logos & Marketing Assets',
   description: 'PK Creative provides custom graphic design services starting at ₹10,000. Professional brand logos, business cards, flyers, and digital marketing graphics.',
-  alternates: {
-    canonical: '/services/graphic-design',
-  },
-};
+  path: '/services/graphic-design',
+  keywords: ['graphic design services India', 'social media creatives', 'poster design', 'brochure design'],
+});
 
 export default async function GraphicDesignServicesPage() {
   const siteContent = await getInitialSiteContent();
@@ -95,6 +95,8 @@ export default async function GraphicDesignServicesPage() {
   return (
     <SeoServicePage
       siteContent={siteContent}
+      path="/services/graphic-design"
+      description="PK Creative provides custom graphic design services starting at ₹10,000. Professional brand logos, business cards, flyers, and digital marketing graphics."
       keywordTitle="Graphic Design Services"
       keywordSubtitle="Capture attention and build brand trust with custom, high-end graphic layout designs starting at ₹10,000."
       introductionText={`At PK Creative, we understand that high-quality visuals speak louder than words. We combine modern typography, balanced layouts, and customized illustrations to help your business stand out from competitors.

@@ -10,6 +10,8 @@ import { Button } from '@/components/ui/button';
 import { Reveal, TextReveal, staggerContainer, staggerItem } from '@/components/motion/reveal';
 import TiltCard from '@/components/motion/tilt-card';
 import Magnetic from '@/components/motion/magnetic';
+import JsonLd from '@/components/json-ld';
+import { breadcrumbJsonLd, faqJsonLd, serviceJsonLd, webPageJsonLd, SERVICE_LINKS } from '@/lib/seo';
 
 interface Feature {
   title: string;
@@ -36,6 +38,12 @@ interface SeoServicePageProps {
   features: Feature[];
   processSteps: ProcessStep[];
   faqs: FAQ[];
+  /** Canonical path of this page, e.g. /services/seo (feeds JSON-LD + related links) */
+  path: string;
+  /** Meta description, reused for the Service schema */
+  description: string;
+  /** Geographic area served (for local landing pages) */
+  area?: string;
 }
 
 export default function SeoServicePage({
@@ -46,6 +54,9 @@ export default function SeoServicePage({
   features,
   processSteps,
   faqs,
+  path,
+  description,
+  area,
 }: SeoServicePageProps) {
   const [activeFaq, setActiveFaq] = useState<number | null>(null);
 
@@ -70,9 +81,21 @@ export default function SeoServicePage({
           areAnimationsEnabled ? '' : 'no-animations'
         }`}
       >
+        <JsonLd
+          data={[
+            webPageJsonLd({ name: keywordTitle, description, path }),
+            serviceJsonLd({ name: keywordTitle, description, path, area }),
+            faqJsonLd(faqs),
+            breadcrumbJsonLd([
+              { name: 'Home', path: '/' },
+              { name: 'Services', path: '/services' },
+              { name: keywordTitle, path },
+            ]),
+          ]}
+        />
         <Header content={siteContent} />
 
-        <main className="flex-grow">
+        <main id="main-content" className="flex-grow">
           {/* Hero */}
           <section className="relative overflow-hidden py-20 md:py-28">
             <div aria-hidden className="bg-grid pointer-events-none absolute inset-0 opacity-40" />
@@ -82,6 +105,13 @@ export default function SeoServicePage({
             />
 
             <div className="container relative z-10 mx-auto max-w-4xl px-4 text-center md:px-6">
+              <nav aria-label="Breadcrumb" className="mb-5 flex items-center justify-center gap-1.5 text-xs text-muted-foreground">
+                <a href="/" className="hover:text-primary">Home</a>
+                <span aria-hidden>/</span>
+                <a href="/services" className="hover:text-primary">Services</a>
+                <span aria-hidden>/</span>
+                <span className="text-foreground/80" aria-current="page">{keywordTitle}</span>
+              </nav>
               <motion.div
                 initial={{ opacity: 0, y: 15 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -274,6 +304,24 @@ export default function SeoServicePage({
                       )}
                     </AnimatePresence>
                   </div>
+                ))}
+              </div>
+            </div>
+          </section>
+
+          {/* Related services: internal links help users and crawlers */}
+          <section className="py-16">
+            <div className="container mx-auto max-w-5xl px-4 md:px-6">
+              <h2 className="mb-6 text-center font-headline text-2xl font-bold text-foreground">Explore more services</h2>
+              <div className="flex flex-wrap justify-center gap-3">
+                {SERVICE_LINKS.filter((l) => l.href !== path).map((l) => (
+                  <a
+                    key={l.href}
+                    href={l.href}
+                    className="rounded-full border border-border/60 bg-secondary/20 px-4 py-2 text-sm font-medium text-foreground/80 transition-colors hover:border-primary/40 hover:text-primary"
+                  >
+                    {l.label}
+                  </a>
                 ))}
               </div>
             </div>

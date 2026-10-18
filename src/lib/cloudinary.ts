@@ -32,3 +32,17 @@ export const uploadToCloudinary = async (file: File): Promise<string> => {
   const uploadData = await uploadResponse.json();
   return uploadData.secure_url;
 };
+
+/**
+ * Adds Cloudinary delivery transforms (auto format -> AVIF/WebP, auto quality, max width) to
+ * Cloudinary URLs so the browser downloads a fraction of the original bytes.
+ * Non-Cloudinary URLs (and URLs that already carry transforms) are returned untouched.
+ */
+export function optimizeImageUrl(url: string | undefined | null, width = 900): string {
+  if (!url) return '';
+  const marker = '/image/upload/';
+  if (!url.includes('res.cloudinary.com') || !url.includes(marker)) return url;
+  const [head, tail] = url.split(marker);
+  if (/^(?:[a-z]{1,3}_[^/,]+,?)+\//.test(tail)) return url; // already transformed
+  return `${head}${marker}f_auto,q_auto,c_limit,w_${width}/${tail}`;
+}

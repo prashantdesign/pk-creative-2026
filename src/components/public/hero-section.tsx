@@ -7,7 +7,7 @@ import { ArrowRight, Sparkles } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 const HeroSection = ({ content }: { content: SiteContent | null }) => {
-  const defaultHeroMedia = "/pk_hero_visual.png";
+  const defaultHeroMedia = "/pk_hero_visual.webp";
   const mediaUrl = content?.heroMediaUrl || defaultHeroMedia;
   const hasMedia = true;
   const isVideo = mediaUrl.toLowerCase().includes('.mp4');
@@ -97,7 +97,7 @@ const HeroSection = ({ content }: { content: SiteContent | null }) => {
               className={`text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-headline font-black tracking-tighter text-foreground leading-[1.1] ${!hasMedia ? 'lg:text-9xl' : ''}`}
             >
               <span className="block text-transparent bg-clip-text bg-gradient-to-br from-foreground via-foreground to-muted-foreground">
-                {content?.heroTitle || 'We Are PK Creative'}
+                {content?.heroTitle || 'Websites & Brands Built To Grow Your Business'}
               </span>
             </motion.h1>
             
@@ -198,10 +198,12 @@ const HeroSection = ({ content }: { content: SiteContent | null }) => {
               ) : (
                 <Image
                   src={mediaUrl}
-                  alt="Hero Visual"
+                  alt="PK Creative - website design, branding and SEO for modern brands"
                   width={440}
                   height={440}
+                  sizes="(max-width: 1024px) 90vw, 440px"
                   priority
+                  fetchPriority="high"
                   className="w-full h-auto object-contain transition-transform duration-700 group-hover:scale-105"
                 />
               )}
