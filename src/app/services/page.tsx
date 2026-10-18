@@ -11,7 +11,7 @@ import { ArrowUpRight, Monitor, Layout, PenTool, Palette, Share2, Search, MapPin
 export const revalidate = 300;
 
 export const metadata: Metadata = buildMetadata({
-  title: 'Services | Website Design, UI/UX, Branding, SEO & Social Media | PK Creative',
+  title: 'Services | Website Design, UI/UX, Branding & SEO',
   description:
     'Explore PK Creative services: website design in Ahmedabad and Rajasthan, UI/UX design, branding, graphic design, SEO and social media management. Websites from ₹10,000.',
   path: '/services',

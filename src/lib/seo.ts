@@ -4,7 +4,7 @@ export const SITE_URL = (process.env.NEXT_PUBLIC_BASE_URL || 'https://pkcreative
 export const SITE_NAME = 'PK Creative';
 export const DEFAULT_TITLE = 'PK Creative | Website Design, Branding & SEO Agency in India';
 export const DEFAULT_DESCRIPTION =
-  'PK Creative is a premium creative agency in India offering custom website design from ₹10,000, UI/UX, branding, graphic design, SEO and social media management for modern brands.';
+  'Premium website design from ₹10,000, UI/UX, branding, SEO and social media management for modern brands in India. Get a free quote from PK Creative.';
 export const DEFAULT_KEYWORDS = [
   'website design agency India',
   'website design Ahmedabad',
@@ -30,6 +30,12 @@ export const SERVICE_LINKS = [
   { label: 'Graphic Design', href: '/services/graphic-design' },
   { label: 'Social Media Management', href: '/services/social-media-management' },
   { label: 'SEO Services', href: '/services/seo' },
+];
+
+export const FOOTER_EXTRA_LINKS = [
+  { label: 'Guides', href: '/blog' },
+  { label: 'About', href: '/about' },
+  { label: 'Contact', href: '/contact' },
 ];
 
 export const HOME_FAQS = [

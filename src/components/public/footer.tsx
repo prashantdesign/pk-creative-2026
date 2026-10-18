@@ -5,7 +5,7 @@ import { Linkedin, Twitter, Instagram, Mail, MessageCircle, ArrowUpRight, ArrowU
 import Logo from '../logo';
 import { Reveal } from '@/components/motion/reveal';
 import Magnetic from '@/components/motion/magnetic';
-import { SERVICE_LINKS } from '@/lib/seo';
+import { SERVICE_LINKS, FOOTER_EXTRA_LINKS } from '@/lib/seo';
 
 import { useFirestore, useDoc, useMemoFirebase } from '@/firebase';
 import { doc } from 'firebase/firestore';
@@ -35,6 +35,8 @@ const Footer = ({ content: initialContent }: { content?: SiteContent | null }) =
     { label: 'Gallery', href: '/gallery' },
     { label: 'Contact', href: '/#contact' },
   ];
+
+  const allLinks = [...links, ...FOOTER_EXTRA_LINKS.filter((e) => !links.some((l) => l.href === e.href))];
 
   const scrollTop = () => {
     const lenis = (window as unknown as { lenis?: { scrollTo: (v: number) => void } }).lenis;
@@ -104,7 +106,7 @@ const Footer = ({ content: initialContent }: { content?: SiteContent | null }) =
             <h4 className="font-headline text-sm font-semibold uppercase tracking-widest text-muted-foreground">
               Explore
             </h4>
-            {links.map((l) => (
+            {allLinks.map((l) => (
               <a
                 key={l.label}
                 href={l.href}

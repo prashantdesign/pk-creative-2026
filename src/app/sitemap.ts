@@ -13,6 +13,13 @@ const routes = [
   { path: '/services/graphic-design', priority: 0.8, changeFreq: 'monthly' as const, lastModified: '2026-10-18' },
   { path: '/services/social-media-management', priority: 0.8, changeFreq: 'monthly' as const, lastModified: '2026-10-18' },
   { path: '/services/seo', priority: 0.8, changeFreq: 'monthly' as const, lastModified: '2026-10-18' },
+  { path: '/blog', priority: 0.8, changeFreq: 'weekly' as const, lastModified: '2026-10-18' },
+  ...[
+    'website-design-cost-in-india',
+    'how-to-choose-web-design-agency-ahmedabad',
+    'local-seo-checklist-small-business-india',
+    'why-nextjs-websites-rank-faster',
+  ].map((s) => ({ path: `/blog/${s}`, priority: 0.7, changeFreq: 'monthly' as const, lastModified: '2026-10-18' })),
   { path: '/work', priority: 0.8, changeFreq: 'weekly' as const, lastModified: '2026-10-18' },
   { path: '/about', priority: 0.7, changeFreq: 'monthly' as const, lastModified: '2026-10-18' },
   { path: '/contact', priority: 0.7, changeFreq: 'monthly' as const, lastModified: '2026-10-18' },

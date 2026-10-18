@@ -26,7 +26,7 @@ export default function WhyUsSection() {
         <SectionHeader
           eyebrow="Why PK Creative"
           title="Everything a growing brand needs, in one place"
-          description="Design that turns heads and engineering that gets found."
+          description="PK Creative is a website design and branding agency in Ahmedabad serving businesses across India: design that turns heads and engineering that gets found on Google."
         />
         <motion.div
           variants={staggerContainer}
