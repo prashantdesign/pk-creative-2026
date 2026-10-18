@@ -55,7 +55,7 @@ export default function FAQSection() {
   return (
     <section id="faq" className="relative overflow-hidden bg-background py-20 md:py-28">
       {/* Decorative Blob */}
-      <div className="absolute top-1/2 left-0 w-80 h-80 bg-primary/5 rounded-full mix-blend-multiply filter blur-[80px] -translate-y-1/2 -translate-x-1/2 pointer-events-none" />
+      <div className="absolute top-1/2 left-0 w-80 h-80  rounded-full bg-[radial-gradient(closest-side,hsl(var(--primary)/0.09),transparent)]    -translate-y-1/2 -translate-x-1/2 pointer-events-none" />
 
       <div className="container relative z-10 mx-auto px-4 md:px-6">
         <div className="grid lg:grid-cols-[1fr_1.5fr] gap-12 items-start">

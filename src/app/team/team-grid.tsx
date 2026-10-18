@@ -1,6 +1,6 @@
 "use client";
 
-import { optimizeImageUrl } from '@/lib/cloudinary';
+import { optimizeImageUrl } from '@/lib/image-url';
 import React from 'react';
 import { useFirestore, useCollection, useMemoFirebase } from '@/firebase';
 import { collection, query, orderBy } from 'firebase/firestore';

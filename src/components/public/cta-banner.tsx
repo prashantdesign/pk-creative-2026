@@ -9,8 +9,8 @@ export default function CtaBanner() {
     <section className="px-4 py-12 sm:px-6 md:py-20">
       <Reveal className="container relative mx-auto max-w-6xl overflow-hidden rounded-[2rem] bg-gradient-to-br from-[#4b1fd1] via-primary to-[#8b5cf6] px-6 py-14 text-center text-white sm:px-12 md:py-20">
         <div aria-hidden className="bg-grid absolute inset-0 opacity-25" />
-        <div aria-hidden className="absolute -right-24 -top-24 h-72 w-72 animate-float rounded-full bg-white/20 blur-3xl" />
-        <div aria-hidden className="absolute -bottom-24 -left-24 h-72 w-72 animate-float-sm rounded-full bg-sky-300/30 blur-3xl" />
+        <div aria-hidden className="absolute -right-24 -top-24 h-72 w-72 animate-float rounded-full bg-[radial-gradient(closest-side,rgba(255,255,255,0.36),transparent)]  " />
+        <div aria-hidden className="absolute -bottom-24 -left-24 h-72 w-72 animate-float-sm rounded-full bg-[radial-gradient(closest-side,rgba(199,210,254,0.50),transparent)]  " />
         <div className="relative z-10 mx-auto max-w-3xl">
           <h2 className="font-headline text-3xl font-extrabold tracking-tight sm:text-4xl md:text-5xl">
             Ready for a website that actually brings in clients?

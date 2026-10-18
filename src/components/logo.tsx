@@ -1,3 +1,4 @@
+import { optimizeImageUrl } from '@/lib/image-url';
 import React from 'react';
 import Image from 'next/image';
 
@@ -12,7 +13,7 @@ const Logo = ({ className, logoUrl, siteName }: LogoProps) => {
     return (
       <div className={`relative h-10 w-32 ${className || ''}`}>
         <Image 
-          src={logoUrl} 
+          src={optimizeImageUrl(logoUrl, 400)} 
           alt={siteName || "Agency Logo"} 
           fill 
           className="object-contain object-left" 

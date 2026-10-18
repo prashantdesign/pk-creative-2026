@@ -1,3 +1,4 @@
+import { optimizeImageUrl } from '@/lib/image-url';
 import React from 'react';
 import Image from 'next/image';
 import type { Project } from '@/types';
@@ -19,7 +20,7 @@ const ProjectCard = ({ project, onProjectClick }: ProjectCardProps) => {
       <CardHeader className="p-0">
         <div className="relative h-60 w-full">
           <Image
-            src={project.imageUrl}
+            src={optimizeImageUrl(project.imageUrl, 1000)}
             alt={project.title}
             fill
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"

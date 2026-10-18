@@ -101,7 +101,7 @@ export default function SeoServicePage({
             <div aria-hidden className="bg-grid pointer-events-none absolute inset-0 opacity-40" />
             <div
               aria-hidden
-              className="pointer-events-none absolute -top-32 left-1/2 h-[420px] w-[620px] -translate-x-1/2 rounded-full bg-primary/15 blur-[130px] animate-aurora"
+              className="pointer-events-none absolute -top-32 left-1/2 h-[420px] w-[620px] -translate-x-1/2 rounded-full bg-[radial-gradient(closest-side,hsl(var(--primary)/0.27),transparent)]   animate-aurora"
             />
 
             <div className="container relative z-10 mx-auto max-w-4xl px-4 text-center md:px-6">

@@ -1,5 +1,6 @@
 'use client';
 
+import { optimizeImageUrl } from '@/lib/image-url';
 import React from 'react';
 import type { SiteContent } from '@/types';
 import { Quote } from 'lucide-react';
@@ -21,7 +22,7 @@ export default function TestimonialsSection({ content }: TestimonialsSectionProp
     <section id="testimonials" className="relative overflow-hidden bg-muted/40 py-20 md:py-28">
       <div
         aria-hidden
-        className="pointer-events-none absolute bottom-0 left-0 h-[500px] w-[500px] -translate-x-1/4 translate-y-1/2 rounded-full bg-primary/5 blur-[110px]"
+        className="pointer-events-none absolute bottom-0 left-0 h-[500px] w-[500px] -translate-x-1/4 translate-y-1/2 rounded-full bg-[radial-gradient(closest-side,hsl(var(--primary)/0.09),transparent)]  "
       />
 
       <div className="container relative z-10 mx-auto px-4 sm:px-6">
@@ -53,7 +54,7 @@ export default function TestimonialsSection({ content }: TestimonialsSectionProp
                     <Image
                       src={
                         testimonial.avatarUrl && testimonial.avatarUrl.trim() !== ''
-                          ? testimonial.avatarUrl
+                          ? optimizeImageUrl(testimonial.avatarUrl, 200)
                           : 'https://res.cloudinary.com/djhqgz0vh/image/upload/v1783278488/kindpng_248253_gxapyn.png'
                       }
                       alt={testimonial.name}

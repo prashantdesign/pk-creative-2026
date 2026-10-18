@@ -47,7 +47,7 @@ const Footer = ({ content: initialContent }: { content?: SiteContent | null }) =
       <div aria-hidden className="bg-grid pointer-events-none absolute inset-0 opacity-[0.35]" />
       <div
         aria-hidden
-        className="pointer-events-none absolute -bottom-40 left-1/2 h-[420px] w-[640px] -translate-x-1/2 rounded-full bg-primary/10 blur-[130px]"
+        className="pointer-events-none absolute -bottom-40 left-1/2 h-[420px] w-[640px] -translate-x-1/2 rounded-full bg-[radial-gradient(closest-side,hsl(var(--primary)/0.18),transparent)]  "
       />
 
       <div className="container relative z-10 mx-auto px-4 py-16 md:px-6 md:py-20">

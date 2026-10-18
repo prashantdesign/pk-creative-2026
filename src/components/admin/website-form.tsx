@@ -1,5 +1,6 @@
 "use client";
 
+import { normalizeImageUrl } from '@/lib/image-url';
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -129,7 +130,7 @@ export default function WebsiteForm({ website, onSuccess }: Props) {
             <div className="flex gap-4 items-center">
               {displayLogo ? (
                 <div className="relative w-16 h-16 rounded-xl overflow-hidden border bg-background flex-shrink-0 p-2">
-                  <Image src={displayLogo} alt="Preview" fill className="object-contain p-2" />
+                  <Image src={normalizeImageUrl(displayLogo)} alt="Preview" fill className="object-contain p-2" />
                 </div>
               ) : (
                 <div className="w-16 h-16 rounded-xl border border-dashed flex items-center justify-center text-xs text-muted-foreground bg-muted">

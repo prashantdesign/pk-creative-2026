@@ -1,5 +1,6 @@
 "use client";
 
+import { normalizeImageUrl } from '@/lib/image-url';
 import React, { useState } from 'react';
 import { useFirestore, useCollection, useMemoFirebase } from '@/firebase';
 import { collection, query, orderBy, doc, deleteDoc } from 'firebase/firestore';
@@ -70,7 +71,7 @@ export default function TeamManager() {
           <Card key={member.id} className="overflow-hidden flex flex-col group relative">
             <CardContent className="p-0 relative aspect-[3/4] bg-muted">
               {member.photoUrl ? (
-                <Image src={member.photoUrl} alt={member.name} fill className="object-cover transition-transform group-hover:scale-105" />
+                <Image src={normalizeImageUrl(member.photoUrl)} alt={member.name} fill className="object-cover transition-transform group-hover:scale-105" />
               ) : (
                 <div className="flex h-full w-full items-center justify-center text-muted-foreground">No Photo</div>
               )}

@@ -1,5 +1,6 @@
 "use client";
 
+import { normalizeImageUrl } from '@/lib/image-url';
 import React, { useState, useMemo } from 'react';
 import { useForm, useFieldArray } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -267,7 +268,7 @@ export default function ProjectForm({ project }: { project?: Project }) {
                   <div className="mt-4">
                     <FormLabel>Preview</FormLabel>
                     <div className="mt-2 relative aspect-video w-full max-w-sm bg-muted rounded-md">
-                      <Image src={mainImageUrl} alt="Main image preview" fill className="rounded-md object-contain" />
+                      <Image src={normalizeImageUrl(mainImageUrl)} alt="Main image preview" fill className="rounded-md object-contain" />
                     </div>
                   </div>
                 )}
@@ -298,7 +299,7 @@ export default function ProjectForm({ project }: { project?: Project }) {
                       <div className="mt-4">
                         <FormLabel>Preview</FormLabel>
                         <div className="mt-2 relative aspect-video w-full max-w-xs bg-muted rounded-md">
-                          <Image src={additionalImages[index]} alt={`Preview ${index + 1}`} fill className="rounded-md object-contain" />
+                          <Image src={normalizeImageUrl(additionalImages[index])} alt={`Preview ${index + 1}`} fill className="rounded-md object-contain" />
                         </div>
                       </div>
                     )}

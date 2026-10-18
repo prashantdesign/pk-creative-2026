@@ -1,5 +1,6 @@
 'use client';
 
+import { optimizeImageUrl } from '@/lib/image-url';
 import React from 'react';
 import type { SiteContent } from '@/types';
 import Image from 'next/image';
@@ -34,7 +35,7 @@ export default function ToolsSection({ content }: { content?: SiteContent | null
             >
               <div className="flex h-16 w-16 items-center justify-center rounded-2xl border border-border/60 bg-background p-3 transition-all duration-300 group-hover:-translate-y-1 group-hover:border-primary/40 sm:h-20 sm:w-20">
                 <Image
-                  src={tool.iconUrl}
+                  src={optimizeImageUrl(tool.iconUrl, 200)}
                   alt={tool.name}
                   width={56}
                   height={56}

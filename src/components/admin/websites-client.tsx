@@ -1,5 +1,6 @@
 "use client";
 
+import { normalizeImageUrl } from '@/lib/image-url';
 import React, { useState } from 'react';
 import { useFirestore, useCollection, useMemoFirebase } from '@/firebase';
 import { collection, query, orderBy, doc, deleteDoc } from 'firebase/firestore';
@@ -83,7 +84,7 @@ export default function WebsitesClient() {
                 <CardContent className="p-6 flex flex-col items-center justify-center gap-4 text-center h-[240px]">
                 {displayLogo ? (
                     <div className="relative w-24 h-24 rounded-2xl overflow-hidden shadow-sm bg-background p-2 border">
-                        <Image src={displayLogo} alt={website.name} fill className="object-contain p-2" />
+                        <Image src={normalizeImageUrl(displayLogo)} alt={website.name} fill className="object-contain p-2" />
                     </div>
                 ) : (
                     <div className="flex h-24 w-24 items-center justify-center bg-muted rounded-2xl font-bold text-2xl text-muted-foreground">

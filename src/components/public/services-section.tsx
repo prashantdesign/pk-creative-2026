@@ -6,6 +6,7 @@ import { motion } from 'framer-motion';
 import { Reveal, staggerContainer, staggerItem } from '@/components/motion/reveal';
 import TiltCard from '@/components/motion/tilt-card';
 import SectionHeader from '@/components/public/section-header';
+import Link from 'next/link';
 
 type Service = { title: string; description: string; icon?: string };
 
@@ -17,21 +18,30 @@ const defaultServices: Service[] = [
   { title: 'SEO Optimization', description: 'Climb the search rankings and dominate your niche.', icon: 'search' },
 ];
 
+/** Maps a CMS service title to its dedicated landing page so every card is a crawlable internal link. */
+const hrefFor = (title: string) => {
+  const t = title.toLowerCase();
+  if (t.includes('ui') || t.includes('ux')) return '/services/ui-ux-design';
+  if (t.includes('web') || t.includes('develop')) return '/services/website-design-ahmedabad';
+  if (t.includes('brand') || t.includes('logo')) return '/services/branding';
+  if (t.includes('social')) return '/services/social-media-management';
+  if (t.includes('seo') || t.includes('search')) return '/services/seo';
+  if (t.includes('graphic') || t.includes('design')) return '/services/graphic-design';
+  return '/#contact';
+};
+
 export default function ServicesSection({ content }: { content: SiteContent | null }) {
   const services = content?.services?.length ? content.services : defaultServices;
+  // Fill the last bento row: the CTA takes whatever columns are left (a full-width banner when the row is complete)
+  const used = services.length ? 4 + 2 * (services.length - 1) : 0;
+  const ctaSpan = used % 6 === 0 ? 6 : 6 - (used % 6);
+  const ctaWide = ctaSpan === 6;
 
   return (
     <section id="services" className="relative overflow-hidden bg-secondary/20 py-20 md:py-28">
-      <motion.div
-        aria-hidden
-        className="pointer-events-none absolute right-0 top-0 h-[600px] w-[600px] -translate-y-1/3 translate-x-1/3 rounded-full bg-primary/5 blur-[120px]"
-        animate={{ scale: [1, 1.12, 1], opacity: [0.5, 0.8, 0.5] }}
-        transition={{ duration: 15, repeat: Infinity, ease: 'easeInOut' }}
-      />
-
+      <div aria-hidden className="bg-dots pointer-events-none absolute inset-0 opacity-30" />
       <div className="container relative z-10 mx-auto px-4 sm:px-6">
         <SectionHeader
-          align="left"
           eyebrow="What we do"
           title={content?.servicesSectionTitle || 'Our Services'}
           description={content?.servicesSectionDescription || 'Everything you need to grow your modern brand.'}
@@ -41,44 +51,55 @@ export default function ServicesSection({ content }: { content: SiteContent | nu
           variants={staggerContainer}
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true, amount: 0.15 }}
-          className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3"
+          viewport={{ once: true, amount: 0.1 }}
+          className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5 lg:grid-cols-6"
         >
-          {services.map((service, index) => (
-            <motion.div key={index} variants={staggerItem}>
-              <TiltCard
-                max={6}
-                className="group flex h-full min-h-[220px] flex-col justify-between overflow-hidden rounded-3xl border border-border bg-background p-6 transition-colors duration-300 hover:border-primary/40 sm:min-h-[280px] sm:p-8"
-              >
-                <div className="flex items-start justify-between">
-                  <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-primary/10 text-primary transition-colors duration-500 group-hover:bg-primary group-hover:text-primary-foreground sm:h-14 sm:w-14">
-                    <Icons name={service.icon || 'star'} className="h-6 w-6 sm:h-7 sm:w-7" />
+          {services.map((service, index) => {
+            // Bento rhythm on desktop: first card wide, then 3-up rows
+            const span = index === 0 ? 'lg:col-span-4' : index === 1 ? 'lg:col-span-2' : 'lg:col-span-2';
+            const featured = index === 0;
+            return (
+              <motion.div key={index} variants={staggerItem} className={span}>
+                <Link
+                  href={hrefFor(service.title)}
+                  className={`group relative flex h-full min-h-[200px] flex-col justify-between overflow-hidden rounded-3xl border border-border bg-background p-6 transition-all duration-300 hover:-translate-y-1 hover:border-primary/40 hover:shadow-[0_20px_50px_-20px_hsl(var(--primary)/0.45)] sm:p-8 ${featured ? 'lg:min-h-[260px]' : ''}`}
+                >
+                  <div
+                    aria-hidden
+                    className="pointer-events-none absolute -right-10 -top-10 h-48 w-48 rounded-full bg-[radial-gradient(closest-side,hsl(var(--primary)/0.18),transparent)] opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+                  />
+                  <div className="relative flex items-start justify-between">
+                    <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-primary/10 text-primary transition-all duration-500 group-hover:rotate-6 group-hover:bg-primary group-hover:text-primary-foreground sm:h-14 sm:w-14">
+                      <Icons name={service.icon || 'star'} className="h-6 w-6 sm:h-7 sm:w-7" />
+                    </div>
+                    <span className="font-headline text-sm font-bold text-muted-foreground/40">
+                      {String(index + 1).padStart(2, '0')}
+                    </span>
                   </div>
-                  <span className="font-headline text-sm font-bold text-muted-foreground/40">
-                    {String(index + 1).padStart(2, '0')}
-                  </span>
-                </div>
-                <div className="mt-8">
-                  <h3 className="mb-2 text-xl font-bold transition-colors duration-300 group-hover:text-primary sm:text-2xl">
-                    {service.title}
-                  </h3>
-                  <p className="text-sm leading-relaxed text-muted-foreground sm:text-base">
-                    {service.description}
-                  </p>
-                </div>
-              </TiltCard>
-            </motion.div>
-          ))}
+                  <div className="relative mt-8">
+                    <h3 className={`mb-2 font-bold transition-colors duration-300 group-hover:text-primary ${featured ? 'text-2xl sm:text-3xl' : 'text-xl sm:text-2xl'}`}>
+                      {service.title}
+                    </h3>
+                    <p className="max-w-xl text-sm leading-relaxed text-muted-foreground sm:text-base">
+                      {service.description}
+                    </p>
+                    <span className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-primary">
+                      Learn more
+                      <Icons name="arrow-right" className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
+                    </span>
+                  </div>
+                </Link>
+              </motion.div>
+            );
+          })}
 
-          <motion.div variants={staggerItem}>
+          <motion.div variants={staggerItem} className={ctaWide ? 'lg:col-span-6' : ctaSpan === 4 ? 'lg:col-span-4' : 'lg:col-span-2'}>
             <a
               href="#contact"
-              className="glow-ring flex h-full min-h-[220px] flex-col justify-between rounded-3xl border border-primary/30 bg-primary/5 p-6 transition-all duration-300 hover:bg-primary/10 sm:min-h-[280px] sm:p-8"
+              className={`relative flex h-full flex-col justify-between overflow-hidden rounded-3xl ${ctaWide ? 'min-h-[140px] gap-4 lg:flex-row lg:items-center' : 'min-h-[200px]'} bg-gradient-to-br from-[#4b1fd1] via-primary to-[#8b5cf6] p-6 text-white transition-transform duration-300 hover:-translate-y-1 sm:p-8`}
             >
-              <span className="text-sm font-semibold uppercase tracking-widest text-primary">
-                Have a project?
-              </span>
-              <span className="mt-8 flex items-center gap-2 text-xl font-bold sm:text-2xl">
+              <span className="text-sm font-semibold uppercase tracking-widest text-white/80">Have a project?</span>
+              <span className={`flex items-center gap-2 text-xl font-bold sm:text-2xl ${ctaWide ? '' : 'mt-8'}`}>
                 Let&apos;s build it together
                 <Icons name="arrow-right" className="h-5 w-5" />
               </span>

@@ -1,5 +1,6 @@
 "use client";
 
+import { normalizeImageUrl } from '@/lib/image-url';
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -106,7 +107,7 @@ export default function InstagramPostForm({ post, onSuccess }: Props) {
             <div className="flex gap-4 items-start">
               {imageUrl && (
                 <div className="relative w-32 h-32 rounded-lg overflow-hidden border">
-                  <Image src={imageUrl} alt="Preview" fill className="object-cover" />
+                  <Image src={normalizeImageUrl(imageUrl)} alt="Preview" fill className="object-cover" />
                 </div>
               )}
               <div className="flex-1 space-y-3">

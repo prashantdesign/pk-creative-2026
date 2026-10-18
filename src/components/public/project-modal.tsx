@@ -1,5 +1,6 @@
 'use client';
 
+import { optimizeImageUrl } from '@/lib/image-url';
 import React from 'react';
 import type { Project } from '@/types';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog';
@@ -41,7 +42,7 @@ const ProjectModal = ({ project, isOpen, onClose }: ProjectModalProps) => {
                     {allImages.map((img, index) => (
                     <CarouselItem key={index}>
                         <div className="relative aspect-video bg-muted rounded-lg overflow-hidden">
-                        <Image src={img} alt={`${project.title} image ${index + 1}`} fill className="object-contain" />
+                        <Image src={optimizeImageUrl(img, 1800)} alt={`${project.title} image ${index + 1}`} fill className="object-contain" />
                         </div>
                     </CarouselItem>
                     ))}

@@ -1,5 +1,6 @@
 'use client';
 
+import { optimizeImageUrl } from '@/lib/image-url';
 import React, { useEffect, useRef, useState } from 'react';
 import { useActionState } from 'react';
 import { useFormStatus } from 'react-dom';
@@ -118,7 +119,7 @@ export default function ContactSection({ content }: { content?: SiteContent | nu
             {hasImage && (
               <div className="relative hidden lg:block h-full min-h-[600px] bg-white dark:bg-zinc-950 border-r border-border/30">
                 <Image 
-                  src={contactImage} 
+                  src={optimizeImageUrl(contactImage, 1200)} 
                   alt="Contact Us" 
                   fill 
                   className="object-cover transition-transform duration-700 hover:scale-[1.01]"

@@ -1,9 +1,10 @@
 'use client';
+import { optimizeImageUrl } from '@/lib/image-url';
 import React from 'react';
 import Image from 'next/image';
 import type { SiteContent } from '@/types';
 import { Button } from '@/components/ui/button';
-import { ArrowRight, Sparkles } from 'lucide-react';
+import { ArrowRight, Sparkles, Zap, ShieldCheck, Search, Star } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 const HeroSection = ({ content }: { content: SiteContent | null }) => {
@@ -38,7 +39,7 @@ const HeroSection = ({ content }: { content: SiteContent | null }) => {
     <section id="home" className={`relative overflow-hidden bg-background ${hasMedia ? 'pt-4 pb-20 md:pt-6 md:pb-24 lg:pt-8 lg:pb-32' : 'py-16'}`}>
       {/* Background Glowing Blobs with Infinite floating logic */}
       <motion.div 
-        className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/20 rounded-full mix-blend-multiply filter blur-[128px] pointer-events-none"
+        className="absolute top-1/4 left-1/4 w-96 h-96  rounded-full bg-[radial-gradient(closest-side,hsl(var(--primary)/0.36),transparent)]    pointer-events-none"
         animate={{
           x: [0, 30, 0],
           y: [0, -40, 0],
@@ -50,7 +51,7 @@ const HeroSection = ({ content }: { content: SiteContent | null }) => {
         }}
       />
       <motion.div 
-        className="absolute top-1/3 right-1/4 w-96 h-96 bg-purple-500/20 rounded-full mix-blend-multiply filter blur-[128px] pointer-events-none"
+        className="absolute top-1/3 right-1/4 w-96 h-96  rounded-full bg-[radial-gradient(closest-side,hsl(var(--primary)/0.36),transparent)]    pointer-events-none"
         animate={{
           x: [0, -40, 0],
           y: [0, 30, 0],
@@ -62,7 +63,7 @@ const HeroSection = ({ content }: { content: SiteContent | null }) => {
         }}
       />
       <motion.div 
-        className="absolute -bottom-32 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-primary/10 rounded-full mix-blend-multiply filter blur-[128px] pointer-events-none"
+        className="absolute -bottom-32 left-1/2 -translate-x-1/2 w-[800px] h-[400px]  rounded-full bg-[radial-gradient(closest-side,hsl(var(--primary)/0.18),transparent)]    pointer-events-none"
         animate={{
           scale: [1, 1.08, 1],
           opacity: [0.7, 0.9, 0.7],
@@ -94,7 +95,7 @@ const HeroSection = ({ content }: { content: SiteContent | null }) => {
             
             <motion.h1 
               variants={itemVariants}
-              className={`text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-headline font-black tracking-tighter text-foreground leading-[1.1] ${!hasMedia ? 'lg:text-9xl' : ''}`}
+              className={`text-5xl sm:text-6xl md:text-6xl lg:text-7xl font-headline font-black tracking-tighter text-foreground leading-[1.1] ${!hasMedia ? 'lg:text-9xl' : ''}`}
             >
               <span className="block text-transparent bg-clip-text bg-gradient-to-br from-foreground via-foreground to-muted-foreground">
                 {content?.heroTitle || 'Websites & Brands Built To Grow Your Business'}
@@ -160,6 +161,15 @@ const HeroSection = ({ content }: { content: SiteContent | null }) => {
                 </Button>
               </motion.div>
             </motion.div>
+
+            <motion.ul
+              variants={itemVariants}
+              className="flex flex-wrap items-center gap-x-6 gap-y-2 pt-2 text-sm font-medium text-muted-foreground"
+            >
+              <li className="flex items-center gap-1.5"><Zap className="h-4 w-4 text-primary" /> 7-day delivery</li>
+              <li className="flex items-center gap-1.5"><Search className="h-4 w-4 text-primary" /> SEO-ready</li>
+              <li className="flex items-center gap-1.5"><ShieldCheck className="h-4 w-4 text-primary" /> Admin panel included</li>
+            </motion.ul>
           </motion.div>
 
           {/* Media Column with premium float and shadow shift */}
@@ -197,7 +207,7 @@ const HeroSection = ({ content }: { content: SiteContent | null }) => {
                 />
               ) : (
                 <Image
-                  src={mediaUrl}
+                  src={optimizeImageUrl(mediaUrl, 1000)}
                   alt="PK Creative - website design, branding and SEO for modern brands"
                   width={440}
                   height={440}
@@ -207,6 +217,9 @@ const HeroSection = ({ content }: { content: SiteContent | null }) => {
                   className="w-full h-auto object-contain transition-transform duration-700 group-hover:scale-105"
                 />
               )}
+              <div className="pointer-events-none absolute bottom-4 left-4 z-20 flex items-center gap-2 rounded-2xl border border-white/20 bg-background/80 px-3 py-2 text-xs font-semibold shadow-lg backdrop-blur">
+                <Star className="h-4 w-4 fill-amber-400 text-amber-400" /> Trusted by growing brands
+              </div>
             </motion.div>
           )}
 

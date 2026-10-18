@@ -1,5 +1,6 @@
 'use client';
 
+import { optimizeImageUrl } from '@/lib/image-url';
 import React from 'react';
 import type { SiteContent } from '@/types';
 import Image from 'next/image';
@@ -61,7 +62,7 @@ const AboutSection = ({ content }: { content: SiteContent | null }) => {
               className="overflow-hidden rounded-3xl border border-border/50 bg-background shadow-xl"
             >
               <Image
-                src={content?.aboutImageUrl || '/pk_about_visual.webp'}
+                src={optimizeImageUrl(content?.aboutImageUrl, 1000) || '/pk_about_visual.webp'}
                 alt="About PK Creative"
                 width={520}
                 height={520}

@@ -1,6 +1,6 @@
 'use client';
 
-import { optimizeImageUrl } from '@/lib/cloudinary';
+import { optimizeImageUrl } from '@/lib/image-url';
 import React, { useState, useMemo, useEffect, useRef, useCallback } from 'react';
 import type { SiteContent, GalleryImage, GalleryCategory } from '@/types';
 import { useFirestore, useCollection, useMemoFirebase } from '@/firebase';

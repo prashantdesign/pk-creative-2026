@@ -1,5 +1,6 @@
 "use client";
 
+import { normalizeImageUrl } from '@/lib/image-url';
 import React, { useState, useMemo } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -186,7 +187,7 @@ export default function GalleryForm({ image }: { image?: GalleryImage }) {
             <div className="mt-4">
               <FormLabel>Image Preview</FormLabel>
               <div className="mt-2 relative aspect-video w-full max-w-sm">
-                <Image src={imageUrl} alt="Image preview" fill className="rounded-md object-contain" />
+                <Image src={normalizeImageUrl(imageUrl)} alt="Image preview" fill className="rounded-md object-contain" />
               </div>
             </div>
           )}

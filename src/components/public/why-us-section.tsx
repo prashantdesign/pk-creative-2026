@@ -20,7 +20,7 @@ export default function WhyUsSection() {
     <section id="why-us" className="relative overflow-hidden bg-secondary/20 py-20 md:py-28">
       <div
         aria-hidden
-        className="pointer-events-none absolute -left-40 top-1/3 h-[500px] w-[500px] rounded-full bg-primary/10 blur-[140px]"
+        className="pointer-events-none absolute -left-40 top-1/3 h-[500px] w-[500px] rounded-full bg-[radial-gradient(closest-side,hsl(var(--primary)/0.18),transparent)]  "
       />
       <div className="container relative z-10 mx-auto px-4 sm:px-6">
         <SectionHeader

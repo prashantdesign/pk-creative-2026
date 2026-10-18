@@ -1,5 +1,6 @@
 "use client";
 
+import { normalizeImageUrl } from '@/lib/image-url';
 import React, { useState } from 'react';
 import { useFirestore, useCollection, useMemoFirebase } from '@/firebase';
 import { collection, query, orderBy, doc, deleteDoc, addDoc, serverTimestamp, updateDoc } from 'firebase/firestore';
@@ -84,7 +85,7 @@ export default function InstagramPlanner() {
             </div>
             <CardContent className="p-0 relative aspect-square bg-muted">
               {post.imageUrl ? (
-                <Image src={post.imageUrl} alt="Instagram post" fill className="object-cover" />
+                <Image src={normalizeImageUrl(post.imageUrl)} alt="Instagram post" fill className="object-cover" />
               ) : (
                 <div className="flex h-full w-full items-center justify-center text-muted-foreground">No Image</div>
               )}

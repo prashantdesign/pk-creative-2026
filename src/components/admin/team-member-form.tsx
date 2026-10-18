@@ -1,5 +1,6 @@
 "use client";
 
+import { normalizeImageUrl } from '@/lib/image-url';
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -98,7 +99,7 @@ export default function TeamMemberForm({ member, onSuccess }: Props) {
             <div className="flex gap-4 items-start">
               {photoUrl && (
                 <div className="relative w-24 h-32 rounded-lg overflow-hidden border">
-                  <Image src={photoUrl} alt="Preview" fill className="object-cover" />
+                  <Image src={normalizeImageUrl(photoUrl)} alt="Preview" fill className="object-cover" />
                 </div>
               )}
               <div className="flex-1 space-y-3">

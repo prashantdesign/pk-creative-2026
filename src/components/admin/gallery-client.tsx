@@ -1,5 +1,6 @@
 "use client";
 
+import { normalizeImageUrl } from '@/lib/image-url';
 import React, { useMemo } from 'react';
 import { collection, query, orderBy, doc, deleteDoc } from 'firebase/firestore';
 import { useFirestore, useCollection } from '@/firebase';
@@ -71,7 +72,7 @@ export default function GalleryClient() {
                     <Card key={image.id}>
                         <CardHeader className="p-0">
                              <Image
-                                src={image.imageUrl}
+                                src={normalizeImageUrl(image.imageUrl)}
                                 alt={image.title}
                                 width={400}
                                 height={300}
@@ -128,7 +129,7 @@ export default function GalleryClient() {
                             <TableRow key={image.id}>
                             <TableCell>
                                 <Image
-                                    src={image.imageUrl}
+                                    src={normalizeImageUrl(image.imageUrl)}
                                     alt={image.title}
                                     width={80}
                                     height={80}

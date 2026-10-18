@@ -5,20 +5,21 @@ import type { SiteContent } from '@/types';
 import { useFirestore, useDoc, useMemoFirebase } from '@/firebase';
 import { doc } from 'firebase/firestore';
 import { MotionConfig } from 'framer-motion';
+import dynamic from 'next/dynamic';
 
 import Header from '@/components/public/header';
 import HeroSection from '@/components/public/hero-section';
 import AboutSection from '@/components/public/about-section';
-import ServicesSection from '@/components/public/services-section';
-import TargetAudienceSection from '@/components/public/target-audience-section';
-import WebsiteShowcaseSection from '@/components/public/website-showcase-section';
-import TestimonialsSection from '@/components/public/testimonials-section';
-import ContactSection from '@/components/public/contact-section';
-import ProcessSection from '@/components/public/process-section';
-import WhyUsSection from '@/components/public/why-us-section';
-import CtaBanner from '@/components/public/cta-banner';
+const ServicesSection = dynamic(() => import('@/components/public/services-section'));
+const TargetAudienceSection = dynamic(() => import('@/components/public/target-audience-section'));
+const WebsiteShowcaseSection = dynamic(() => import('@/components/public/website-showcase-section'));
+const TestimonialsSection = dynamic(() => import('@/components/public/testimonials-section'));
+const ContactSection = dynamic(() => import('@/components/public/contact-section'));
+const ProcessSection = dynamic(() => import('@/components/public/process-section'));
+const WhyUsSection = dynamic(() => import('@/components/public/why-us-section'));
+const CtaBanner = dynamic(() => import('@/components/public/cta-banner'));
 import ServiceStrip from '@/components/public/service-strip';
-import FAQSection from '@/components/public/faq-section';
+const FAQSection = dynamic(() => import('@/components/public/faq-section'));
 import Footer from '@/components/public/footer';
 
 export default function HomeClient({ initialSiteContent }: { initialSiteContent: SiteContent | null }) {
