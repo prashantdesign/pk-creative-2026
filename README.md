@@ -15,7 +15,7 @@ npm run dev                   # http://localhost:9002
 1. Import the repo in Vercel (framework: Next.js is auto-detected, `vercel.json` sets the install command).
 2. Add every variable from `.env.example` under **Project → Settings → Environment Variables** (Production + Preview).
    `NEXT_PUBLIC_BASE_URL` must be `https://pkcreative.in`.
-3. **Domains**: add `pkcreative.in` (primary) and `www.pkcreative.in`. The app 301-redirects `www` to the apex host.
+3. **Domains**: add `pkcreative.in` (primary) and `www.pkcreative.in`. Choose which host is primary under Vercel Domains (the site declares `https://pkcreative.in` as canonical, so make the apex primary and let Vercel redirect www to it). Do not add a second redirect in code, it can cause a loop.
 4. Deploy. Public pages are statically generated and refresh from Firestore every 5 minutes (ISR), so admin edits go live without a redeploy.
 
 ### Instagram scheduler (optional)

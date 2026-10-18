@@ -49,13 +49,6 @@ const nextConfig: NextConfig = {
   },
   async redirects() {
     return [
-      // Force a single canonical host (pkcreative.in) so link equity is not split with www
-      {
-        source: '/:path*',
-        has: [{ type: 'host', value: 'www.pkcreative.in' }],
-        destination: 'https://pkcreative.in/:path*',
-        permanent: true,
-      },
       // Old PNG hero/about/contact visuals were converted to WebP; admin may still have the old paths saved
       { source: '/pk_hero_visual.png', destination: '/pk_hero_visual.webp', permanent: true },
       { source: '/pk_about_visual.png', destination: '/pk_about_visual.webp', permanent: true },
