@@ -8,7 +8,6 @@ import { motion, AnimatePresence, MotionConfig } from 'framer-motion';
 import { ChevronDown, ArrowRight, Sparkles } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Reveal, TextReveal, staggerContainer, staggerItem } from '@/components/motion/reveal';
-import TiltCard from '@/components/motion/tilt-card';
 import Magnetic from '@/components/motion/magnetic';
 import JsonLd from '@/components/json-ld';
 import { breadcrumbJsonLd, faqJsonLd, serviceJsonLd, webPageJsonLd, SERVICE_LINKS } from '@/lib/seo';
@@ -116,7 +115,7 @@ export default function SeoServicePage({
                 initial={{ opacity: 0, y: 15 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5 }}
-                className="mb-6 inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/5 px-3 py-1.5 text-xs font-semibold uppercase tracking-widest text-primary"
+                className="mb-6 inline-flex items-center gap-2 rounded-full border border-border bg-secondary/40 px-3 py-1.5 text-xs font-semibold uppercase tracking-widest text-muted-foreground"
               >
                 <Sparkles className="h-3 w-3" />
                 <span>Premium Agency Offerings</span>
@@ -150,7 +149,7 @@ export default function SeoServicePage({
                     className="w-full rounded-full bg-primary px-8 py-6 text-base font-semibold text-primary-foreground shadow-lg shadow-primary/25 transition-transform hover:scale-[1.03] sm:w-auto"
                     asChild
                   >
-                    <a href="/#contact">Get Started Today</a>
+                    <a href="/#contact">Get a free quote</a>
                   </Button>
                 </Magnetic>
                 <Magnetic className="w-full sm:w-auto">
@@ -160,7 +159,7 @@ export default function SeoServicePage({
                     className="w-full rounded-full px-8 py-6 text-base font-semibold hover:bg-secondary/40 sm:w-auto"
                     asChild
                   >
-                    <a href="/work">Explore Our Work</a>
+                    <a href="/work">See our work</a>
                   </Button>
                 </Magnetic>
               </motion.div>
@@ -200,8 +199,7 @@ export default function SeoServicePage({
               >
                 {features.map((feature, index) => (
                   <motion.div key={index} variants={staggerItem}>
-                    <TiltCard
-                      max={6}
+                    <div
                       className="flex h-full flex-col gap-4 rounded-2xl border border-border/55 bg-secondary/20 p-6 transition-colors duration-300 hover:border-primary/40"
                     >
                       <div className="w-fit rounded-xl bg-primary/10 p-3 text-primary">
@@ -213,7 +211,7 @@ export default function SeoServicePage({
                       <p className="text-sm leading-relaxed text-muted-foreground">
                         {feature.description}
                       </p>
-                    </TiltCard>
+                    </div>
                   </motion.div>
                 ))}
               </motion.div>
@@ -348,7 +346,7 @@ export default function SeoServicePage({
                   asChild
                 >
                   <a href="/#contact" className="inline-flex items-center gap-2">
-                    <span>Start Your Project</span>
+                    <span>Get a free quote</span>
                     <ArrowRight className="h-4 w-4" />
                   </a>
                 </Button>

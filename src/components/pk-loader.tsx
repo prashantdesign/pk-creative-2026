@@ -89,7 +89,7 @@ export function PKSectionLoader({ label, minHeight = 320 }: { label?: string; mi
 /** Full-screen loader for route transitions. */
 export function PKPageLoader({ label = 'Loading' }: { label?: string }) {
   return (
-    <div className="fixed inset-0 z-[70] flex items-center justify-center bg-background/95 backdrop-blur-sm">
+    <div className="animate-loader-in fixed inset-0 z-[70] flex items-center justify-center bg-background/95">
       <PKLoader size="lg" label={label} />
     </div>
   );

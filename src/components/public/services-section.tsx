@@ -72,9 +72,6 @@ export default function ServicesSection({ content }: { content: SiteContent | nu
                     <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-primary/10 text-primary transition-all duration-500 group-hover:rotate-6 group-hover:bg-primary group-hover:text-primary-foreground sm:h-14 sm:w-14">
                       <Icons name={service.icon || 'star'} className="h-6 w-6 sm:h-7 sm:w-7" />
                     </div>
-                    <span className="font-headline text-sm font-bold text-muted-foreground/40">
-                      {String(index + 1).padStart(2, '0')}
-                    </span>
                   </div>
                   <div className="relative mt-8">
                     <h3 className={`mb-2 font-bold transition-colors duration-300 group-hover:text-primary ${featured ? 'text-2xl sm:text-3xl' : 'text-xl sm:text-2xl'}`}>

@@ -62,18 +62,6 @@ const HeroSection = ({ content }: { content: SiteContent | null }) => {
           ease: "easeInOut",
         }}
       />
-      <motion.div 
-        className="absolute -bottom-32 left-1/2 -translate-x-1/2 w-[800px] h-[400px]  rounded-full bg-[radial-gradient(closest-side,hsl(var(--primary)/0.18),transparent)]    pointer-events-none"
-        animate={{
-          scale: [1, 1.08, 1],
-          opacity: [0.7, 0.9, 0.7],
-        }}
-        transition={{
-          duration: 10,
-          repeat: Infinity,
-          ease: "easeInOut",
-        }}
-      />
 
       <div className="container relative z-10 mx-auto px-4 md:px-6">
         <div className={`grid gap-12 items-center ${hasMedia ? 'lg:grid-cols-[1.25fr_0.75fr]' : 'grid-cols-1 text-center justify-items-center'}`}>
@@ -136,7 +124,7 @@ const HeroSection = ({ content }: { content: SiteContent | null }) => {
                 >
                   <a href={content?.ctaLink || "#services"}>
                     <span className="relative z-10 flex items-center">
-                      {content?.ctaText || 'Our Services'}
+                      {content?.ctaText || 'Our services'}
                       <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
                     </span>
                     <div className="absolute inset-0 h-full w-full bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:animate-shimmer" />
@@ -156,7 +144,7 @@ const HeroSection = ({ content }: { content: SiteContent | null }) => {
                   className="px-8 py-7 rounded-full text-lg font-medium border-border hover:bg-accent hover:text-accent-foreground transition-all w-full"
                 >
                   <a href="#contact">
-                    Contact Us
+                    Get a free quote
                   </a>
                 </Button>
               </motion.div>
@@ -195,8 +183,7 @@ const HeroSection = ({ content }: { content: SiteContent | null }) => {
               }}
               className="relative w-full max-w-[440px] rounded-3xl overflow-hidden shadow-2xl group border border-border/50 mx-auto lg:mx-0 lg:justify-self-end cursor-pointer"
             >
-              <div className="absolute inset-0 bg-gradient-to-tr from-primary/20 to-transparent mix-blend-overlay z-10 pointer-events-none group-hover:opacity-0 transition-opacity duration-700" />
-              {isVideo ? (
+                            {isVideo ? (
                 <video 
                   src={mediaUrl} 
                   autoPlay 

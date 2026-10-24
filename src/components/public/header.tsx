@@ -60,7 +60,7 @@ const Header = ({ content: initialContent }: { content?: SiteContent | null }) =
       >
         <div className="container mx-auto flex h-16 items-center justify-between px-4 sm:h-[72px] md:px-6">
           <Magnetic strength={10}>
-            <Link href="/" className="flex items-center" aria-label="PK Creative home">
+            <Link href="/" className="flex min-h-11 items-center" aria-label="PK Creative home">
               <Logo siteName={content?.siteName} logoUrl={content?.logoUrl} />
             </Link>
           </Magnetic>
@@ -85,13 +85,13 @@ const Header = ({ content: initialContent }: { content?: SiteContent | null }) =
                 asChild
                 className="rounded-full bg-primary px-6 text-primary-foreground hover:bg-primary/90"
               >
-                <a href="/#contact">Let&apos;s Talk</a>
+                <Link href="/#contact">Get a free quote</Link>
               </Button>
             </Magnetic>
           </div>
 
           <button
-            className="relative z-50 flex h-10 w-10 items-center justify-center rounded-full border border-border/60 bg-background/60 backdrop-blur-md md:hidden"
+            className="relative z-50 flex h-11 w-11 items-center justify-center rounded-full border border-border/60 bg-background/60 backdrop-blur-md md:hidden"
             onClick={() => setIsOpen((v) => !v)}
             aria-label="Toggle menu"
             aria-expanded={isOpen}
@@ -160,7 +160,7 @@ const Header = ({ content: initialContent }: { content?: SiteContent | null }) =
                   className="w-full rounded-full bg-primary py-6 text-base text-primary-foreground"
                 >
                   <a href="/#contact" onClick={() => setIsOpen(false)}>
-                    Let&apos;s Talk
+                    Get a free quote
                   </a>
                 </Button>
               </motion.div>

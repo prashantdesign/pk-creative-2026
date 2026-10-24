@@ -38,7 +38,7 @@ function SubmitButton() {
         ) : (
           <Send className="h-5 w-5 shrink-0" />
         )}
-        {pending ? 'Sending...' : 'Send Message'}
+        {pending ? 'Sending…' : 'Send message'}
       </Button>
     </motion.div>
   );
@@ -97,8 +97,8 @@ export default function ContactSection({ content }: { content?: SiteContent | nu
           transition={{ duration: 0.6, ease: "easeOut" }}
           className="max-w-3xl mx-auto text-center mb-8 sm:mb-12 md:mb-16 px-4"
         >
-          <span className="mb-4 inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/5 px-3 py-1 text-xs font-semibold uppercase tracking-widest text-primary">
-            <span className="h-1.5 w-1.5 rounded-full bg-primary" />
+          <span className="mb-4 inline-flex items-center gap-2 rounded-full border border-border bg-secondary/40 px-3 py-1 text-xs font-semibold uppercase tracking-widest text-muted-foreground">
+            <span className="h-1.5 w-1.5 rounded-full bg-muted-foreground/60" />
             Get in touch
           </span>
           <h2 className="mb-3 font-headline text-3xl font-extrabold tracking-tight sm:mb-4 sm:text-4xl md:text-5xl">
@@ -147,6 +147,7 @@ export default function ContactSection({ content }: { content?: SiteContent | nu
                       <User className="absolute left-3.5 sm:left-4 h-4 w-4 sm:h-5 sm:w-5 text-muted-foreground/60" />
                       <Input 
                         id="name" 
+                        autoComplete="name" 
                         name="name" 
                         type="text" 
                         placeholder="John Doe" 
@@ -161,6 +162,7 @@ export default function ContactSection({ content }: { content?: SiteContent | nu
                       <Mail className="absolute left-3.5 sm:left-4 h-4 w-4 sm:h-5 sm:w-5 text-muted-foreground/60" />
                       <Input 
                         id="email" 
+                        autoComplete="email" 
                         name="email" 
                         type="email" 
                         placeholder="john@example.com" 
@@ -177,7 +179,8 @@ export default function ContactSection({ content }: { content?: SiteContent | nu
                     <div className="relative flex items-center">
                       <Phone className="absolute left-3.5 sm:left-4 h-4 w-4 sm:h-5 sm:w-5 text-muted-foreground/60" />
                       <Input 
-                        id="phone" 
+                        id="phone"
+                        autoComplete="tel" 
                         name="phone" 
                         type="tel" 
                         placeholder="+91 98765 43210" 

@@ -34,11 +34,11 @@ const SectionHeader: React.FC<SectionHeaderProps> = ({
       {eyebrow && (
         <Reveal
           className={cn(
-            'mb-4 inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/5 px-3 py-1 text-xs font-semibold uppercase tracking-widest text-primary',
+            'mb-4 inline-flex items-center gap-2 rounded-full border border-border bg-secondary/40 px-3 py-1 text-xs font-semibold uppercase tracking-widest text-muted-foreground',
             centered && 'mx-auto'
           )}
         >
-          <span className="h-1.5 w-1.5 rounded-full bg-primary" />
+          <span className="h-1.5 w-1.5 rounded-full bg-muted-foreground/60" />
           {eyebrow}
         </Reveal>
       )}

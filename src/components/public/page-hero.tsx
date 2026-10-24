@@ -30,9 +30,9 @@ export default function PageHero({ eyebrow, title, description, children }: Page
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-            className="mb-5 inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/5 px-3 py-1 text-xs font-semibold uppercase tracking-widest text-primary"
+            className="mb-5 inline-flex items-center gap-2 rounded-full border border-border bg-secondary/40 px-3 py-1 text-xs font-semibold uppercase tracking-widest text-muted-foreground"
           >
-            <span className="h-1.5 w-1.5 rounded-full bg-primary" />
+            <span className="h-1.5 w-1.5 rounded-full bg-muted-foreground/60" />
             {eyebrow}
           </motion.span>
         )}

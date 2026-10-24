@@ -39,9 +39,7 @@ const Footer = ({ content: initialContent }: { content?: SiteContent | null }) =
   const allLinks = [...links, ...FOOTER_EXTRA_LINKS.filter((e) => !links.some((l) => l.href === e.href))];
 
   const scrollTop = () => {
-    const lenis = (window as unknown as { lenis?: { scrollTo: (v: number) => void } }).lenis;
-    if (lenis) lenis.scrollTo(0);
-    else window.scrollTo({ top: 0, behavior: 'smooth' });
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   return (
@@ -63,7 +61,7 @@ const Footer = ({ content: initialContent }: { content?: SiteContent | null }) =
               href="/#contact"
               className="group inline-flex items-center gap-2 rounded-full bg-primary px-7 py-4 text-base font-semibold text-primary-foreground transition-transform hover:scale-[1.03]"
             >
-              Start a project
+              Get a free quote
               <ArrowUpRight className="h-5 w-5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
             </a>
           </Magnetic>
@@ -102,22 +100,22 @@ const Footer = ({ content: initialContent }: { content?: SiteContent | null }) =
             </div>
           </div>
 
-          <div className="flex flex-col gap-3">
-            <h4 className="font-headline text-sm font-semibold uppercase tracking-widest text-muted-foreground">
+          <div className="flex flex-col gap-0.5">
+            <h4 className="mb-2 font-headline text-sm font-semibold uppercase tracking-widest text-muted-foreground">
               Explore
             </h4>
             {allLinks.map((l) => (
               <a
                 key={l.label}
                 href={l.href}
-                className="w-fit text-sm text-foreground/80 transition-colors hover:text-primary"
+                className="flex min-h-11 w-fit items-center text-sm text-foreground/80 transition-colors hover:text-primary"
               >
                 {l.label}
               </a>
             ))}
           </div>
 
-          <nav aria-label="Services" className="col-span-2 flex flex-col gap-3 sm:col-span-1">
+          <nav aria-label="Services" className="col-span-2 flex flex-col gap-0.5 sm:col-span-1">
             <h4 className="font-headline text-sm font-semibold uppercase tracking-widest text-muted-foreground">
               Services
             </h4>
@@ -125,7 +123,7 @@ const Footer = ({ content: initialContent }: { content?: SiteContent | null }) =
               <a
                 key={l.href}
                 href={l.href}
-                className="w-fit text-sm text-foreground/80 transition-colors hover:text-primary"
+                className="flex min-h-11 w-fit items-center text-sm text-foreground/80 transition-colors hover:text-primary"
               >
                 {l.label}
               </a>
@@ -144,7 +142,7 @@ const Footer = ({ content: initialContent }: { content?: SiteContent | null }) =
                   target={s.href.startsWith('http') ? '_blank' : undefined}
                   rel="noopener noreferrer"
                   aria-label={s.label}
-                  className="flex h-10 w-10 items-center justify-center rounded-full border border-border/60 text-muted-foreground transition-all hover:border-primary/40 hover:bg-primary/10 hover:text-primary"
+                  className="flex h-11 w-11 items-center justify-center rounded-full border border-border/60 text-muted-foreground transition-all hover:border-primary/40 hover:bg-primary/10 hover:text-primary"
                 >
                   <s.icon className="h-4 w-4" />
                 </a>
@@ -161,7 +159,7 @@ const Footer = ({ content: initialContent }: { content?: SiteContent | null }) =
         </p>
         <button
           onClick={scrollTop}
-          className="inline-flex items-center gap-1.5 rounded-full border border-border/60 px-3 py-1.5 text-xs font-medium transition-colors hover:border-primary/40 hover:text-primary"
+          className="inline-flex min-h-11 items-center gap-1.5 rounded-full border border-border/60 px-4 py-2 text-xs font-medium transition-colors hover:border-primary/40 hover:text-primary"
         >
           Back to top <ArrowUp className="h-3.5 w-3.5" />
         </button>

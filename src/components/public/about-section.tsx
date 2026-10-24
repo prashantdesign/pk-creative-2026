@@ -26,8 +26,8 @@ const AboutSection = ({ content }: { content: SiteContent | null }) => {
       <div className="container relative z-10 mx-auto px-4 sm:px-6">
         <div className="grid items-center gap-12 md:grid-cols-2 lg:gap-20">
           <div className="space-y-6">
-            <Reveal className="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/5 px-3 py-1 text-xs font-semibold uppercase tracking-widest text-primary">
-              <span className="h-1.5 w-1.5 rounded-full bg-primary" />
+            <Reveal className="inline-flex items-center gap-2 rounded-full border border-border bg-secondary/40 px-3 py-1 text-xs font-semibold uppercase tracking-widest text-muted-foreground">
+              <span className="h-1.5 w-1.5 rounded-full bg-muted-foreground/60" />
               Who we are
             </Reveal>
             <TextReveal

@@ -53,7 +53,7 @@ const formSchema = z.object({
 
   targetAudience: z.array(z.string()).optional(),
 
-  theme: z.enum(['light', 'dark', 'system']).default('dark'),
+  theme: z.enum(['light', 'dark', 'system']).default('system'),
 
   contactSectionTitle: z.string().optional(),
   contactSectionDescription: z.string().optional(),
@@ -116,7 +116,7 @@ export default function SiteContentForm() {
       contactImageUrl: "",
       footerDescription: "Creative Solutions For Modern Brands.\nWebsite Design • Branding • Social Media",
       footerCopyrightText: "© 2026 PK Creative. All Rights Reserved.",
-      theme: 'dark',
+      theme: 'system',
       linkedin: "",
       twitter: "",
       instagram: "",
@@ -166,7 +166,7 @@ export default function SiteContentForm() {
         contactImageUrl: siteContent.contactImageUrl || '',
         footerDescription: siteContent.footerDescription || "Creative Solutions For Modern Brands.\nWebsite Design • Branding • Social Media",
         footerCopyrightText: siteContent.footerCopyrightText || "© 2026 PK Creative. All Rights Reserved.",
-        theme: siteContent.theme || 'dark',
+        theme: siteContent.theme || 'system',
         linkedin: siteContent.socials?.linkedin,
         twitter: siteContent.socials?.twitter,
         instagram: siteContent.socials?.instagram,
@@ -574,15 +574,21 @@ export default function SiteContentForm() {
                       >
                         <FormItem className="flex items-center space-x-3 space-y-0">
                           <FormControl>
+                            <RadioGroupItem value="system" />
+                          </FormControl>
+                          <FormLabel className="font-normal">System (recommended): follows each visitor&apos;s phone or computer setting</FormLabel>
+                        </FormItem>
+                        <FormItem className="flex items-center space-x-3 space-y-0">
+                          <FormControl>
                             <RadioGroupItem value="light" />
                           </FormControl>
-                          <FormLabel className="font-normal">Light</FormLabel>
+                          <FormLabel className="font-normal">Always light</FormLabel>
                         </FormItem>
                         <FormItem className="flex items-center space-x-3 space-y-0">
                           <FormControl>
                             <RadioGroupItem value="dark" />
                           </FormControl>
-                          <FormLabel className="font-normal">Dark</FormLabel>
+                          <FormLabel className="font-normal">Always dark</FormLabel>
                         </FormItem>
                       </RadioGroup>
                     </FormControl>

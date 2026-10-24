@@ -42,7 +42,7 @@ export default function TargetAudienceSection({ content }: { content: SiteConten
 
       <Reveal className="container relative z-10 mx-auto mb-14 max-w-3xl px-4 text-center sm:px-6 md:mb-20">
         <span className="mb-4 inline-flex items-center gap-2 rounded-full border border-background/20 bg-background/5 px-3 py-1 text-xs font-semibold uppercase tracking-widest text-background/70">
-          <span className="h-1.5 w-1.5 rounded-full bg-primary" />
+          <span className="h-1.5 w-1.5 rounded-full bg-muted-foreground/60" />
           Who we help
         </span>
         <h2 className="font-headline text-3xl font-extrabold tracking-tight text-background sm:text-4xl md:text-5xl">

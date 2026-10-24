@@ -14,6 +14,7 @@
     --popover-foreground: 0 0% 6.7%;
 
     --primary: 258 100% 58%;
+    --primary-text: 258 100% 58%;
     --primary-foreground: 0 0% 100%;
 
     --secondary: 225 33% 98%;
@@ -54,7 +55,9 @@
     --popover: 0 0% 9%;
     --popover-foreground: 0 0% 98%;
 
-    --primary: 258 100% 68%;
+    /* Button fills need white-on-violet >= 4.5:1 (5.38); violet text needs a lighter tone on the dark page (6.1:1) */
+    --primary: 258 100% 62%;
+    --primary-text: 258 100% 74%;
     --primary-foreground: 0 0% 100%;
 
     --secondary: 225 15% 15%;
@@ -75,7 +78,7 @@
 
     --sidebar-background: 0 0% 9%;
     --sidebar-foreground: 0 0% 98%;
-    --sidebar-primary: 258 100% 68%;
+    --sidebar-primary: 258 100% 62%;
     --sidebar-primary-foreground: 0 0% 100%;
     --sidebar-accent: 225 15% 15%;
     --sidebar-accent-foreground: 0 0% 98%;
@@ -124,6 +127,15 @@
 }
 
 @layer utilities {
+  /* Violet used as text/icon colour follows --primary-text so it stays readable (>=4.5:1) in both appearances */
+  html .text-primary,
+  html .hover\:text-primary:hover,
+  html .group:hover .group-hover\:text-primary { color: hsl(var(--primary-text)); }
+
+  /* Delayed fade so the page loader only appears if navigation takes longer than ~300ms */
+  @keyframes loader-in { from { opacity: 0; } to { opacity: 1; } }
+  .animate-loader-in { animation: loader-in 0.25s ease-out 0.3s both; }
+
   @keyframes fade-in-up {
     from {
       opacity: 0;
@@ -190,42 +202,12 @@
     box-shadow: 0 0 0 1px hsl(var(--primary) / 0.35), 0 24px 70px -20px hsl(var(--primary) / 0.55);
   }
 
-  /* ---- Custom cursor ---- */
-  .cursor-dot,
-  .cursor-ring {
-    position: fixed;
-    top: 0;
-    left: 0;
-    pointer-events: none;
-    z-index: 9999;
-    border-radius: 9999px;
-    will-change: transform, opacity;
-    transition: opacity 0.25s ease, width 0.2s ease, height 0.2s ease, background-color 0.2s ease;
-  }
-  .cursor-dot {
-    width: 6px;
-    height: 6px;
-    background: hsl(var(--primary));
-  }
-  .cursor-ring {
-    width: 34px;
-    height: 34px;
-    border: 1.5px solid hsl(var(--primary) / 0.5);
-  }
-  .cursor-ring.cursor-ring--grow {
-    width: 60px;
-    height: 60px;
-    background: hsl(var(--primary) / 0.08);
-    border-color: hsl(var(--primary) / 0.3);
-  }
-
   /* ---- Misc ---- */
   .perspective-1000 { perspective: 1000px; }
   .preserve-3d { transform-style: preserve-3d; }
   .backface-hidden { backface-visibility: hidden; }
 
   @media (prefers-reduced-motion: reduce) {
-    .cursor-dot, .cursor-ring { display: none !important; }
     *, *::before, *::after {
       animation-duration: 0.001ms !important;
       animation-iteration-count: 1 !important;

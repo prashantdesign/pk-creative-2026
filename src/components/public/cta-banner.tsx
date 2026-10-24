@@ -15,7 +15,7 @@ export default function CtaBanner() {
           <h2 className="font-headline text-3xl font-extrabold tracking-tight sm:text-4xl md:text-5xl">
             Ready for a website that actually brings in clients?
           </h2>
-          <p className="mx-auto mt-4 max-w-xl text-base text-white/80 sm:text-lg">
+          <p className="mx-auto mt-4 max-w-xl text-base text-white/90 sm:text-lg">
             Tell us about your project and get a free, no-obligation quote within one business day.
           </p>
           <div className="mt-8 flex justify-center">

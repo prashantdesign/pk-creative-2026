@@ -3,8 +3,6 @@ import { Inter, Poppins } from 'next/font/google';
 import './globals.css';
 import { Toaster } from "@/components/ui/toaster";
 import { ThemeProvider } from '@/components/theme-provider';
-import SmoothScroll from '@/components/motion/smooth-scroll';
-import CustomCursor from '@/components/motion/custom-cursor';
 import ScrollProgress from '@/components/motion/scroll-progress';
 import FloatingContact from '@/components/public/floating-contact';
 import JsonLd from '@/components/json-ld';
@@ -31,6 +29,7 @@ export const revalidate = 300;
 export const viewport: Viewport = {
   width: 'device-width',
   initialScale: 1,
+  viewportFit: 'cover',
   themeColor: [
     { media: '(prefers-color-scheme: light)', color: '#ffffff' },
     { media: '(prefers-color-scheme: dark)', color: '#111111' },
@@ -112,12 +111,19 @@ export default async function RootLayout({
 }>) {
   const content = await getInitialSiteContent();
   const gaTrackingId = content?.seoSettings?.gaTrackingId || process.env.NEXT_PUBLIC_GA_ID || '';
-  const theme = content?.theme === 'light' ? 'light' : 'dark';
+  // Follow the visitor's system appearance unless the admin pins light or dark
+  const pref = content?.theme === 'light' || content?.theme === 'dark' ? content.theme : 'system';
   const whatsapp = content?.socials?.whatsapp;
 
   return (
-    <html lang="en-IN" suppressHydrationWarning className={`scroll-smooth ${theme}`}>
+    <html lang="en-IN" suppressHydrationWarning data-theme={pref} className={`scroll-smooth ${pref === 'system' ? '' : pref}`}>
       <head>
+        <script
+          // Runs before first paint so 'system' appearance never flashes the wrong theme
+          dangerouslySetInnerHTML={{
+            __html: `(function(){try{var d=document.documentElement;if(d.dataset.theme==='system'){d.classList.add(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light')}}catch(e){}})()`,
+          }}
+        />
         <link rel="preconnect" href="https://res.cloudinary.com" crossOrigin="" />
         <link rel="preconnect" href="https://lh3.googleusercontent.com" crossOrigin="" />
         <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
@@ -146,8 +152,7 @@ export default async function RootLayout({
         <FirebaseClientProvider>
           <ThemeProvider>
             <ScrollProgress />
-            <CustomCursor />
-            <SmoothScroll>{children}</SmoothScroll>
+            {children}
             <FloatingContact whatsapp={whatsapp} />
             <Toaster />
             <FirebaseErrorListener />

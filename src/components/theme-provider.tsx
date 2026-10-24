@@ -27,11 +27,20 @@ export function ThemeProvider({ children }: ThemeProviderProps) {
   const siteContentRef = useMemo(() => firestore ? doc(firestore, 'pkcreative_siteContent', 'global') : null, [firestore]);
   const { data: siteContent, loading } = useDoc<SiteContent & { theme?: Theme }>(siteContentRef);
 
+  // 'system' follows the visitor's OS appearance (and updates live when it changes)
   useEffect(() => {
-    if (siteContent?.theme) {
-      setTheme(siteContent.theme);
+    const pref = siteContent?.theme;
+    if (!pref) return;
+    if (pref === 'light' || pref === 'dark') {
+      setTheme(pref);
+      return;
     }
-  }, [siteContent]);
+    const mq = window.matchMedia('(prefers-color-scheme: dark)');
+    const apply = () => setTheme(mq.matches ? 'dark' : 'light');
+    apply();
+    mq.addEventListener('change', apply);
+    return () => mq.removeEventListener('change', apply);
+  }, [siteContent?.theme]);
 
   useEffect(() => {
     const root = window.document.documentElement;

@@ -3,7 +3,6 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { Zap, ShieldCheck, LineChart, Wallet, Headphones, Sparkles } from 'lucide-react';
 import SectionHeader from '@/components/public/section-header';
-import TiltCard from '@/components/motion/tilt-card';
 import { staggerContainer, staggerItem } from '@/components/motion/reveal';
 
 const reasons = [
@@ -37,14 +36,13 @@ export default function WhyUsSection() {
         >
           {reasons.map((r) => (
             <motion.div key={r.title} variants={staggerItem}>
-              <TiltCard
-                max={5}
+              <div
                 className="group h-full rounded-3xl border border-border bg-background p-6 transition-colors duration-300 hover:border-primary/40 sm:p-8"
               >
                 <r.icon className="mb-5 h-8 w-8 text-primary transition-transform duration-500 group-hover:scale-110" />
                 <h3 className="mb-2 font-headline text-xl font-bold">{r.title}</h3>
                 <p className="text-sm leading-relaxed text-muted-foreground sm:text-base">{r.text}</p>
-              </TiltCard>
+              </div>
             </motion.div>
           ))}
         </motion.div>

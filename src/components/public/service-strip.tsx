@@ -17,7 +17,7 @@ export default function ServiceStrip() {
             <a
               key={s.href}
               href={s.href}
-              className="flex items-center gap-8 whitespace-nowrap font-headline text-lg font-semibold text-foreground/70 transition-colors hover:text-primary sm:text-xl"
+              className="flex min-h-11 items-center gap-8 whitespace-nowrap font-headline text-lg font-semibold text-foreground/70 transition-colors hover:text-primary sm:text-xl"
             >
               {s.label}
               <Sparkles className="h-4 w-4 text-primary" aria-hidden />

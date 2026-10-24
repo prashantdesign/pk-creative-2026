@@ -44,7 +44,6 @@
     "firebase-admin": "^14.1.0",
     "framer-motion": "^12.40.0",
     "genkit": "^1.0.0",
-    "lenis": "^1.3.26",
     "lucide-react": "^0.475.0",
     "next": "15.5.9",
     "nodemailer": "^9.0.1",
