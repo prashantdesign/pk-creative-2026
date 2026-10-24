@@ -16,11 +16,7 @@ const reasons = [
 
 export default function WhyUsSection() {
   return (
-    <section id="why-us" className="relative overflow-hidden bg-secondary/20 py-20 md:py-28">
-      <div
-        aria-hidden
-        className="pointer-events-none absolute -left-40 top-1/3 h-[500px] w-[500px] rounded-full bg-[radial-gradient(closest-side,hsl(var(--primary)/0.18),transparent)]  "
-      />
+    <section id="why-us" className="relative overflow-hidden bg-secondary py-24 md:py-32">
       <div className="container relative z-10 mx-auto px-4 sm:px-6">
         <SectionHeader
           eyebrow="Why PK Creative"
@@ -37,9 +33,9 @@ export default function WhyUsSection() {
           {reasons.map((r) => (
             <motion.div key={r.title} variants={staggerItem}>
               <div
-                className="group h-full rounded-3xl border border-border bg-background p-6 transition-colors duration-300 hover:border-primary/40 sm:p-8"
+                className="h-full rounded-[2rem] bg-background p-6 sm:p-8"
               >
-                <r.icon className="mb-5 h-8 w-8 text-primary transition-transform duration-500 group-hover:scale-110" />
+                <r.icon className="mb-5 h-8 w-8 text-primary" />
                 <h3 className="mb-2 font-headline text-xl font-bold">{r.title}</h3>
                 <p className="text-sm leading-relaxed text-muted-foreground sm:text-base">{r.text}</p>
               </div>

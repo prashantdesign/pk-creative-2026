@@ -46,7 +46,7 @@ export default async function ContactPage() {
           description="Have a project in mind? We'd love to collaborate. Fill out the form below or reach us directly at info@pkcreative.in."
         />
 
-        <ContactSection content={siteContent} />
+        <ContactSection content={siteContent} hideHeader />
       </main>
 
       <Footer content={siteContent} />

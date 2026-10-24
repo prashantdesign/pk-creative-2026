@@ -5,84 +5,84 @@
 @layer base {
   :root {
     --background: 0 0% 100%;
-    --foreground: 0 0% 6.7%;
+    --foreground: 240 3% 12%;
 
     --card: 0 0% 100%;
-    --card-foreground: 0 0% 6.7%;
+    --card-foreground: 240 3% 12%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 0 0% 6.7%;
+    --popover-foreground: 240 3% 12%;
 
     --primary: 258 100% 58%;
     --primary-text: 258 100% 58%;
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 225 33% 98%;
-    --secondary-foreground: 0 0% 6.7%;
+    --secondary: 240 5% 96%;
+    --secondary-foreground: 240 3% 12%;
 
-    --muted: 225 33% 98%;
-    --muted-foreground: 0 0% 40%;
+    --muted: 240 5% 96%;
+    --muted-foreground: 240 2% 42%;
     
-    --accent: 225 33% 98%;
-    --accent-foreground: 0 0% 6.7%;
+    --accent: 240 5% 96%;
+    --accent-foreground: 240 3% 12%;
 
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 0 0% 90%;
-    --input: 0 0% 90%;
+    --border: 240 6% 88%;
+    --input: 240 6% 84%;
     --ring: 258 100% 58%;
 
-    --radius: 0.75rem;
+    --radius: 1.25rem;
 
-    --sidebar-background: 225 33% 98%;
-    --sidebar-foreground: 0 0% 6.7%;
+    --sidebar-background: 240 5% 97%;
+    --sidebar-foreground: 240 3% 12%;
     --sidebar-primary: 258 100% 58%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 0 0% 90%;
-    --sidebar-accent-foreground: 0 0% 6.7%;
-    --sidebar-border: 0 0% 90%;
+    --sidebar-accent: 240 5% 92%;
+    --sidebar-accent-foreground: 240 3% 12%;
+    --sidebar-border: 240 6% 88%;
     --sidebar-ring: 258 100% 58%;
   }
 
   .dark {
-    --background: 0 0% 6.7%;
-    --foreground: 0 0% 98%;
+    --background: 0 0% 0%;
+    --foreground: 240 5% 96%;
 
-    --card: 0 0% 9%;
-    --card-foreground: 0 0% 98%;
+    --card: 240 3% 11%;
+    --card-foreground: 240 5% 96%;
 
-    --popover: 0 0% 9%;
-    --popover-foreground: 0 0% 98%;
+    --popover: 240 3% 11%;
+    --popover-foreground: 240 5% 96%;
 
     /* Button fills need white-on-violet >= 4.5:1 (5.38); violet text needs a lighter tone on the dark page (6.1:1) */
     --primary: 258 100% 62%;
     --primary-text: 258 100% 74%;
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 225 15% 15%;
-    --secondary-foreground: 0 0% 98%;
+    --secondary: 240 3% 11%;
+    --secondary-foreground: 240 5% 96%;
 
-    --muted: 225 15% 15%;
-    --muted-foreground: 0 0% 60%;
+    --muted: 240 3% 13%;
+    --muted-foreground: 240 4% 64%;
     
-    --accent: 225 15% 15%;
-    --accent-foreground: 0 0% 98%;
+    --accent: 240 3% 15%;
+    --accent-foreground: 240 5% 96%;
 
     --destructive: 0 62% 30%;
     --destructive-foreground: 0 0% 98%;
 
-    --border: 0 0% 15%;
-    --input: 0 0% 15%;
+    --border: 240 3% 20%;
+    --input: 240 3% 22%;
     --ring: 258 100% 68%;
 
-    --sidebar-background: 0 0% 9%;
-    --sidebar-foreground: 0 0% 98%;
+    --sidebar-background: 240 3% 7%;
+    --sidebar-foreground: 240 5% 96%;
     --sidebar-primary: 258 100% 62%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 225 15% 15%;
-    --sidebar-accent-foreground: 0 0% 98%;
-    --sidebar-border: 0 0% 15%;
+    --sidebar-accent: 240 3% 15%;
+    --sidebar-accent-foreground: 240 5% 96%;
+    --sidebar-border: 240 3% 18%;
     --sidebar-ring: 258 100% 68%;
   }
 }
@@ -91,7 +91,11 @@
   * {
     @apply border-border;
   }
+  /* Apple-style type: system UI font (SF Pro on Apple devices, Inter elsewhere), semibold display weights, tight tracking */
   body {
+    font-feature-settings: 'ss01', 'cv11';
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
     @apply bg-background text-foreground;
     min-height: 100vh;
     overflow-x: hidden;
@@ -110,7 +114,11 @@
     }
   }
   /* Fluid headings – tighten on phones, breathe on desktop */
-  h1 { text-wrap: balance; }
+  h1 { text-wrap: balance; letter-spacing: -0.035em; line-height: 1.05; }
+  h2 { letter-spacing: -0.03em; line-height: 1.1; }
+  h3 { letter-spacing: -0.015em; }
+  .font-black, .font-extrabold { font-weight: 650; }
+  .font-bold.font-headline { font-weight: 600; }
   h2, h3 { text-wrap: balance; }
 
   .animation-delay-300 {

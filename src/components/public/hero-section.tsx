@@ -1,220 +1,94 @@
 'use client';
-import { optimizeImageUrl } from '@/lib/image-url';
 import React from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 import type { SiteContent } from '@/types';
-import { Button } from '@/components/ui/button';
-import { ArrowRight, Sparkles, Zap, ShieldCheck, Search, Star } from 'lucide-react';
+import { ArrowRight, ChevronRight } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { optimizeImageUrl } from '@/lib/image-url';
+
+const ease = [0.28, 0.11, 0.32, 1] as const;
 
 const HeroSection = ({ content }: { content: SiteContent | null }) => {
-  const defaultHeroMedia = "/pk_hero_visual.webp";
-  const mediaUrl = content?.heroMediaUrl || defaultHeroMedia;
-  const hasMedia = true;
+  const mediaUrl = content?.heroMediaUrl || '/pk_hero_visual.webp';
   const isVideo = mediaUrl.toLowerCase().includes('.mp4');
+  const secondaryHref = content?.ctaLink || '#services';
 
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.15,
-        delayChildren: 0.1,
-      }
-    }
-  };
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: 30 },
-    visible: { 
-      opacity: 1, 
-      y: 0,
-      transition: { type: "spring" as const, stiffness: 100, damping: 20 }
-    }
-  };
-
-
+  const rise = (delay: number) => ({
+    initial: { opacity: 0, y: 24 },
+    animate: { opacity: 1, y: 0 },
+    transition: { duration: 0.9, delay, ease },
+  });
 
   return (
-    <section id="home" className={`relative overflow-hidden bg-background ${hasMedia ? 'pt-4 pb-20 md:pt-6 md:pb-24 lg:pt-8 lg:pb-32' : 'py-16'}`}>
-      {/* Background Glowing Blobs with Infinite floating logic */}
-      <motion.div 
-        className="absolute top-1/4 left-1/4 w-96 h-96  rounded-full bg-[radial-gradient(closest-side,hsl(var(--primary)/0.36),transparent)]    pointer-events-none"
-        animate={{
-          x: [0, 30, 0],
-          y: [0, -40, 0],
-        }}
-        transition={{
-          duration: 12,
-          repeat: Infinity,
-          ease: "easeInOut",
-        }}
-      />
-      <motion.div 
-        className="absolute top-1/3 right-1/4 w-96 h-96  rounded-full bg-[radial-gradient(closest-side,hsl(var(--primary)/0.36),transparent)]    pointer-events-none"
-        animate={{
-          x: [0, -40, 0],
-          y: [0, 30, 0],
-        }}
-        transition={{
-          duration: 15,
-          repeat: Infinity,
-          ease: "easeInOut",
-        }}
+    <section id="home" className="relative overflow-hidden bg-background pt-14 sm:pt-20 md:pt-24">
+      {/* one soft light behind the product visual, nothing else competes with it */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute left-1/2 top-[38%] h-[520px] w-[920px] max-w-[160vw] -translate-x-1/2 rounded-full bg-[radial-gradient(closest-side,hsl(var(--primary)/0.16),transparent)]"
       />
 
-      <div className="container relative z-10 mx-auto px-4 md:px-6">
-        <div className={`grid gap-12 items-center ${hasMedia ? 'lg:grid-cols-[1.25fr_0.75fr]' : 'grid-cols-1 text-center justify-items-center'}`}>
-          
-          {/* Text Column */}
-          <motion.div 
-            variants={containerVariants}
-            initial="hidden"
-            animate="visible"
-            className={`space-y-8 ${hasMedia ? 'max-w-2xl' : 'max-w-5xl mx-auto'}`}
+      <div className="container relative z-10 mx-auto px-4 text-center md:px-6">
+        <motion.p {...rise(0)} className="text-sm font-semibold text-primary sm:text-base">
+          Creative solutions for modern brands
+        </motion.p>
+
+        <motion.h1
+          {...rise(0.08)}
+          className="mx-auto mt-4 max-w-4xl font-headline text-[2.6rem] font-semibold leading-[1.05] tracking-tight text-foreground sm:text-6xl md:text-7xl lg:text-[5.25rem]"
+        >
+          {content?.heroTitle || 'Websites & brands built to grow your business'}
+        </motion.h1>
+
+        <motion.p
+          {...rise(0.16)}
+          className="mx-auto mt-6 max-w-2xl text-lg leading-snug text-muted-foreground sm:text-xl md:text-2xl"
+        >
+          {content?.heroSubtitle || 'Premium website design, UI/UX, branding and social media management.'}
+        </motion.p>
+
+        <motion.div {...rise(0.24)} className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row sm:gap-6">
+          <Link
+            href="#contact"
+            className="group inline-flex min-h-12 items-center gap-2 rounded-full bg-primary px-7 text-base font-medium text-primary-foreground transition-all duration-300 hover:brightness-110 active:scale-[0.98]"
           >
-            <motion.div 
-              variants={itemVariants}
-              className={`inline-flex items-center gap-2 rounded-full border border-primary/20 bg-background/50 backdrop-blur-sm px-4 py-1.5 text-sm font-medium text-primary shadow-sm mb-6 ${!hasMedia ? 'mx-auto' : ''}`}
-            >
-              <Sparkles className="h-4 w-4" />
-              <span>Creative Solutions For Modern Brands</span>
-            </motion.div>
-            
-            <motion.h1 
-              variants={itemVariants}
-              className={`text-5xl sm:text-6xl md:text-6xl lg:text-7xl font-headline font-black tracking-tighter text-foreground leading-[1.1] ${!hasMedia ? 'lg:text-9xl' : ''}`}
-            >
-              <span className="block text-transparent bg-clip-text bg-gradient-to-br from-foreground via-foreground to-muted-foreground">
-                {content?.heroTitle || 'Websites & Brands Built To Grow Your Business'}
-              </span>
-            </motion.h1>
-            
-            <motion.p 
-              variants={itemVariants}
-              className={`text-xl md:text-2xl text-muted-foreground font-body leading-relaxed ${!hasMedia ? 'mx-auto max-w-2xl' : ''}`}
-            >
-              {content?.heroSubtitle ||
-                'We deliver premium Website Design, UI/UX, Branding, and Social Media Management.'}
-            </motion.p>
-            
-            <motion.div
-              variants={itemVariants}
-              className={`inline-flex items-center gap-2.5 rounded-2xl bg-primary/5 border border-primary/10 px-4 py-2 text-sm font-semibold text-foreground ${!hasMedia ? 'mx-auto' : ''}`}
-            >
-              <span className="h-2.5 w-2.5 rounded-full bg-[#612af5] dark:bg-primary animate-pulse" />
-              <span>
-                <span className="text-primary font-bold">Dynamic Websites</span> starting from <span className="text-primary font-bold">₹10,000</span>
-              </span>
-            </motion.div>
-            
-            <motion.div 
-              variants={itemVariants}
-              className={`pt-4 flex flex-col sm:flex-row items-center gap-4 ${!hasMedia ? 'justify-center' : ''}`}
-            >
-              <motion.div 
-                whileHover={{ scale: 1.04, y: -2 }}
-                whileTap={{ scale: 0.98 }}
-                className="w-full sm:w-auto"
-              >
-                <Button 
-                  asChild 
-                  size="lg" 
-                  className="group relative overflow-hidden bg-primary hover:bg-primary/90 text-primary-foreground px-8 py-7 rounded-full text-lg font-semibold shadow-[0_0_40px_-10px_rgba(var(--primary),0.5)] transition-all hover:shadow-[0_0_60px_-15px_rgba(var(--primary),0.6)] w-full"
-                >
-                  <a href={content?.ctaLink || "#services"}>
-                    <span className="relative z-10 flex items-center">
-                      {content?.ctaText || 'Our services'}
-                      <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
-                    </span>
-                    <div className="absolute inset-0 h-full w-full bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:animate-shimmer" />
-                  </a>
-                </Button>
-              </motion.div>
-              
-              <motion.div 
-                whileHover={{ scale: 1.04, y: -2 }}
-                whileTap={{ scale: 0.98 }}
-                className="w-full sm:w-auto"
-              >
-                <Button 
-                  asChild 
-                  variant="outline" 
-                  size="lg" 
-                  className="px-8 py-7 rounded-full text-lg font-medium border-border hover:bg-accent hover:text-accent-foreground transition-all w-full"
-                >
-                  <a href="#contact">
-                    Get a free quote
-                  </a>
-                </Button>
-              </motion.div>
-            </motion.div>
+            Get a free quote
+            <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-0.5" />
+          </Link>
+          <Link
+            href={secondaryHref}
+            className="group inline-flex min-h-12 items-center gap-1 text-base font-medium text-primary hover:underline"
+          >
+            {content?.ctaText || 'Our services'}
+            <ChevronRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-0.5" />
+          </Link>
+        </motion.div>
 
-            <motion.ul
-              variants={itemVariants}
-              className="flex flex-wrap items-center gap-x-6 gap-y-2 pt-2 text-sm font-medium text-muted-foreground"
-            >
-              <li className="flex items-center gap-1.5"><Zap className="h-4 w-4 text-primary" /> 7-day delivery</li>
-              <li className="flex items-center gap-1.5"><Search className="h-4 w-4 text-primary" /> SEO-ready</li>
-              <li className="flex items-center gap-1.5"><ShieldCheck className="h-4 w-4 text-primary" /> Admin panel included</li>
-            </motion.ul>
-          </motion.div>
+        <motion.p {...rise(0.3)} className="mt-6 text-sm text-muted-foreground">
+          Dynamic websites from <span className="font-semibold text-foreground">₹10,000</span> · 7-day delivery · SEO-ready · Admin panel included
+        </motion.p>
 
-          {/* Media Column with premium float and shadow shift */}
-          {hasMedia && (
-            <motion.div 
-              initial={{ opacity: 0, y: 40 }}
-              animate={{ 
-                opacity: 1,
-                y: [0, -10, 0]
-              }}
-              transition={{
-                opacity: { duration: 0.8, ease: "easeOut" },
-                y: {
-                  duration: 6,
-                  repeat: Infinity,
-                  ease: "easeInOut"
-                }
-              }}
-              whileHover={{ 
-                scale: 1.03,
-                boxShadow: "0 25px 60px -15px rgba(97, 42, 245, 0.3)",
-                transition: { duration: 0.4 }
-              }}
-              className="relative w-full max-w-[440px] rounded-3xl overflow-hidden shadow-2xl group border border-border/50 mx-auto lg:mx-0 lg:justify-self-end cursor-pointer"
-            >
-                            {isVideo ? (
-                <video 
-                  src={mediaUrl} 
-                  autoPlay 
-                  loop 
-                  muted 
-                  playsInline
-                  className="w-full h-auto object-contain transition-transform duration-700 group-hover:scale-105"
-                />
-              ) : (
-                <Image
-                  src={optimizeImageUrl(mediaUrl, 1000)}
-                  alt="PK Creative - website design, branding and SEO for modern brands"
-                  width={440}
-                  height={440}
-                  sizes="(max-width: 1024px) 90vw, 440px"
-                  priority
-                  fetchPriority="high"
-                  className="w-full h-auto object-contain transition-transform duration-700 group-hover:scale-105"
-                />
-              )}
-              <div className="pointer-events-none absolute bottom-4 left-4 z-20 flex items-center gap-2 rounded-2xl border border-white/20 bg-background/80 px-3 py-2 text-xs font-semibold shadow-lg backdrop-blur">
-                <Star className="h-4 w-4 fill-amber-400 text-amber-400" /> Trusted by growing brands
-              </div>
-            </motion.div>
+        <motion.div
+          initial={{ opacity: 0, y: 48, scale: 0.94 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          transition={{ duration: 1.2, delay: 0.35, ease }}
+          className="relative mx-auto mt-12 aspect-[4/3] w-full max-w-4xl overflow-hidden rounded-[1.75rem] bg-secondary shadow-[0_40px_80px_-30px_rgba(0,0,0,0.35)] sm:mt-16 sm:rounded-[2.25rem] md:aspect-[16/10]"
+        >
+          {isVideo ? (
+            <video src={mediaUrl} autoPlay loop muted playsInline className="h-full w-full object-cover" />
+          ) : (
+            <Image
+              src={optimizeImageUrl(mediaUrl, 1600)}
+              alt="PK Creative - website design, branding and SEO for modern brands"
+              fill
+              sizes="(max-width: 896px) 100vw, 896px"
+              priority
+              fetchPriority="high"
+              className="object-cover"
+            />
           )}
-
-        </div>
+        </motion.div>
       </div>
-      
-      {/* Decorative Bottom Fade */}
-      <div className="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-background to-transparent pointer-events-none" />
     </section>
   );
 };

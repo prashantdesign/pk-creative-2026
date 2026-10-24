@@ -1,10 +1,8 @@
 'use client';
 import React from 'react';
 import type { SiteContent } from '@/types';
-import { Linkedin, Twitter, Instagram, Mail, MessageCircle, ArrowUpRight, ArrowUp } from 'lucide-react';
+import { Linkedin, Twitter, Instagram, Mail, MessageCircle, ArrowUp } from 'lucide-react';
 import Logo from '../logo';
-import { Reveal } from '@/components/motion/reveal';
-import Magnetic from '@/components/motion/magnetic';
 import { SERVICE_LINKS, FOOTER_EXTRA_LINKS } from '@/lib/seo';
 
 import { useFirestore, useDoc, useMemoFirebase } from '@/firebase';
@@ -36,37 +34,16 @@ const Footer = ({ content: initialContent }: { content?: SiteContent | null }) =
     { label: 'Contact', href: '/#contact' },
   ];
 
-  const allLinks = [...links, ...FOOTER_EXTRA_LINKS.filter((e) => !links.some((l) => l.href === e.href))];
+  const allLinks = [...links, ...FOOTER_EXTRA_LINKS.filter((e) => !links.some((l) => l.href === e.href || l.label === e.label))];
 
   const scrollTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   return (
-    <footer className="relative overflow-hidden border-t border-border/60 bg-secondary/20">
-      <div aria-hidden className="bg-grid pointer-events-none absolute inset-0 opacity-[0.35]" />
-      <div
-        aria-hidden
-        className="pointer-events-none absolute -bottom-40 left-1/2 h-[420px] w-[640px] -translate-x-1/2 rounded-full bg-[radial-gradient(closest-side,hsl(var(--primary)/0.18),transparent)]  "
-      />
+    <footer className="relative overflow-hidden bg-secondary">
 
-      <div className="container relative z-10 mx-auto px-4 py-16 md:px-6 md:py-20">
-        <Reveal className="mb-14 flex flex-col items-start justify-between gap-6 border-b border-border/50 pb-12 md:flex-row md:items-end">
-          <h2 className="max-w-xl font-headline text-3xl font-extrabold tracking-tight sm:text-4xl md:text-5xl">
-            Let&apos;s build something{' '}
-            <span className="text-gradient-primary">worth remembering.</span>
-          </h2>
-          <Magnetic>
-            <a
-              href="/#contact"
-              className="group inline-flex items-center gap-2 rounded-full bg-primary px-7 py-4 text-base font-semibold text-primary-foreground transition-transform hover:scale-[1.03]"
-            >
-              Get a free quote
-              <ArrowUpRight className="h-5 w-5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-            </a>
-          </Magnetic>
-        </Reveal>
-
+      <div className="container relative z-10 mx-auto px-4 py-12 md:px-6 md:py-16">
         <div className="grid grid-cols-2 gap-10 sm:grid-cols-2 md:grid-cols-5">
           <div className="col-span-2 flex flex-col gap-4 md:col-span-2 md:max-w-sm">
             <Logo siteName={content?.siteName} logoUrl={content?.logoUrl} />

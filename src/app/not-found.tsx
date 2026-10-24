@@ -12,7 +12,7 @@ export default async function NotFound() {
     <div className="flex min-h-screen flex-col bg-background">
       <Header content={siteContent} />
       <main id="main-content" className="container mx-auto flex flex-1 flex-col items-center justify-center px-4 py-24 text-center">
-        <p className="font-headline text-7xl font-black text-gradient-primary sm:text-8xl">404</p>
+        <p className="font-headline text-7xl font-semibold text-primary sm:text-8xl">404</p>
         <h1 className="mt-4 font-headline text-3xl font-extrabold tracking-tight sm:text-4xl">This page took a creative break</h1>
         <p className="mt-3 max-w-md text-muted-foreground">The page you are looking for does not exist or has moved. Try one of these instead.</p>
         <div className="mt-8 flex flex-wrap justify-center gap-3">

@@ -17,22 +17,15 @@ interface PageHeroProps {
  */
 export default function PageHero({ eyebrow, title, description, children }: PageHeroProps) {
   return (
-    <section className="relative overflow-hidden border-b border-border/40 bg-secondary/10 py-16 sm:py-20 md:py-24">
-      <div aria-hidden className="bg-grid pointer-events-none absolute inset-0 opacity-40" />
-      <div
-        aria-hidden
-        className="pointer-events-none absolute -top-32 left-1/2 h-[360px] w-[560px] -translate-x-1/2 rounded-full bg-[radial-gradient(closest-side,hsl(var(--primary)/0.27),transparent)]  "
-      />
-
-      <div className="container relative z-10 mx-auto max-w-3xl px-4 text-center sm:px-6">
+    <section className="relative overflow-hidden bg-background pb-10 pt-16 sm:pb-14 sm:pt-24 md:pt-28">
+      <div className="container relative z-10 mx-auto max-w-4xl px-4 text-center sm:px-6">
         {eyebrow && (
           <motion.span
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-            className="mb-5 inline-flex items-center gap-2 rounded-full border border-border bg-secondary/40 px-3 py-1 text-xs font-semibold uppercase tracking-widest text-muted-foreground"
+            transition={{ duration: 0.7, ease: [0.28, 0.11, 0.32, 1] }}
+            className="mb-4 block text-sm font-semibold text-primary sm:text-base"
           >
-            <span className="h-1.5 w-1.5 rounded-full bg-muted-foreground/60" />
             {eyebrow}
           </motion.span>
         )}
@@ -41,15 +34,15 @@ export default function PageHero({ eyebrow, title, description, children }: Page
           as="h1"
           text={title}
           once={false}
-          className="font-headline text-4xl font-extrabold tracking-tight text-foreground sm:text-5xl md:text-6xl"
+          className="font-headline text-5xl font-semibold tracking-tight text-foreground sm:text-6xl md:text-7xl"
         />
 
         {description && (
           <motion.p
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
-            className="mx-auto mt-5 max-w-xl text-base text-muted-foreground sm:text-lg"
+            transition={{ duration: 0.8, delay: 0.15, ease: [0.28, 0.11, 0.32, 1] }}
+            className="mx-auto mt-6 max-w-2xl text-lg leading-snug text-muted-foreground sm:text-xl md:text-2xl"
           >
             {description}
           </motion.p>

@@ -104,12 +104,11 @@ export default function DashboardClient() {
 
   return (
     <div className="space-y-8">
-      <div className="relative overflow-hidden rounded-2xl border bg-gradient-to-br from-primary/15 via-background to-background p-6 md:p-8">
-        <div aria-hidden className="pointer-events-none absolute -right-16 -top-16 h-56 w-56 rounded-full bg-primary/20 blur-3xl" />
+      <div className="relative overflow-hidden rounded-[1.75rem] bg-card p-6 md:p-8">
         <div className="relative flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
           <div>
             <p className="mb-1 flex items-center gap-2 text-sm font-medium text-primary"><Sparkles className="h-4 w-4" />{format(new Date(), 'EEEE, d MMMM yyyy')}</p>
-            <h2 className="text-2xl font-bold tracking-tight md:text-3xl">{greeting}, welcome back.</h2>
+            <h2 className="text-2xl font-semibold tracking-tight md:text-3xl">{greeting}, welcome back.</h2>
             <p className="mt-1 text-muted-foreground">
               {unreadMessages > 0 ? `You have ${unreadMessages} unread message${unreadMessages > 1 ? 's' : ''} waiting.` : 'Inbox is clear. Nice work.'}
             </p>

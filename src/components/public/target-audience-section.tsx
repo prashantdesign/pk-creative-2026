@@ -33,7 +33,7 @@ export default function TargetAudienceSection({ content }: { content: SiteConten
   return (
     <section
       id="audience"
-      className="relative overflow-hidden bg-foreground py-20 text-background md:py-28"
+      className="relative overflow-hidden bg-[#1d1d1f] py-24 text-white md:py-32"
     >
       <div
         aria-hidden
@@ -41,14 +41,13 @@ export default function TargetAudienceSection({ content }: { content: SiteConten
       />
 
       <Reveal className="container relative z-10 mx-auto mb-14 max-w-3xl px-4 text-center sm:px-6 md:mb-20">
-        <span className="mb-4 inline-flex items-center gap-2 rounded-full border border-background/20 bg-background/5 px-3 py-1 text-xs font-semibold uppercase tracking-widest text-background/70">
-          <span className="h-1.5 w-1.5 rounded-full bg-muted-foreground/60" />
+        <span className="mb-3 block text-sm font-semibold text-white/70 sm:text-base">
           Who we help
         </span>
-        <h2 className="font-headline text-3xl font-extrabold tracking-tight text-background sm:text-4xl md:text-5xl">
+        <h2 className="font-headline text-4xl font-semibold tracking-tight text-white sm:text-5xl md:text-6xl">
           {content?.targetAudienceSectionTitle || 'Built for ambitious brands'}
         </h2>
-        <p className="mt-4 text-base text-background/70 sm:text-lg">
+        <p className="mt-4 text-base text-white/70 sm:text-lg">
           {content?.targetAudienceSectionDescription ||
             'We partner with teams across industries to ship digital experiences that convert.'}
         </p>
@@ -62,12 +61,12 @@ export default function TargetAudienceSection({ content }: { content: SiteConten
           {audience.map((client, index) => (
             <div
               key={index}
-              className="flex items-center gap-3 whitespace-nowrap rounded-2xl border border-background/10 bg-background/5 px-5 py-4 transition-colors hover:border-background/25 hover:bg-background/10"
+              className="flex items-center gap-3 whitespace-nowrap rounded-2xl border border-white/10 bg-white/5 px-5 py-4 transition-colors hover:border-white/25 hover:bg-white/10"
             >
               <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-primary/20">
                 <Icons name={getIconForText(client)} className="h-5 w-5 text-primary" />
               </span>
-              <span className="text-base font-medium tracking-wide text-background sm:text-lg">
+              <span className="text-base font-medium tracking-wide text-white sm:text-lg">
                 {client}
               </span>
             </div>

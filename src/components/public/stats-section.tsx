@@ -44,9 +44,9 @@ function Stat({ value, label, delay }: { value: string; label: string; delay: nu
       initial={{ opacity: 0, y: 24 }}
       animate={inView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.6, delay, ease: [0.22, 1, 0.36, 1] }}
-      className="rounded-3xl border border-border/60 bg-background/50 p-6 text-center sm:p-8"
+      className="rounded-[2rem] bg-secondary p-6 text-center sm:p-8"
     >
-      <p className="font-headline text-4xl font-extrabold text-gradient-primary sm:text-5xl">
+      <p className="font-headline text-4xl font-semibold text-foreground sm:text-5xl">
         {display}
       </p>
       <p className="mt-2 text-sm text-muted-foreground sm:text-base">{label}</p>

@@ -26,19 +26,18 @@ const SectionHeader: React.FC<SectionHeaderProps> = ({
   return (
     <div
       className={cn(
-        'mb-12 md:mb-16',
-        centered ? 'mx-auto max-w-2xl text-center' : 'max-w-2xl text-left',
+        'mb-12 md:mb-20',
+        centered ? 'mx-auto max-w-3xl text-center' : 'max-w-3xl text-left',
         className
       )}
     >
       {eyebrow && (
         <Reveal
           className={cn(
-            'mb-4 inline-flex items-center gap-2 rounded-full border border-border bg-secondary/40 px-3 py-1 text-xs font-semibold uppercase tracking-widest text-muted-foreground',
+            'mb-3 block text-sm font-semibold text-primary sm:text-base',
             centered && 'mx-auto'
           )}
         >
-          <span className="h-1.5 w-1.5 rounded-full bg-muted-foreground/60" />
           {eyebrow}
         </Reveal>
       )}
@@ -46,7 +45,7 @@ const SectionHeader: React.FC<SectionHeaderProps> = ({
         <TextReveal
           as="h2"
           text={title}
-          className="font-headline text-3xl font-extrabold tracking-tight text-foreground sm:text-4xl md:text-5xl"
+          className="font-headline text-4xl font-semibold tracking-tight text-foreground sm:text-5xl md:text-6xl"
         />
       )}
       {description && (
@@ -54,7 +53,7 @@ const SectionHeader: React.FC<SectionHeaderProps> = ({
           as="p"
           delay={0.1}
           className={cn(
-            'mt-4 text-base text-muted-foreground sm:text-lg',
+            'mt-5 text-lg leading-snug text-muted-foreground sm:text-xl md:text-2xl',
             centered ? 'mx-auto max-w-2xl' : 'max-w-xl'
           )}
         >

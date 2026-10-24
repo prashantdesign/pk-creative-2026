@@ -5,7 +5,6 @@ import React from 'react';
 import type { SiteContent } from '@/types';
 import Image from 'next/image';
 import { Reveal, TextReveal } from '@/components/motion/reveal';
-import TiltCard from '@/components/motion/tilt-card';
 
 const FALLBACK_STATS = [
   { value: '120+', label: 'Projects shipped' },
@@ -20,20 +19,18 @@ const AboutSection = ({ content }: { content: SiteContent | null }) => {
       : FALLBACK_STATS;
 
   return (
-    <section id="about" className="relative overflow-hidden bg-secondary py-20 md:py-28">
-      <div aria-hidden className="bg-dots pointer-events-none absolute inset-0 opacity-40" />
+    <section id="about" className="relative overflow-hidden bg-secondary py-24 md:py-32">
 
       <div className="container relative z-10 mx-auto px-4 sm:px-6">
         <div className="grid items-center gap-12 md:grid-cols-2 lg:gap-20">
           <div className="space-y-6">
-            <Reveal className="inline-flex items-center gap-2 rounded-full border border-border bg-secondary/40 px-3 py-1 text-xs font-semibold uppercase tracking-widest text-muted-foreground">
-              <span className="h-1.5 w-1.5 rounded-full bg-muted-foreground/60" />
+            <Reveal className="mb-3 block text-sm font-semibold text-primary sm:text-base">
               Who we are
             </Reveal>
             <TextReveal
               as="h2"
               text="About Us"
-              className="font-headline text-3xl font-extrabold tracking-tight text-foreground sm:text-4xl md:text-5xl"
+              className="font-headline text-4xl font-semibold tracking-tight text-foreground sm:text-5xl md:text-6xl"
             />
             <Reveal
               as="p"
@@ -46,7 +43,7 @@ const AboutSection = ({ content }: { content: SiteContent | null }) => {
 
             <Reveal delay={0.15} className="grid grid-cols-3 gap-4 pt-4">
               {stats.slice(0, 3).map((s) => (
-                <div key={s.label} className="rounded-2xl border border-border/60 bg-background/60 p-4">
+                <div key={s.label} className="rounded-2xl bg-background p-4">
                   <div className="font-headline text-2xl font-extrabold text-primary sm:text-3xl">
                     {s.value}
                   </div>
@@ -57,10 +54,7 @@ const AboutSection = ({ content }: { content: SiteContent | null }) => {
           </div>
 
           <Reveal direction="left" className="mx-auto w-full max-w-sm md:max-w-none">
-            <TiltCard
-              max={9}
-              className="overflow-hidden rounded-3xl border border-border/50 bg-background shadow-xl"
-            >
+            <div className="overflow-hidden rounded-[2rem] bg-background">
               <Image
                 src={optimizeImageUrl(content?.aboutImageUrl, 1000) || '/pk_about_visual.webp'}
                 alt="About PK Creative"
@@ -68,7 +62,7 @@ const AboutSection = ({ content }: { content: SiteContent | null }) => {
                 height={520}
                 className="h-auto w-full object-contain"
               />
-            </TiltCard>
+            </div>
           </Reveal>
         </div>
       </div>

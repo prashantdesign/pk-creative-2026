@@ -53,9 +53,7 @@ export default function FAQSection() {
   };
 
   return (
-    <section id="faq" className="relative overflow-hidden bg-background py-20 md:py-28">
-      {/* Decorative Blob */}
-      <div className="absolute top-1/2 left-0 w-80 h-80  rounded-full bg-[radial-gradient(closest-side,hsl(var(--primary)/0.09),transparent)]    -translate-y-1/2 -translate-x-1/2 pointer-events-none" />
+    <section id="faq" className="relative overflow-hidden bg-background py-24 md:py-32">
 
       <div className="container relative z-10 mx-auto px-4 md:px-6">
         <div className="grid lg:grid-cols-[1fr_1.5fr] gap-12 items-start">
@@ -68,14 +66,14 @@ export default function FAQSection() {
             transition={{ duration: 0.6, ease: "easeOut" }}
             className="space-y-6 lg:sticky lg:top-24"
           >
-            <h2 className="font-headline text-3xl font-extrabold tracking-tight text-foreground md:text-5xl">
-              Frequently Asked <span className="text-gradient-primary">Questions</span>
+            <h2 className="font-headline text-4xl font-semibold tracking-tight text-foreground md:text-5xl">
+              Frequently Asked Questions
             </h2>
             <p className="text-lg text-muted-foreground leading-relaxed">
               Have questions about our pricing, deliverables, or timeline? Here are quick answers to our most common inquiries.
             </p>
-            <div className="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-secondary/50 px-4 py-1.5 text-sm font-medium text-primary">
-              <span className="h-2 w-2 rounded-full bg-primary animate-pulse" />
+            <div className="inline-flex items-center gap-2 rounded-full bg-secondary px-4 py-1.5 text-sm font-medium text-muted-foreground">
+              <span className="h-2 w-2 rounded-full bg-primary" />
               <span>Admin Dashboards Included Standard</span>
             </div>
           </motion.div>
@@ -86,7 +84,7 @@ export default function FAQSection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="bg-card/30 border border-border/40 rounded-3xl p-6 sm:p-10 shadow-sm"
+            className="bg-secondary rounded-[2rem] p-6 sm:p-10 shadow-sm"
           >
             <div className="divide-y divide-border/60">
               {faqItems.map((item, index) => (

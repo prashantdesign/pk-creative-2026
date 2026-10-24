@@ -44,7 +44,7 @@ function SubmitButton() {
   );
 }
 
-export default function ContactSection({ content }: { content?: SiteContent | null }) {
+export default function ContactSection({ content, hideHeader = false }: { content?: SiteContent | null; hideHeader?: boolean }) {
   const [state, formAction] = useActionState(submitContactForm, initialState);
   const [selectedServices, setSelectedServices] = useState<string[]>([]);
   const [errorCount, setErrorCount] = useState(0);
@@ -89,7 +89,7 @@ export default function ContactSection({ content }: { content?: SiteContent | nu
     <section id="contact" className="scroll-mt-20 py-12 sm:py-16 md:py-24 bg-secondary overflow-hidden">
       <div className="container mx-auto px-4 md:px-6">
         
-        {/* Title Scroll-Reveal */}
+        {!hideHeader && (
         <motion.div 
           initial={{ opacity: 0, y: 25 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -97,17 +97,18 @@ export default function ContactSection({ content }: { content?: SiteContent | nu
           transition={{ duration: 0.6, ease: "easeOut" }}
           className="max-w-3xl mx-auto text-center mb-8 sm:mb-12 md:mb-16 px-4"
         >
-          <span className="mb-4 inline-flex items-center gap-2 rounded-full border border-border bg-secondary/40 px-3 py-1 text-xs font-semibold uppercase tracking-widest text-muted-foreground">
-            <span className="h-1.5 w-1.5 rounded-full bg-muted-foreground/60" />
+          <span className="mb-3 block text-sm font-semibold text-primary sm:text-base">
             Get in touch
           </span>
-          <h2 className="mb-3 font-headline text-3xl font-extrabold tracking-tight sm:mb-4 sm:text-4xl md:text-5xl">
+          <h2 className="mb-3 font-headline text-4xl font-semibold tracking-tight sm:mb-4 sm:text-5xl md:text-6xl">
             {content?.contactSectionTitle || "Let's Work Together"}
           </h2>
           <p className="text-base text-muted-foreground sm:text-lg md:text-xl">
             {content?.contactSectionDescription || "Ready to elevate your brand? Fill out the form below and we'll be in touch shortly."}
           </p>
         </motion.div>
+
+        )}
 
         {/* Card Scroll-Reveal */}
         <motion.div 
@@ -117,7 +118,7 @@ export default function ContactSection({ content }: { content?: SiteContent | nu
           transition={{ type: "spring" as const, stiffness: 80, damping: 15 }}
           className={`mx-auto ${hasImage ? 'max-w-6xl' : 'max-w-2xl'}`}
         >
-          <div className={`bg-background rounded-2xl sm:rounded-[32px] shadow-[0_20px_60px_-15px_rgba(0,0,0,0.12)] border border-border/40 overflow-hidden ${hasImage ? 'grid lg:grid-cols-2' : ''}`}>
+          <div className={`bg-background rounded-[1.75rem] sm:rounded-[2.25rem] overflow-hidden ${hasImage ? 'grid lg:grid-cols-2' : ''}`}>
             
             {/* Visual Column */}
             {hasImage && (

@@ -5,7 +5,7 @@ import type { SiteContent } from '@/types';
 import Header from '@/components/public/header';
 import Footer from '@/components/public/footer';
 import { motion, AnimatePresence, MotionConfig } from 'framer-motion';
-import { ChevronDown, ArrowRight, Sparkles } from 'lucide-react';
+import { ChevronDown, ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Reveal, TextReveal, staggerContainer, staggerItem } from '@/components/motion/reveal';
 import Magnetic from '@/components/motion/magnetic';
@@ -97,11 +97,6 @@ export default function SeoServicePage({
         <main id="main-content" className="flex-grow">
           {/* Hero */}
           <section className="relative overflow-hidden py-20 md:py-28">
-            <div aria-hidden className="bg-grid pointer-events-none absolute inset-0 opacity-40" />
-            <div
-              aria-hidden
-              className="pointer-events-none absolute -top-32 left-1/2 h-[420px] w-[620px] -translate-x-1/2 rounded-full bg-[radial-gradient(closest-side,hsl(var(--primary)/0.27),transparent)]   animate-aurora"
-            />
 
             <div className="container relative z-10 mx-auto max-w-4xl px-4 text-center md:px-6">
               <nav aria-label="Breadcrumb" className="mb-5 flex items-center justify-center gap-1.5 text-xs text-muted-foreground">
@@ -115,17 +110,16 @@ export default function SeoServicePage({
                 initial={{ opacity: 0, y: 15 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5 }}
-                className="mb-6 inline-flex items-center gap-2 rounded-full border border-border bg-secondary/40 px-3 py-1.5 text-xs font-semibold uppercase tracking-widest text-muted-foreground"
+                className="mb-6 text-sm font-semibold text-primary sm:text-base"
               >
-                <Sparkles className="h-3 w-3" />
-                <span>Premium Agency Offerings</span>
+                <span>Premium agency offerings</span>
               </motion.div>
 
               <TextReveal
                 as="h1"
                 once={false}
                 text={keywordTitle}
-                className="font-headline text-4xl font-extrabold leading-[1.08] tracking-tight text-foreground sm:text-5xl md:text-6xl"
+                className="font-headline text-5xl font-semibold tracking-tight text-foreground sm:text-6xl md:text-7xl"
               />
 
               <motion.p
@@ -167,7 +161,7 @@ export default function SeoServicePage({
           </section>
 
           {/* Overview */}
-          <section className="relative border-y border-border/40 bg-secondary/10 py-16">
+          <section className="relative bg-secondary py-20">
             <Reveal className="container mx-auto max-w-3xl px-4 text-center md:px-6">
               <h2 className="mb-6 font-headline text-2xl font-bold text-foreground">Overview</h2>
               <p className="whitespace-pre-line text-base leading-relaxed text-muted-foreground md:text-lg">
@@ -183,7 +177,7 @@ export default function SeoServicePage({
                 <TextReveal
                   as="h2"
                   text="What We Offer"
-                  className="mb-4 font-headline text-3xl font-extrabold tracking-tight text-foreground md:text-4xl"
+                  className="mb-4 font-headline text-4xl font-semibold tracking-tight text-foreground md:text-5xl"
                 />
                 <Reveal as="p" delay={0.1} className="text-base text-muted-foreground md:text-lg">
                   Explore the specific deliverables and tools we bring to ensure project success.
@@ -200,9 +194,9 @@ export default function SeoServicePage({
                 {features.map((feature, index) => (
                   <motion.div key={index} variants={staggerItem}>
                     <div
-                      className="flex h-full flex-col gap-4 rounded-2xl border border-border/55 bg-secondary/20 p-6 transition-colors duration-300 hover:border-primary/40"
+                      className="flex h-full flex-col gap-4 rounded-[2rem] bg-secondary p-6 sm:p-8"
                     >
-                      <div className="w-fit rounded-xl bg-primary/10 p-3 text-primary">
+                      <div className="w-fit rounded-xl bg-background p-3 text-primary">
                         {feature.icon}
                       </div>
                       <h3 className="font-headline text-lg font-bold text-foreground">
@@ -219,13 +213,13 @@ export default function SeoServicePage({
           </section>
 
           {/* Process */}
-          <section className="relative border-y border-border/40 bg-secondary/15 py-20 md:py-28">
+          <section className="relative bg-background py-24 md:py-32">
             <div className="container mx-auto max-w-5xl px-4 md:px-6">
               <div className="mx-auto mb-14 max-w-3xl text-center md:mb-16">
                 <TextReveal
                   as="h2"
                   text="Our Working Process"
-                  className="mb-4 font-headline text-3xl font-extrabold tracking-tight text-foreground md:text-4xl"
+                  className="mb-4 font-headline text-4xl font-semibold tracking-tight text-foreground md:text-5xl"
                 />
                 <Reveal as="p" delay={0.1} className="text-base text-muted-foreground">
                   How we take your project from an initial concept to a high-converting result.
@@ -237,7 +231,7 @@ export default function SeoServicePage({
                   <Reveal
                     key={index}
                     delay={index * 0.08}
-                    className="relative flex gap-4 rounded-2xl border border-border/40 bg-background/50 p-6"
+                    className="relative flex gap-4 rounded-[2rem] bg-secondary p-6 sm:p-8"
                   >
                     <div className="absolute right-4 top-4 font-headline text-3xl font-extrabold text-primary/15">
                       {step.step}
@@ -263,7 +257,7 @@ export default function SeoServicePage({
                 <TextReveal
                   as="h2"
                   text="Frequently Asked Questions"
-                  className="mb-4 font-headline text-3xl font-extrabold tracking-tight text-foreground md:text-4xl"
+                  className="mb-4 font-headline text-4xl font-semibold tracking-tight text-foreground md:text-5xl"
                 />
                 <Reveal as="p" delay={0.1} className="text-base text-muted-foreground">
                   Common queries regarding our services, tools, and pricing plans.
@@ -274,7 +268,7 @@ export default function SeoServicePage({
                 {faqs.map((faq, index) => (
                   <div
                     key={index}
-                    className="overflow-hidden rounded-2xl border border-border/40 bg-secondary/10"
+                    className="overflow-hidden rounded-3xl bg-secondary"
                   >
                     <button
                       onClick={() => toggleFaq(index)}
@@ -326,23 +320,19 @@ export default function SeoServicePage({
           </section>
 
           {/* CTA */}
-          <section className="relative overflow-hidden border-t border-border/40 bg-gradient-to-br from-primary/10 to-indigo-500/5 py-16 text-center md:py-24">
-            <div
-              aria-hidden
-              className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_120%,hsl(var(--primary)/0.25),transparent_60%)]"
-            />
+          <section className="relative overflow-hidden bg-[#1d1d1f] py-20 text-center text-white md:py-28">
             <Reveal className="container relative z-10 mx-auto max-w-4xl px-4 md:px-6">
-              <h2 className="mb-6 font-headline text-3xl font-extrabold tracking-tight text-foreground md:text-5xl">
-                Ready to Grow Your Digital Presence?
+              <h2 className="mb-6 font-headline text-4xl font-semibold tracking-tight text-white md:text-6xl">
+                Ready to grow your digital presence?
               </h2>
-              <p className="mx-auto mb-8 max-w-2xl text-base leading-relaxed text-muted-foreground md:text-lg">
+              <p className="mx-auto mb-8 max-w-2xl text-base leading-relaxed text-white/80 md:text-lg">
                 Whether you need a dynamic local website, a custom branding layout, or a
                 high-converting booking platform, we have you covered.
               </p>
               <Magnetic>
                 <Button
                   size="lg"
-                  className="rounded-full bg-primary px-10 py-6 text-base font-semibold text-primary-foreground shadow-lg transition-transform hover:scale-[1.03]"
+                  className="rounded-full bg-white px-10 py-6 text-base font-medium text-[#1d1d1f] transition-transform hover:scale-[1.03] hover:bg-white"
                   asChild
                 >
                   <a href="/#contact" className="inline-flex items-center gap-2">

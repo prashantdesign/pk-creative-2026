@@ -52,13 +52,11 @@ const Header = ({ content: initialContent }: { content?: SiteContent | null }) =
         initial={{ y: -80, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-        className={`sticky inset-x-0 top-0 z-50 transition-all duration-300 ${
-          isScrolled || isOpen
-            ? 'border-b border-border/40 bg-background/70 backdrop-blur-xl'
-            : 'border-b border-transparent bg-transparent'
+        className={`sticky inset-x-0 top-0 z-50 border-b backdrop-blur-xl backdrop-saturate-150 transition-colors duration-300 ${
+          isScrolled || isOpen ? 'border-border/60 bg-background/80' : 'border-transparent bg-background/60'
         }`}
       >
-        <div className="container mx-auto flex h-16 items-center justify-between px-4 sm:h-[72px] md:px-6">
+        <div className="container mx-auto flex h-14 items-center justify-between px-4 md:px-6">
           <Magnetic strength={10}>
             <Link href="/" className="flex min-h-11 items-center" aria-label="PK Creative home">
               <Logo siteName={content?.siteName} logoUrl={content?.logoUrl} />
@@ -70,10 +68,10 @@ const Header = ({ content: initialContent }: { content?: SiteContent | null }) =
               <Magnetic key={item.label} strength={12}>
                 <Link
                   href={item.href}
-                  className="group relative rounded-full px-4 py-2 text-sm font-medium text-foreground/80 transition-colors hover:text-foreground"
+                  className="group relative rounded-full px-3.5 py-2 text-[0.8125rem] font-normal text-foreground/80 transition-colors hover:text-foreground"
                 >
                   {item.label}
-                  <span className="absolute inset-x-4 bottom-1 h-px origin-left scale-x-0 bg-primary transition-transform duration-300 group-hover:scale-x-100" />
+                  
                 </Link>
               </Magnetic>
             ))}
@@ -83,7 +81,7 @@ const Header = ({ content: initialContent }: { content?: SiteContent | null }) =
             <Magnetic strength={14}>
               <Button
                 asChild
-                className="rounded-full bg-primary px-6 text-primary-foreground hover:bg-primary/90"
+                className="h-9 rounded-full bg-primary px-5 text-[0.8125rem] font-medium text-primary-foreground hover:brightness-110"
               >
                 <Link href="/#contact">Get a free quote</Link>
               </Button>
@@ -143,7 +141,7 @@ const Header = ({ content: initialContent }: { content?: SiteContent | null }) =
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.08 + i * 0.06, duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-                  className="border-b border-border/40 py-5 font-headline text-3xl font-bold tracking-tight text-foreground"
+                  className="border-b border-border/60 py-5 font-headline text-3xl font-semibold tracking-tight text-foreground"
                 >
                   {item.label}
                 </motion.a>

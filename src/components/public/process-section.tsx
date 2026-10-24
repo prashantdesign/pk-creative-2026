@@ -14,8 +14,7 @@ const steps = [
 
 export default function ProcessSection() {
   return (
-    <section id="process" className="relative overflow-hidden py-20 md:py-28">
-      <div aria-hidden className="bg-grid pointer-events-none absolute inset-0 opacity-30" />
+    <section id="process" className="relative overflow-hidden bg-background py-24 md:py-32">
       <div className="container relative z-10 mx-auto px-4 sm:px-6">
         <SectionHeader
           eyebrow="How we work"
@@ -35,8 +34,8 @@ export default function ProcessSection() {
           />
           {steps.map((step, i) => (
             <Reveal key={step.title} delay={i * 0.1}>
-              <div className="group relative h-full rounded-3xl border border-border/60 bg-background/60 p-6 backdrop-blur transition-colors duration-300 hover:border-primary/40 sm:p-7">
-                <div className="relative mb-6 flex h-14 w-14 items-center justify-center rounded-2xl bg-primary/10 text-primary transition-all duration-500 group-hover:rotate-6 group-hover:bg-primary group-hover:text-primary-foreground">
+              <div className="relative h-full rounded-[2rem] bg-secondary p-6 sm:p-7">
+                <div className="relative mb-6 flex h-14 w-14 items-center justify-center rounded-2xl bg-background text-primary">
                   <step.icon className="h-6 w-6" />
                   <span className="absolute -right-2 -top-2 flex h-6 w-6 items-center justify-center rounded-full bg-foreground font-headline text-[11px] font-bold text-background">
                     {i + 1}

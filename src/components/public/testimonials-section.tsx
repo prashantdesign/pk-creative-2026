@@ -19,11 +19,7 @@ export default function TestimonialsSection({ content }: TestimonialsSectionProp
   if (!testimonials || testimonials.length === 0) return null;
 
   return (
-    <section id="testimonials" className="relative overflow-hidden bg-muted/40 py-20 md:py-28">
-      <div
-        aria-hidden
-        className="pointer-events-none absolute bottom-0 left-0 h-[500px] w-[500px] -translate-x-1/4 translate-y-1/2 rounded-full bg-[radial-gradient(closest-side,hsl(var(--primary)/0.09),transparent)]  "
-      />
+    <section id="testimonials" className="relative overflow-hidden bg-background py-24 md:py-32">
 
       <div className="container relative z-10 mx-auto px-4 sm:px-6">
         <SectionHeader
@@ -43,7 +39,7 @@ export default function TestimonialsSection({ content }: TestimonialsSectionProp
             <motion.div key={index} variants={staggerItem} className="h-full">
               <TiltCard
                 max={5}
-                className="flex h-full flex-col justify-between overflow-hidden rounded-3xl border border-border/50 bg-background p-6 sm:p-8"
+                className="flex h-full flex-col justify-between overflow-hidden rounded-[2rem] bg-secondary p-6 sm:p-8"
               >
                 <Quote className="mb-4 h-9 w-9 text-primary/20" />
                 <p className="mb-8 flex-grow text-base leading-relaxed text-foreground/90 sm:text-lg">

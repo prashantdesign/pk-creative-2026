@@ -38,8 +38,7 @@ export default function ServicesSection({ content }: { content: SiteContent | nu
   const ctaWide = ctaSpan === 6;
 
   return (
-    <section id="services" className="relative overflow-hidden bg-secondary/20 py-20 md:py-28">
-      <div aria-hidden className="bg-dots pointer-events-none absolute inset-0 opacity-30" />
+    <section id="services" className="relative overflow-hidden bg-background py-24 md:py-32">
       <div className="container relative z-10 mx-auto px-4 sm:px-6">
         <SectionHeader
           eyebrow="What we do"
@@ -62,14 +61,14 @@ export default function ServicesSection({ content }: { content: SiteContent | nu
               <motion.div key={index} variants={staggerItem} className={span}>
                 <Link
                   href={hrefFor(service.title)}
-                  className={`group relative flex h-full min-h-[200px] flex-col justify-between overflow-hidden rounded-3xl border border-border bg-background p-6 transition-all duration-300 hover:-translate-y-1 hover:border-primary/40 hover:shadow-[0_20px_50px_-20px_hsl(var(--primary)/0.45)] sm:p-8 ${featured ? 'lg:min-h-[260px]' : ''}`}
+                  className={`group relative flex h-full min-h-[200px] flex-col justify-between overflow-hidden rounded-[2rem] bg-secondary p-6 transition-transform duration-500 ease-out hover:scale-[1.015] sm:p-8 ${featured ? 'lg:min-h-[260px]' : ''}`}
                 >
                   <div
                     aria-hidden
-                    className="pointer-events-none absolute -right-10 -top-10 h-48 w-48 rounded-full bg-[radial-gradient(closest-side,hsl(var(--primary)/0.18),transparent)] opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+                    className="hidden"
                   />
                   <div className="relative flex items-start justify-between">
-                    <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-primary/10 text-primary transition-all duration-500 group-hover:rotate-6 group-hover:bg-primary group-hover:text-primary-foreground sm:h-14 sm:w-14">
+                    <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-background text-primary sm:h-14 sm:w-14">
                       <Icons name={service.icon || 'star'} className="h-6 w-6 sm:h-7 sm:w-7" />
                     </div>
                   </div>
@@ -93,9 +92,9 @@ export default function ServicesSection({ content }: { content: SiteContent | nu
           <motion.div variants={staggerItem} className={ctaWide ? 'lg:col-span-6' : ctaSpan === 4 ? 'lg:col-span-4' : 'lg:col-span-2'}>
             <a
               href="#contact"
-              className={`relative flex h-full flex-col justify-between overflow-hidden rounded-3xl ${ctaWide ? 'min-h-[140px] gap-4 lg:flex-row lg:items-center' : 'min-h-[200px]'} bg-gradient-to-br from-[#4b1fd1] via-primary to-[#8b5cf6] p-6 text-white transition-transform duration-300 hover:-translate-y-1 sm:p-8`}
+              className={`relative flex h-full flex-col justify-between overflow-hidden rounded-[2rem] ${ctaWide ? 'min-h-[140px] gap-4 lg:flex-row lg:items-center' : 'min-h-[200px]'} bg-primary p-6 text-primary-foreground transition-transform duration-500 ease-out hover:scale-[1.015] sm:p-8`}
             >
-              <span className="text-sm font-semibold uppercase tracking-widest text-white/80">Have a project?</span>
+              <span className="text-sm font-semibold text-primary-foreground/90">Have a project?</span>
               <span className={`flex items-center gap-2 text-xl font-bold sm:text-2xl ${ctaWide ? '' : 'mt-8'}`}>
                 Let&apos;s build it together
                 <Icons name="arrow-right" className="h-5 w-5" />
