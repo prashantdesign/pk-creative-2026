@@ -91,9 +91,7 @@
   * {
     @apply border-border;
   }
-  /* Apple-style type: system UI font (SF Pro on Apple devices, Inter elsewhere), semibold display weights, tight tracking */
   body {
-    font-feature-settings: 'ss01', 'cv11';
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
     @apply bg-background text-foreground;
@@ -114,11 +112,7 @@
     }
   }
   /* Fluid headings – tighten on phones, breathe on desktop */
-  h1 { text-wrap: balance; letter-spacing: -0.035em; line-height: 1.05; }
-  h2 { letter-spacing: -0.03em; line-height: 1.1; }
-  h3 { letter-spacing: -0.015em; }
-  .font-black, .font-extrabold { font-weight: 650; }
-  .font-bold.font-headline { font-weight: 600; }
+  h1 { text-wrap: balance; }
   h2, h3 { text-wrap: balance; }
 
   .animation-delay-300 {

@@ -46,7 +46,7 @@ function Stat({ value, label, delay }: { value: string; label: string; delay: nu
       transition={{ duration: 0.6, delay, ease: [0.22, 1, 0.36, 1] }}
       className="rounded-[2rem] bg-secondary p-6 text-center sm:p-8"
     >
-      <p className="font-headline text-4xl font-semibold text-foreground sm:text-5xl">
+      <p className="font-headline text-4xl font-extrabold text-foreground sm:text-5xl">
         {display}
       </p>
       <p className="mt-2 text-sm text-muted-foreground sm:text-base">{label}</p>

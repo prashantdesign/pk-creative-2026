@@ -100,7 +100,7 @@ export default function ContactSection({ content, hideHeader = false }: { conten
           <span className="mb-3 block text-sm font-semibold text-primary sm:text-base">
             Get in touch
           </span>
-          <h2 className="mb-3 font-headline text-4xl font-semibold tracking-tight sm:mb-4 sm:text-5xl md:text-6xl">
+          <h2 className="mb-3 font-headline text-4xl font-extrabold tracking-tight sm:mb-4 sm:text-5xl md:text-6xl">
             {content?.contactSectionTitle || "Let's Work Together"}
           </h2>
           <p className="text-base text-muted-foreground sm:text-lg md:text-xl">

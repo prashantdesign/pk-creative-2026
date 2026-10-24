@@ -119,7 +119,7 @@ export default function SeoServicePage({
                 as="h1"
                 once={false}
                 text={keywordTitle}
-                className="font-headline text-5xl font-semibold tracking-tight text-foreground sm:text-6xl md:text-7xl"
+                className="font-headline text-5xl font-extrabold tracking-tight text-foreground sm:text-6xl md:text-7xl"
               />
 
               <motion.p
@@ -177,7 +177,7 @@ export default function SeoServicePage({
                 <TextReveal
                   as="h2"
                   text="What We Offer"
-                  className="mb-4 font-headline text-4xl font-semibold tracking-tight text-foreground md:text-5xl"
+                  className="mb-4 font-headline text-4xl font-extrabold tracking-tight text-foreground md:text-5xl"
                 />
                 <Reveal as="p" delay={0.1} className="text-base text-muted-foreground md:text-lg">
                   Explore the specific deliverables and tools we bring to ensure project success.
@@ -219,7 +219,7 @@ export default function SeoServicePage({
                 <TextReveal
                   as="h2"
                   text="Our Working Process"
-                  className="mb-4 font-headline text-4xl font-semibold tracking-tight text-foreground md:text-5xl"
+                  className="mb-4 font-headline text-4xl font-extrabold tracking-tight text-foreground md:text-5xl"
                 />
                 <Reveal as="p" delay={0.1} className="text-base text-muted-foreground">
                   How we take your project from an initial concept to a high-converting result.
@@ -257,7 +257,7 @@ export default function SeoServicePage({
                 <TextReveal
                   as="h2"
                   text="Frequently Asked Questions"
-                  className="mb-4 font-headline text-4xl font-semibold tracking-tight text-foreground md:text-5xl"
+                  className="mb-4 font-headline text-4xl font-extrabold tracking-tight text-foreground md:text-5xl"
                 />
                 <Reveal as="p" delay={0.1} className="text-base text-muted-foreground">
                   Common queries regarding our services, tools, and pricing plans.
@@ -322,7 +322,7 @@ export default function SeoServicePage({
           {/* CTA */}
           <section className="relative overflow-hidden bg-[#1d1d1f] py-20 text-center text-white md:py-28">
             <Reveal className="container relative z-10 mx-auto max-w-4xl px-4 md:px-6">
-              <h2 className="mb-6 font-headline text-4xl font-semibold tracking-tight text-white md:text-6xl">
+              <h2 className="mb-6 font-headline text-4xl font-extrabold tracking-tight text-white md:text-6xl">
                 Ready to grow your digital presence?
               </h2>
               <p className="mx-auto mb-8 max-w-2xl text-base leading-relaxed text-white/80 md:text-lg">

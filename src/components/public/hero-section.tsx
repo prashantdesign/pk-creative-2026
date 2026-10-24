@@ -35,7 +35,7 @@ const HeroSection = ({ content }: { content: SiteContent | null }) => {
 
         <motion.h1
           {...rise(0.08)}
-          className="mx-auto mt-4 max-w-4xl font-headline text-[2.6rem] font-semibold leading-[1.05] tracking-tight text-foreground sm:text-6xl md:text-7xl lg:text-[5.25rem]"
+          className="mx-auto mt-4 max-w-4xl font-headline text-[2.6rem] font-black leading-[1.08] tracking-tighter text-foreground sm:text-6xl md:text-7xl lg:text-[5.25rem]"
         >
           {content?.heroTitle || 'Websites & brands built to grow your business'}
         </motion.h1>

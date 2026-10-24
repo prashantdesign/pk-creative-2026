@@ -66,7 +66,7 @@ export default function FAQSection() {
             transition={{ duration: 0.6, ease: "easeOut" }}
             className="space-y-6 lg:sticky lg:top-24"
           >
-            <h2 className="font-headline text-4xl font-semibold tracking-tight text-foreground md:text-5xl">
+            <h2 className="font-headline text-4xl font-extrabold tracking-tight text-foreground md:text-5xl">
               Frequently Asked Questions
             </h2>
             <p className="text-lg text-muted-foreground leading-relaxed">

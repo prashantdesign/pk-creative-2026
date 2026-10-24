@@ -34,7 +34,7 @@ export default function PageHero({ eyebrow, title, description, children }: Page
           as="h1"
           text={title}
           once={false}
-          className="font-headline text-5xl font-semibold tracking-tight text-foreground sm:text-6xl md:text-7xl"
+          className="font-headline text-5xl font-extrabold tracking-tight text-foreground sm:text-6xl md:text-7xl"
         />
 
         {description && (

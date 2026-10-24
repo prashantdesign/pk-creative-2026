@@ -44,7 +44,7 @@ export default function TargetAudienceSection({ content }: { content: SiteConten
         <span className="mb-3 block text-sm font-semibold text-white/70 sm:text-base">
           Who we help
         </span>
-        <h2 className="font-headline text-4xl font-semibold tracking-tight text-white sm:text-5xl md:text-6xl">
+        <h2 className="font-headline text-4xl font-extrabold tracking-tight text-white sm:text-5xl md:text-6xl">
           {content?.targetAudienceSectionTitle || 'Built for ambitious brands'}
         </h2>
         <p className="mt-4 text-base text-white/70 sm:text-lg">

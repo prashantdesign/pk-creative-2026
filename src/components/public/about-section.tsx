@@ -30,7 +30,7 @@ const AboutSection = ({ content }: { content: SiteContent | null }) => {
             <TextReveal
               as="h2"
               text="About Us"
-              className="font-headline text-4xl font-semibold tracking-tight text-foreground sm:text-5xl md:text-6xl"
+              className="font-headline text-4xl font-extrabold tracking-tight text-foreground sm:text-5xl md:text-6xl"
             />
             <Reveal
               as="p"

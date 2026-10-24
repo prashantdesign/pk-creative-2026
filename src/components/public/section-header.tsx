@@ -45,7 +45,7 @@ const SectionHeader: React.FC<SectionHeaderProps> = ({
         <TextReveal
           as="h2"
           text={title}
-          className="font-headline text-4xl font-semibold tracking-tight text-foreground sm:text-5xl md:text-6xl"
+          className="font-headline text-4xl font-extrabold tracking-tight text-foreground sm:text-5xl md:text-6xl"
         />
       )}
       {description && (

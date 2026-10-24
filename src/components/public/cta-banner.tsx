@@ -11,7 +11,7 @@ export default function CtaBanner() {
           className="pointer-events-none absolute left-1/2 top-full h-[420px] w-[760px] max-w-full -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(closest-side,rgba(120,70,255,0.45),transparent)]"
         />
         <div className="relative z-10 mx-auto max-w-3xl">
-          <h2 className="font-headline text-4xl font-semibold tracking-tight sm:text-5xl md:text-6xl">
+          <h2 className="font-headline text-4xl font-extrabold tracking-tight sm:text-5xl md:text-6xl">
             Ready for a website that brings in clients?
           </h2>
           <p className="mx-auto mt-5 max-w-xl text-lg text-white/80 sm:text-xl">
