@@ -14,8 +14,8 @@ import { doc } from 'firebase/firestore';
 const Header = ({ content: initialContent }: { content?: SiteContent | null }) => {
   const firestore = useFirestore();
   const siteContentRef = useMemoFirebase(
-    () => (firestore ? doc(firestore, 'pkcreative_siteContent', 'global') : null),
-    [firestore]
+    () => (firestore && !initialContent ? doc(firestore, 'pkcreative_siteContent', 'global') : null),
+    [firestore, initialContent]
   );
   const { data: fetchedContent } = useDoc<SiteContent>(siteContentRef);
   const content = initialContent || fetchedContent;
@@ -49,9 +49,6 @@ const Header = ({ content: initialContent }: { content?: SiteContent | null }) =
   return (
     <>
       <motion.header
-        initial={{ y: -80, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
         className={`sticky inset-x-0 top-0 z-50 border-b backdrop-blur-xl backdrop-saturate-150 transition-colors duration-300 ${
           isScrolled || isOpen ? 'border-border/60 bg-background/80' : 'border-transparent bg-background/60'
         }`}
@@ -131,7 +128,6 @@ const Header = ({ content: initialContent }: { content?: SiteContent | null }) =
             transition={{ duration: 0.25 }}
             className="fixed inset-0 z-40 flex flex-col bg-background/95 backdrop-blur-2xl md:hidden"
           >
-            <div className="bg-grid absolute inset-0 opacity-30" aria-hidden />
             <nav className="relative mt-24 flex flex-1 flex-col gap-2 px-6">
               {navItems.map((item, i) => (
                 <motion.a

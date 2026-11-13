@@ -16,6 +16,7 @@ const nextConfig: NextConfig = {
   poweredByHeader: false,
   compress: true,
   reactStrictMode: true,
+  compiler: { removeConsole: process.env.NODE_ENV === 'production' ? { exclude: ['error', 'warn'] } : false },
   images: {
     formats: ['image/avif', 'image/webp'],
     minimumCacheTTL: 60 * 60 * 24 * 30,
@@ -37,6 +38,7 @@ const nextConfig: NextConfig = {
     return [
       { source: '/:path*', headers: securityHeaders },
       { source: '/:all*(webp|jpg|jpeg|png|svg|avif|ico|woff2)', headers: longCache },
+      { source: '/feed.xml', headers: [{ key: 'Content-Type', value: 'application/rss+xml; charset=utf-8' }] },
       // Keep the admin out of every search engine index and out of shared caches
       {
         source: '/pk-admin/:path*',

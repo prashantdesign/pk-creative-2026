@@ -1,5 +1,7 @@
 import { MetadataRoute } from 'next';
 import { SITE_URL } from '@/lib/seo';
+import { POSTS } from '@/lib/posts';
+import { CATEGORIES } from '@/content/categories';
 
 // Static lastModified dates so crawlers are not told "everything changed today" on every request.
 // Bump a date when that page's content meaningfully changes.
@@ -13,13 +15,7 @@ const routes = [
   { path: '/services/graphic-design', priority: 0.8, changeFreq: 'monthly' as const, lastModified: '2026-10-18' },
   { path: '/services/social-media-management', priority: 0.8, changeFreq: 'monthly' as const, lastModified: '2026-10-18' },
   { path: '/services/seo', priority: 0.8, changeFreq: 'monthly' as const, lastModified: '2026-10-18' },
-  { path: '/blog', priority: 0.8, changeFreq: 'weekly' as const, lastModified: '2026-10-18' },
-  ...[
-    'website-design-cost-in-india',
-    'how-to-choose-web-design-agency-ahmedabad',
-    'local-seo-checklist-small-business-india',
-    'why-nextjs-websites-rank-faster',
-  ].map((s) => ({ path: `/blog/${s}`, priority: 0.7, changeFreq: 'monthly' as const, lastModified: '2026-10-18' })),
+  { path: '/blog', priority: 0.8, changeFreq: 'daily' as const, lastModified: '2026-11-12' },
   { path: '/work', priority: 0.8, changeFreq: 'weekly' as const, lastModified: '2026-10-18' },
   { path: '/about', priority: 0.7, changeFreq: 'monthly' as const, lastModified: '2026-10-18' },
   { path: '/contact', priority: 0.7, changeFreq: 'monthly' as const, lastModified: '2026-10-18' },
@@ -27,8 +23,15 @@ const routes = [
   { path: '/team', priority: 0.5, changeFreq: 'monthly' as const, lastModified: '2026-10-18' },
 ];
 
+const newest = POSTS[0]?.date || '2026-10-18';
+
+const blogRoutes = [
+  ...CATEGORIES.map((c) => ({ path: `/blog/category/${c.slug}`, priority: 0.7, changeFreq: 'weekly' as const, lastModified: newest })),
+  ...POSTS.map((p) => ({ path: `/blog/${p.slug}`, priority: 0.7, changeFreq: 'monthly' as const, lastModified: p.date })),
+];
+
 export default function sitemap(): MetadataRoute.Sitemap {
-  return routes.map((route) => ({
+  return [...routes, ...blogRoutes].map((route) => ({
     url: `${SITE_URL}${route.path}`,
     lastModified: new Date(route.lastModified),
     changeFrequency: route.changeFreq,

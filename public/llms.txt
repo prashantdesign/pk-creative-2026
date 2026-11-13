@@ -12,10 +12,18 @@
 - [SEO services](https://pkcreative.in/services/seo)
 
 ## Guides
+100+ practical guides in 10 topics. Full index: https://pkcreative.in/blog and https://pkcreative.in/sitemap.xml (RSS: https://pkcreative.in/feed.xml)
+- [Website design](https://pkcreative.in/blog/category/web-design)
+- [SEO & ranking](https://pkcreative.in/blog/category/seo)
+- [Local SEO](https://pkcreative.in/blog/category/local-seo)
+- [Branding](https://pkcreative.in/blog/category/branding)
+- [UI/UX design](https://pkcreative.in/blog/category/ui-ux)
+- [Social media](https://pkcreative.in/blog/category/social-media)
+- [Graphic design](https://pkcreative.in/blog/category/graphic-design)
+- [Speed & performance](https://pkcreative.in/blog/category/performance)
+- [Marketing & growth](https://pkcreative.in/blog/category/growth)
+- [E-commerce & web apps](https://pkcreative.in/blog/category/ecommerce)
 - [Website design cost in India](https://pkcreative.in/blog/website-design-cost-in-india)
-- [How to choose a web design agency in Ahmedabad](https://pkcreative.in/blog/how-to-choose-web-design-agency-ahmedabad)
-- [Local SEO checklist for small businesses](https://pkcreative.in/blog/local-seo-checklist-small-business-india)
-- [Why Next.js websites rank faster](https://pkcreative.in/blog/why-nextjs-websites-rank-faster)
 
 ## Contact
 - [Contact page](https://pkcreative.in/contact)

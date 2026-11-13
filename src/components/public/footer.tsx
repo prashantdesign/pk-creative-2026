@@ -4,6 +4,7 @@ import type { SiteContent } from '@/types';
 import { Linkedin, Twitter, Instagram, Mail, MessageCircle, ArrowUp } from 'lucide-react';
 import Logo from '../logo';
 import { SERVICE_LINKS, FOOTER_EXTRA_LINKS } from '@/lib/seo';
+import { CATEGORIES } from '@/content/categories';
 
 import { useFirestore, useDoc, useMemoFirebase } from '@/firebase';
 import { doc } from 'firebase/firestore';
@@ -11,8 +12,8 @@ import { doc } from 'firebase/firestore';
 const Footer = ({ content: initialContent }: { content?: SiteContent | null }) => {
   const firestore = useFirestore();
   const siteContentRef = useMemoFirebase(
-    () => (firestore ? doc(firestore, 'pkcreative_siteContent', 'global') : null),
-    [firestore]
+    () => (firestore && !initialContent ? doc(firestore, 'pkcreative_siteContent', 'global') : null),
+    [firestore, initialContent]
   );
   const { data: fetchedContent } = useDoc<SiteContent>(siteContentRef);
 
@@ -128,6 +129,17 @@ const Footer = ({ content: initialContent }: { content?: SiteContent | null }) =
           </div>
         </div>
       </div>
+
+      <nav aria-label="Guides by topic" className="container relative z-10 mx-auto border-t border-border/50 px-4 py-6 md:px-6">
+        <h4 className="mb-2 font-headline text-sm font-semibold uppercase tracking-widest text-muted-foreground">Guides</h4>
+        <ul className="flex flex-wrap gap-x-5 gap-y-1 text-sm">
+          {CATEGORIES.map((c) => (
+            <li key={c.slug}>
+              <a href={`/blog/category/${c.slug}`} className="inline-flex min-h-9 items-center text-foreground/80 transition-colors hover:text-primary">{c.name}</a>
+            </li>
+          ))}
+        </ul>
+      </nav>
 
       <div className="container relative z-10 mx-auto flex flex-col items-center justify-between gap-4 border-t border-border/50 px-4 py-6 text-center text-sm text-muted-foreground sm:flex-row md:px-6">
         <p>

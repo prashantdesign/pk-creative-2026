@@ -1,7 +1,7 @@
 'use client';
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Zap, ShieldCheck, LineChart, Wallet, Headphones, Sparkles } from 'lucide-react';
+import { Zap, ShieldCheck, LineChart, Wallet, Headphones, PenTool } from 'lucide-react';
 import SectionHeader from '@/components/public/section-header';
 import { staggerContainer, staggerItem } from '@/components/motion/reveal';
 
@@ -10,7 +10,7 @@ const reasons = [
   { icon: LineChart, title: 'SEO-ready by default', text: 'Semantic markup, schema, sitemaps and clean metadata on every page we ship.' },
   { icon: Wallet, title: 'Honest pricing', text: 'Dynamic websites from ₹10,000 with the admin panel included. No hidden extras.' },
   { icon: ShieldCheck, title: 'Secure & reliable', text: 'Hardened headers, protected admin and reliable hosting on modern infrastructure.' },
-  { icon: Sparkles, title: 'Premium design', text: 'Custom visuals and motion crafted for your brand, never a recycled template.' },
+  { icon: PenTool, title: 'Premium design', text: 'Custom visuals and motion crafted for your brand, never a recycled template.' },
   { icon: Headphones, title: 'Real support', text: 'Direct access to the people building your site, before and after launch.' },
 ];
 

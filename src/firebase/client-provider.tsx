@@ -22,8 +22,15 @@ export function FirebaseClientProvider({ children }: FirebaseClientProviderProps
   const [services, setServices] = useState<FirebaseServices | null>(null);
 
   useEffect(() => {
-    // Initialize Firebase on the client side, once per component mount.
-    setServices(initializeFirebase());
+    // Start Firebase once the browser is idle so it never competes with first paint / hydration.
+    const start = () => setServices(initializeFirebase());
+    const w = window as Window & { requestIdleCallback?: (cb: () => void, o?: { timeout: number }) => number; cancelIdleCallback?: (id: number) => void };
+    if (w.requestIdleCallback) {
+      const id = w.requestIdleCallback(start, { timeout: 1500 });
+      return () => w.cancelIdleCallback?.(id);
+    }
+    const t = setTimeout(start, 200);
+    return () => clearTimeout(t);
   }, []); // Empty dependency array ensures this runs only once on mount
 
   // During SSR and the initial client render before useEffect runs, services will be null.

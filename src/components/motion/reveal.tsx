@@ -7,10 +7,10 @@ import { cn } from '@/lib/utils';
 type Direction = 'up' | 'down' | 'left' | 'right' | 'none';
 
 const offset: Record<Direction, { x?: number; y?: number }> = {
-  up: { y: 28 },
-  down: { y: -28 },
-  left: { x: 28 },
-  right: { x: -28 },
+  up: { y: 16 },
+  down: { y: -16 },
+  left: { x: 16 },
+  right: { x: -16 },
   none: {},
 };
 
@@ -31,9 +31,9 @@ export function Reveal({
   as = 'div',
   direction = 'up',
   delay = 0,
-  duration = 0.6,
+  duration = 0.5,
   once = true,
-  amount = 0.2,
+  amount = 0.1,
   className,
   children,
   ...rest

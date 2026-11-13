@@ -1,6 +1,5 @@
 'use client';
 import React from 'react';
-import { Sparkles } from 'lucide-react';
 import Marquee from '@/components/motion/marquee';
 import { SERVICE_LINKS } from '@/lib/seo';
 
@@ -20,7 +19,7 @@ export default function ServiceStrip() {
               className="flex min-h-11 items-center gap-8 whitespace-nowrap font-headline text-lg font-semibold text-foreground/70 transition-colors hover:text-primary sm:text-xl"
             >
               {s.label}
-              <Sparkles className="h-4 w-4 text-primary" aria-hidden />
+              <span className="h-1.5 w-1.5 rounded-full bg-primary" aria-hidden />
             </a>
           ))}
         </Marquee>

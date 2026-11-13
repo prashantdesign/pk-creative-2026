@@ -1,6 +1,12 @@
 import type { SiteContent } from '@/types';
 
-export const SITE_URL = (process.env.NEXT_PUBLIC_BASE_URL || 'https://pkcreative.in').replace(/\/$/, '');
+// Always the https apex host. A www/http/trailing-slash variant in the env var would make every
+// sitemap URL and canonical redirect, which Search Console reports as "Page with redirect".
+export const SITE_URL = (process.env.NEXT_PUBLIC_BASE_URL || 'https://pkcreative.in')
+  .trim()
+  .replace(/^http:\/\//, 'https://')
+  .replace(/^https:\/\/www\./, 'https://')
+  .replace(/\/+$/, '');
 export const SITE_NAME = 'PK Creative';
 export const DEFAULT_TITLE = 'PK Creative | Website Design, Branding & SEO Agency in India';
 export const DEFAULT_DESCRIPTION =
