@@ -21,7 +21,8 @@ export function optimizeImageUrl(url: string | undefined | null, width = 900): s
 export function normalizeImageUrl(url: string | undefined | null, width = 1600): string {
   if (!url) return '';
   const u = url.trim();
-  if (!/^https?:\/\/(drive|docs)\.google\.com\//i.test(u)) return u;
+  // drive.google.com, docs.google.com and drive.usercontent.google.com (the host Drive redirects downloads to)
+  if (!/^https?:\/\/(drive|docs|drive\.usercontent)\.google\.com\//i.test(u)) return u;
   const id = u.match(/\/d\/([\w-]{10,})/)?.[1] || u.match(/[?&]id=([\w-]{10,})/)?.[1];
   return id ? `https://lh3.googleusercontent.com/d/${id}=w${width}` : u;
 }
