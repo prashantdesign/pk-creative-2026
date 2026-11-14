@@ -79,6 +79,20 @@ export const CATEGORIES: Category[] = [
     description: 'Selling online in India: store platforms, payments, product pages, shipping, custom portals and when a web app is worth it.',
     service: { label: 'Website design in Ahmedabad', href: '/services/website-design-ahmedabad' },
   },
+  {
+    slug: 'industries',
+    name: 'Industry Guides',
+    title: 'Website & Marketing Guides by Industry',
+    description: 'What a website should include for your type of business: clinics, restaurants, schools, manufacturers, shops and more, with SEO and marketing tips for each.',
+    service: { label: 'Website design in Ahmedabad', href: '/services/website-design-ahmedabad' },
+  },
+  {
+    slug: 'how-to',
+    name: 'How-To & Tutorials',
+    title: 'Step-by-Step Website & SEO Tutorials',
+    description: 'Clear step-by-step tutorials: set up tools, fix common website and SEO problems and understand the terms you keep hearing.',
+    service: { label: 'SEO services', href: '/services/seo' },
+  },
 ];
 
 export const getCategory = (slug: string) => CATEGORIES.find((c) => c.slug === slug);

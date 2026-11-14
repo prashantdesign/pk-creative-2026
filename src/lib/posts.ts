@@ -15,6 +15,7 @@ import { GRAPHIC_DESIGN } from '@/content/posts/graphic-design';
 import { PERFORMANCE } from '@/content/posts/performance';
 import { GROWTH } from '@/content/posts/growth';
 import { ECOMMERCE } from '@/content/posts/ecommerce';
+import { BATCHES } from '@/content/posts/batches';
 
 export type { Post, PostSection } from '@/content/posts/types';
 export type BlogPost = Post & { category: string };
@@ -31,6 +32,8 @@ const BY_CATEGORY: Record<string, RawPost[]> = {
   growth: GROWTH,
   ecommerce: ECOMMERCE,
 };
+
+for (const [cat, items] of Object.entries(BATCHES)) BY_CATEGORY[cat] = [...(BY_CATEGORY[cat] || []), ...items];
 
 const withExtras = (p: RawPost): RawPost => {
   const x = EXTRAS[p.slug];
@@ -51,8 +54,9 @@ export const wordCount = (p: RawPost) => words(p);
 // Publish dates run oldest -> newest, interleaving categories so the feed stays varied.
 // Deterministic (no Date.now) so builds are stable and "date modified" never lies.
 const START = Date.UTC(2026, 5, 1);
-const STEP_DAYS = 1.45;
-const isoDay = (i: number) => new Date(START + Math.round(i * STEP_DAYS) * 86400000).toISOString().slice(0, 10);
+const END = Date.UTC(2026, 10, 12); // never date a post in the future
+const isoDay = (i: number, total: number) =>
+  new Date(START + Math.round((i * (END - START)) / Math.max(total - 1, 1) / 86400000) * 86400000).toISOString().slice(0, 10);
 
 function build(): BlogPost[] {
   const queues = CATEGORIES.map((c) => ({ category: c.slug, items: [...(BY_CATEGORY[c.slug] || [])] }));
@@ -69,7 +73,7 @@ function build(): BlogPost[] {
     }
   }
 
-  const fresh = ordered.map(({ raw, category }, i) => ({ raw: withExtras(raw), category, date: isoDay(i) }));
+  const fresh = ordered.map(({ raw, category }, i) => ({ raw: withExtras(raw), category, date: isoDay(i, ordered.length) }));
   const all = [
     ...fresh,
     ...LEGACY_POSTS.map(({ category, date, ...raw }) => ({ raw: withExtras(raw as RawPost), category, date })),
