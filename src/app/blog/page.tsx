@@ -60,7 +60,7 @@ export default async function BlogIndex() {
         <section aria-labelledby="latest" className="container mx-auto px-4 py-12 md:px-6">
           <h2 id="latest" className="mb-6 font-headline text-2xl font-bold tracking-tight">Latest guides</h2>
           <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
-            {latest.map((p) => <PostCard key={p.slug} post={p} />)}
+            {latest.map((p, i) => <PostCard key={p.slug} post={p} index={i} />)}
           </div>
         </section>
 

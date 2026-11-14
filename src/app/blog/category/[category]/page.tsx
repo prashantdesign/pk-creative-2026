@@ -51,7 +51,7 @@ export default async function CategoryPage({ params }: { params: Promise<{ categ
       <main id="main-content" className="flex-1 pb-16">
         <PageHero eyebrow={`${posts.length} guides`} title={cat.title} description={cat.description} />
         <section className="container mx-auto grid gap-5 px-4 py-10 md:grid-cols-2 md:px-6 lg:grid-cols-3">
-          {posts.map((p) => <PostCard key={p.slug} post={p} />)}
+          {posts.map((p, i) => <PostCard key={p.slug} post={p} index={i} />)}
         </section>
         <div className="container mx-auto flex flex-wrap items-center justify-center gap-3 px-4 pb-6 text-sm md:px-6">
           <Link href="/blog" className="rounded-full border border-border px-4 py-2 hover:border-primary/40 hover:text-primary">All guides</Link>

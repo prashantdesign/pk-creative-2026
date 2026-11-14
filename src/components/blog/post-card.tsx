@@ -3,12 +3,13 @@ import { ArrowUpRight, Clock } from 'lucide-react';
 import { getCategory } from '@/content/categories';
 import type { BlogPost } from '@/lib/posts';
 
-export default function PostCard({ post }: { post: BlogPost }) {
+export default function PostCard({ post, index = 0 }: { post: BlogPost; index?: number }) {
   const cat = getCategory(post.category);
   return (
     <Link
       href={`/blog/${post.slug}`}
-      className="group flex flex-col gap-3 rounded-3xl border border-border bg-secondary/20 p-6 transition-colors hover:border-primary/40 sm:p-7"
+      style={{ ['--i' as string]: Math.min(index, 8) }}
+      className="card-rise hover-lift group flex flex-col gap-3 rounded-3xl border border-border bg-secondary/20 p-6 transition-colors hover:border-primary/40 sm:p-7"
     >
       <span className="flex items-center gap-3 text-xs text-muted-foreground">
         <span className="font-semibold uppercase tracking-wide text-primary">{cat?.name}</span>

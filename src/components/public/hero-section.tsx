@@ -33,7 +33,7 @@ const HeroSection = ({ content }: { content: SiteContent | null }) => {
         <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row sm:gap-6">
           <Link
             href="#contact"
-            className="group inline-flex min-h-12 items-center gap-2 rounded-full bg-primary px-7 text-base font-medium text-primary-foreground transition-all duration-300 hover:brightness-110 active:scale-[0.98]"
+            className="btn-press group inline-flex min-h-12 items-center gap-2 rounded-full bg-primary px-7 text-base font-medium text-primary-foreground transition-all duration-300 hover:brightness-110 active:scale-[0.98]"
           >
             Get a free quote
             <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-0.5" />
@@ -52,7 +52,7 @@ const HeroSection = ({ content }: { content: SiteContent | null }) => {
         </p>
 
         <div
-          className="relative mx-auto mt-12 aspect-[4/3] w-full max-w-4xl overflow-hidden rounded-[1.75rem] bg-secondary shadow-[0_40px_80px_-30px_rgba(0,0,0,0.35)] sm:mt-16 sm:rounded-[2.25rem] md:aspect-[16/10]"
+          className="hero-settle relative mx-auto mt-12 aspect-[4/3] w-full max-w-4xl overflow-hidden rounded-[1.75rem] bg-secondary shadow-[0_40px_80px_-30px_rgba(0,0,0,0.35)] sm:mt-16 sm:rounded-[2.25rem] md:aspect-[16/10]"
         >
           {isVideo ? (
             <video src={mediaUrl} autoPlay loop muted playsInline className="h-full w-full object-cover" />
