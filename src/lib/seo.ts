@@ -39,7 +39,6 @@ export const SERVICE_LINKS = [
 ];
 
 export const FOOTER_EXTRA_LINKS = [
-  { label: 'Guides', href: '/blog' },
   { label: 'About', href: '/about' },
   { label: 'Contact', href: '/contact' },
 ];

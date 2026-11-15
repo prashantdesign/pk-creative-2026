@@ -43,7 +43,6 @@ const Header = ({ content: initialContent }: { content?: SiteContent | null }) =
     { label: 'Work', href: '/work' },
     ...(content?.isTeamSectionVisible !== false ? [{ label: 'Team', href: '/team' }] : []),
     { label: 'Gallery', href: '/gallery' },
-    { label: 'Guides', href: '/blog' },
     { label: 'Contact', href: '/#contact' },
   ];
 

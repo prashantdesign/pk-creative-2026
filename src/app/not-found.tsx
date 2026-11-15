@@ -17,7 +17,7 @@ export default async function NotFound() {
         <p className="mt-3 max-w-md text-muted-foreground">The page you are looking for does not exist or has moved. Try one of these instead.</p>
         <div className="mt-8 flex flex-wrap justify-center gap-3">
           <a href="/" className="rounded-full bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground">Back to home</a>
-          {[{ label: 'Guides', href: '/blog' }, ...SERVICE_LINKS.slice(0, 3)].map((l) => (
+          {SERVICE_LINKS.slice(0, 4).map((l) => (
             <a key={l.href} href={l.href} className="rounded-full border border-border px-5 py-3 text-sm font-medium hover:border-primary/40 hover:text-primary">{l.label}</a>
           ))}
         </div>

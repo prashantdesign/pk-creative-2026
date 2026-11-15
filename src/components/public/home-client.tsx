@@ -22,7 +22,7 @@ import ServiceStrip from '@/components/public/service-strip';
 const FAQSection = dynamic(() => import('@/components/public/faq-section'), { loading: () => <div className="min-h-[360px]" aria-hidden /> });
 import Footer from '@/components/public/footer';
 
-export default function HomeClient({ initialSiteContent, guides = null }: { initialSiteContent: SiteContent | null; guides?: React.ReactNode }) {
+export default function HomeClient({ initialSiteContent }: { initialSiteContent: SiteContent | null }) {
   const firestore = useFirestore();
 
   const siteContentRef = useMemoFirebase(() => firestore ? doc(firestore, 'pkcreative_siteContent', 'global') : null, [firestore]);
@@ -69,7 +69,6 @@ export default function HomeClient({ initialSiteContent, guides = null }: { init
           <FAQSection />
           <ContactSection content={siteContent} />
           {(siteContent?.isTestimonialsSectionVisible ?? true) && <TestimonialsSection content={siteContent} />}
-          {guides}
         </main>
         <Footer content={siteContent} />
       </div>
