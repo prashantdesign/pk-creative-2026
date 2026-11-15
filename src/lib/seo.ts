@@ -1,11 +1,11 @@
 import type { SiteContent } from '@/types';
 
-// Always the https apex host. A www/http/trailing-slash variant in the env var would make every
-// sitemap URL and canonical redirect, which Search Console reports as "Page with redirect".
+// Must be the exact host Vercel serves WITHOUT redirecting (set NEXT_PUBLIC_BASE_URL to match the
+// primary domain in Vercel > Domains). If this host differs from the one that serves the page, every
+// sitemap URL and canonical redirects and Search Console reports "Page with redirect".
 export const SITE_URL = (process.env.NEXT_PUBLIC_BASE_URL || 'https://pkcreative.in')
   .trim()
   .replace(/^http:\/\//, 'https://')
-  .replace(/^https:\/\/www\./, 'https://')
   .replace(/\/+$/, '');
 export const SITE_NAME = 'PK Creative';
 export const DEFAULT_TITLE = 'PK Creative | Website Design, Branding & SEO Agency in India';

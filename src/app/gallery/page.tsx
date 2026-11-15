@@ -8,7 +8,7 @@ import GalleryClient from './gallery-client';
 export const revalidate = 300;
 
 export const metadata: Metadata = buildMetadata({
-  title: 'Creative Gallery | Graphic Design & Branding Showcase | PK Creative',
+  title: 'Creative Gallery | Graphic Design & Branding | PK Creative',
   description: 'Explore the PK Creative gallery: graphic design, social media creatives, branding and campaign visuals crafted for modern brands.',
   path: '/gallery',
   keywords: ['graphic design gallery', 'branding showcase', 'social media creatives'],

@@ -10,7 +10,7 @@ export const revalidate = 300;
 export const metadata: Metadata = buildMetadata({
   title: 'UI/UX Design Services in India | Websites & App Interfaces',
   description:
-    'PK Creative designs conversion-focused UI/UX for websites, web apps and mobile interfaces. User research, wireframes, interactive prototypes and design systems starting at ₹10,000.',
+    'Conversion-focused UI/UX for websites, web apps and mobile interfaces: user research, wireframes, prototypes and design systems from ₹10,000.',
   path: '/services/ui-ux-design',
   keywords: ['UI UX design India', 'UI UX design agency', 'website UI design', 'app interface design', 'design system', 'wireframes and prototypes'],
 });

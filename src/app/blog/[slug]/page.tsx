@@ -23,7 +23,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const post = getPost((await params).slug);
   if (!post) return {};
   const path = `/blog/${post.slug}`;
-  const meta = buildMetadata({ title: `${post.title} | PK Creative`, description: post.description, path, keywords: post.keywords, image: `${path}/opengraph-image` });
+  const meta = buildMetadata({ title: post.title.length <= 48 ? `${post.title} | PK Creative` : post.title, description: post.description, path, keywords: post.keywords, image: `${path}/opengraph-image` });
   return {
     ...meta,
     authors: [{ name: 'PK Creative', url: SITE_URL }],
